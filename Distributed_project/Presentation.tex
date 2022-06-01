@@ -1,0 +1,28 @@
+\section{Presentation}
+\subsection{The Application}
+The application we want to propose for this project is a website in which users can book a place for a drive to beaches with limited access. Each beach has a maximum number of people which can join it. The bookings to a beach can be made for three different time slots: the morning, the afternoon or for all day long (until the evening). The goal is to allow users to book places in an efficient and fast manner, managing all the problems regarding the concurrency of the requests and the maximum limit of places that can be booked.
+\subsection{Requirements}
+\subsubsection{The Actors}
+The application requires the presence of \textit{two} main actors:
+\begin{itemize}
+    \item \textbf{Unregistered User:} This user have to register a new account or login to an existing one, in order to use the application's features.
+    \item \textbf{User:} The registered user has access to the application homepage; through which he/she can view all available slots, or find one particular beach or one particular slot, and book a place. 
+\end{itemize}
+
+\subsubsection{Functional Requirements}
+\begin{itemize}
+    \item A user can sign up to the app.
+    \item A user can login to the app.
+    \item A user can search available beaches.
+    \item A user can search for available slots.
+    \item A user can view all available slots,
+    \item A user can book a slot, if there is at least one place available.
+    \item A user can release a booked place for a ride if the ride hasn't started yet.
+\end{itemize}
+
+\subsubsection{Non-Functional Requirements}
+\begin{itemize}
+    \item The application must be always available.
+    \item The data should be consistent.
+    \item No contrasts between users' actions.
+\end{itemize}
