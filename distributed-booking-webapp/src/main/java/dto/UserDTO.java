@@ -1,4 +1,4 @@
-package it.unipi.dii.dsmt.dto;
+package dto;
 
 public class UserDTO {
     Integer userId;
