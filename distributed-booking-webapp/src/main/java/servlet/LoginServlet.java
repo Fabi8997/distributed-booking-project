@@ -22,8 +22,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if(DbManager.login(request.getParameter("user"), request.getParameter("pass"))){
-            //String targetJSP = "/pages/jsp/homepage.jsp"; //the correct one!
-            String targetJSP = "/pages/jsp/index.jsp";
+            String targetJSP = "/pages/jsp/beaches.jsp"; //the correct one!
             String user = request.getParameter("user");
 
             HttpSession session=request.getSession(false);
@@ -48,13 +47,9 @@ public class LoginServlet extends HttpServlet {
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
             requestDispatcher.forward(request,response);
-        }else{/*
+        }else{
             String targetJSP = "index.jsp";
             request.setAttribute("error", "Username/Password not correct!");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
-            requestDispatcher.forward(request,response);
-            */
-            String targetJSP = "/pages/jsp/profile.jsp";
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
             requestDispatcher.forward(request,response);
         }

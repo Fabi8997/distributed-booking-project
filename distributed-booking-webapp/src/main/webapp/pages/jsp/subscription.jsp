@@ -11,6 +11,7 @@
 <%
   String user = (String) session.getAttribute("user");
   System.out.println("Retrieving the information for "+user+"...");
+  // TODO: 04/06/2022 getSub can return [] !! 
   int subscriptionId = DbManager.getSubscriptionFromUser(user);
   SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
 %>
