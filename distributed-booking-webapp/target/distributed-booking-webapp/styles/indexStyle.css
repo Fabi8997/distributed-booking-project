@@ -1,0 +1,117 @@
+body {
+    font-size: 28px;
+    margin: 0;
+    background-color: #EEEDDE;
+}
+
+.login-card, .newFormCard{
+    margin: 30px auto;
+    padding: 40px;
+    width: 274px;
+    background-color: #F7F7F7;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.login-card h1 {
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+}
+
+.newFormCard p{
+    font-size: 18px;
+    text-align: center;
+}
+
+#error{
+    font-weight: bold;
+    color: red;
+}
+
+#info{
+    font-weight: bold;
+    color: green;
+}
+
+.login-card input[type=submit], .newFormCard input[type=submit], .newFormCard #back_btn{
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+.newFormCard #back_btn{
+    margin-bottom: 10px;
+    margin-top: 5%;
+}
+
+.login-card input[type=text], input[type=password] ,.newFormCard input[type=text], .newFormCard input[type=number], .newFormCard input[type=datetime-local], .newFormCard textarea{
+    height: 44px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.newFormCard textarea{
+    font-size: 14px;
+    text-align: left;
+}
+
+.login-card input[type=text]:hover, input[type=password]:hover ,.newFormCard input[type=text]:hover, .newFormCard input[type=number]:hover, .newFormCard input[type=datetime-local]:hover, .newFormCard textarea:hover{
+    border: 1px solid #b9b9b9;
+    border-top: 1px solid #a0a0a0;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.login {
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+}
+
+.login-submit {
+    border: 0;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    background-color: #54749f;
+}
+
+.login-submit:hover {
+    border: 0;
+    text-shadow: 0 1px rgba(0,0,0,0.3);
+    background-color: #486286;
+}
+
+.login-card a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 400;
+    text-align: center;
+    display: inline-block;
+    opacity: 0.6;
+    transition: opacity ease 0.5s;
+}
+
+.login-card a:hover {
+    opacity: 1;
+}
+
+.login-help {
+    width: 100%;
+    text-align: center;
+    font-size: 17px;
+}
+
+.newFormCard label{
+    font-size: 18px;
+}
