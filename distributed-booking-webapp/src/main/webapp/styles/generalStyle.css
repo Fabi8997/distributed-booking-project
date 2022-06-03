@@ -1,0 +1,256 @@
+body {
+    margin: 0;
+    background-color: rgba(84, 116, 159, 0.57);
+}
+
+ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #141E27;
+    position: sticky;
+    top: 0;
+    font-size: 18px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #EEEDDE;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #203239;
+}
+
+.active {
+    background-color: #54749f;
+}
+
+#credit, #logout{
+    float: right;
+}
+
+#logout{
+    background-color: #486286;
+}
+
+
+
+#logout img{
+    size: 32px;
+}
+
+table {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+.auction_content table tbody tr, #current_auction table tbody tr {
+    cursor: pointer;
+}
+
+tbody tr:hover{
+    background-color: rgba(32, 50, 57, 0.4);
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background-color: #141E27;
+    color: #EEEDDE;
+}
+
+#myInput {
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    width: 70%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #EEEDDE;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+#myInputAuct{
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    width: 95%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #EEEDDE;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.auction_content{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.auction_content h3, #titleAdd{
+    text-align: center;
+}
+
+.ViewAuctionContent{
+    margin-top: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    align-content: center;
+}
+
+.ViewAuctionContent th{
+    width: 20%;
+    background-color: #54749f;
+}
+
+.ViewAuctionContentForm{
+    margin-top: 10px;
+    margin-right: 25%;
+    margin-left: 25%;
+    background: #EEEDDE;
+}
+
+.ViewAuctionContent form.ViewAuctionContentForm input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #CCC;
+    float: left;
+    width: 64%;
+    background: #f8f8f8;
+}
+
+.ViewAuctionContent button, #content button{
+    float: left;
+    width: 30%;
+    padding: 10px;
+    background: #54749f;
+    color: #EEEDDE;
+    font-size: 17px;
+    border: 1px solid #CCC;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+}
+
+.ViewAuctionContent button:hover, #content button:hover {
+    background: #486286;
+}
+
+#other_actions button{
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.ViewAuctionContent form.ViewAuctionContentForm::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.ViewAuctionContent p{
+    text-align: center;
+    font-size: 16px;
+}
+#error{
+    font-weight: bold;
+    color: red;
+}
+
+#info{
+    font-weight: bold;
+    color: green;
+}
+
+#content{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+#current_auction, #other_actions{
+    display: inline-block;
+    margin-bottom: 5%;
+}
+
+#current_auction{
+    width: 40%;
+    float: left;
+}
+
+#other_actions{
+    width: 40%;
+    float: right;
+
+}
+
+#overlay {
+    background-color: rgba(204, 204, 204, 0.48); /*or semitransparent image*/
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    -webkit-filter: blur(5px);
+}
+
+#insertGood {
+
+    font-size: 17px;
+    width: 22%;
+    display: inline-block;
+    float: right;
+    padding: 12px 20px 12px 20px;
+    margin-top: 12px;
+    text-align: center;
+    border: 0;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    background-color: #54749f;
+}
+
+#insertGood:hover{
+    border: 0;
+    text-shadow: 0 1px rgba(0,0,0,0.3);
+    background-color: #486286;
+}
+
+h3{
+    font-size: 30px;
+    text-align: center;
+    color: #EEEDDE;
+}
