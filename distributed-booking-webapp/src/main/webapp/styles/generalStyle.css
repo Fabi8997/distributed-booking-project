@@ -70,7 +70,7 @@ table tr {
     padding: .35em;
 }
 
-.auction_content table tbody tr, #current_auction table tbody tr {
+.booking_content table tbody tr, #current_auction table tbody tr {
     cursor: pointer;
 }
 
@@ -116,12 +116,12 @@ table th {
     margin-top: 12px;
 }
 
-.auction_content{
+.booking_content{
     margin-left: 10%;
     margin-right: 10%;
 }
 
-.auction_content h3, #titleAdd{
+.booking_content h3, #titleAdd{
     text-align: center;
 }
 
