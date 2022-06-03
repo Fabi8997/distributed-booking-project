@@ -70,7 +70,7 @@ table tr {
     padding: .35em;
 }
 
-.auction_content table tbody tr, #current_auction table tbody tr {
+.booking_content table tbody tr, #current_auction table tbody tr {
     cursor: pointer;
 }
 
@@ -116,35 +116,35 @@ table th {
     margin-top: 12px;
 }
 
-.auction_content{
+.booking_content{
     margin-left: 10%;
     margin-right: 10%;
 }
 
-.auction_content h3, #titleAdd{
+.booking_content h3, #titleAdd{
     text-align: center;
 }
 
-.ViewAuctionContent{
+.ViewBookingContent{
     margin-top: 20px;
     margin-left: 20%;
     margin-right: 20%;
     align-content: center;
 }
 
-.ViewAuctionContent th{
+.ViewBookingContent th{
     width: 20%;
     background-color: #54749f;
 }
 
-.ViewAuctionContentForm{
+.ViewBookingContentForm{
     margin-top: 10px;
     margin-right: 25%;
     margin-left: 25%;
     background: #EEEDDE;
 }
 
-.ViewAuctionContent form.ViewAuctionContentForm input[type=text] {
+.ViewBookingContent form.ViewBookingContentForm input[type=text] {
     padding: 10px;
     font-size: 17px;
     border: 1px solid #CCC;
@@ -153,7 +153,7 @@ table th {
     background: #f8f8f8;
 }
 
-.ViewAuctionContent button, #content button{
+.ViewBookingContent button, #content button{
     float: left;
     width: 30%;
     padding: 10px;
@@ -166,7 +166,7 @@ table th {
     cursor: pointer;
 }
 
-.ViewAuctionContent button:hover, #content button:hover {
+.ViewBookingContent button:hover, #content button:hover {
     background: #486286;
 }
 
@@ -175,13 +175,13 @@ table th {
     margin-bottom: 5%;
 }
 
-.ViewAuctionContent form.ViewAuctionContentForm::after {
+.ViewBookingContent form.ViewBookingContentForm::after {
     content: "";
     clear: both;
     display: table;
 }
 
-.ViewAuctionContent p{
+.ViewBookingContent p{
     text-align: center;
     font-size: 16px;
 }
@@ -253,4 +253,16 @@ h3{
     font-size: 30px;
     text-align: center;
     color: #EEEDDE;
+}
+
+#addSub{
+    width: 30%;
+    padding: 10px;
+    background: #54749f;
+    color: #EEEDDE;
+    font-size: 17px;
+    border: 1px solid #CCC;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
 }

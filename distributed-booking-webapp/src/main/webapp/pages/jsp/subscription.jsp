@@ -28,10 +28,10 @@
 </ul>
 
 
-<div class="ViewAuctionContent">
+<div class="ViewBookingContent">
   <h3 id="titleAdd">Add a subscription to your account:</h3>
 
-  <form class="ViewAuctionContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
+  <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
     <label for="subInput">Select the subscription type:</label>
     <select name="subTypes" id="subInput">
       <option value="none" selected="selected" disabled>--</option>

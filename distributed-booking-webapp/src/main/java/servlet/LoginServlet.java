@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
             requestDispatcher.forward(request,response);
             */
-            String targetJSP = "/pages/jsp/subscription.jsp";
+            String targetJSP = "/pages/jsp/profile.jsp";
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
             requestDispatcher.forward(request,response);
         }

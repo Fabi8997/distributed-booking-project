@@ -1,7 +1,5 @@
 package servlet;
 
-import database.DbManager;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "ProfileServlet", value = "/ProfileServlet")
-public class ProfileServlet extends HttpServlet{
+@WebServlet(name = "SubscriptionServlet", value = "/SubscriptionServlet")
+public class SubscriptionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -41,19 +39,17 @@ public class ProfileServlet extends HttpServlet{
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
                 requestDispatcher.forward(request,response);
             }else{
-                System.out.println("Uploading Profile...");
+                System.out.println("Sending the subscription page...");
 
                 //Open the goods page
-                String targetJSP = "/pages/jsp/profile.jsp";
+                String targetJSP = "/pages/jsp/subscription.jsp";
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
                 requestDispatcher.forward(request,response);
             }
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
-
 }
