@@ -84,8 +84,8 @@ handle_call({login, {Username, Password}}, _From, _Status) ->
 	Result = mnesia_server:login(Username,Password),
 	{reply, Result, _Status };
 
-handle_call({register, {Username, Password, Credit}}, _From, _Status) ->
-	Result = mnesia_server:register(Username,Password,Credit),
+handle_call({register, {Username, Password}}, _From, _Status) ->
+	Result = mnesia_server:register(Username,Password),
 	{reply, Result, _Status };
 
 handle_call({get_user, Username}, _From, _Status) ->
@@ -122,7 +122,7 @@ handle_call({insert_booking, {Username, BeachId, Type, Timestamp}}, _From, _Stat
 
 handle_call({get_booking, BookingId}, _From, _Status) ->
 	Result = mnesia_server:get_booking(BookingId),
-	{reply, Result, _Status }.
+	{reply, Result, _Status };
 	
 handle_call({all_bookings, User}, _From, _Status) ->
 	Result = mnesia_server:all_bookings(User),

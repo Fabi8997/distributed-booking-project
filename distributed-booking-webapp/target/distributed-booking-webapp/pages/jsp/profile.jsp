@@ -29,7 +29,7 @@
 <div class="booking_content">
     <div id="auction_content_actions">
         <label>Your subscription</label>
-
+        <!--<input class="idSub" type="hidden" name="idSub" value="<%--=/* subscription.getType() */--%>">-->
         <a id="addSub" href="<%= request.getContextPath() %>/SubscriptionServlet">Add a new subscription</a>
     </div>
 </div>
