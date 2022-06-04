@@ -4,14 +4,14 @@ import com.ericsson.otp.erlang.OtpErlangTuple;
 
 public class SubscriptionDTO{
 
-    String idSubscription;
+    int idSubscription;
     String username;
-    String idBeach;
+    int idBeach;
     String type;
     String status;
     String endDate;
 
-    public SubscriptionDTO( String idSubscription, String username, String idBeach, String type, String status, String endDate){
+    public SubscriptionDTO( int idSubscription, String username, int idBeach, String type, String status, String endDate){
         this.idSubscription = idSubscription;
         this.username = username;
         this.idBeach = idBeach;
@@ -21,15 +21,15 @@ public class SubscriptionDTO{
     }
 
     public SubscriptionDTO(OtpErlangTuple subscriptionInfo) {
-        idSubscription = subscriptionInfo.elementAt(0).toString();
+        idSubscription = Integer.parseInt(subscriptionInfo.elementAt(0).toString());
         username = subscriptionInfo.elementAt(1).toString();
-        idBeach = subscriptionInfo.elementAt(2).toString();
+        idBeach = Integer.parseInt(subscriptionInfo.elementAt(2).toString());
         type = subscriptionInfo.elementAt(3).toString();
         status = subscriptionInfo.elementAt(4).toString();
         endDate = subscriptionInfo.elementAt(5).toString();
     }
 
-    public String getIdSubscription() {
+    public int getIdSubscription() {
         return idSubscription;
     }
 
@@ -37,7 +37,7 @@ public class SubscriptionDTO{
         return username;
     }
 
-    public String getIdBeach() {
+    public int getIdBeach() {
         return idBeach;
     }
 

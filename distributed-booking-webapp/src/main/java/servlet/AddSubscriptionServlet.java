@@ -42,7 +42,7 @@ public class AddSubscriptionServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
                 requestDispatcher.forward(request,response);
             }else{
-                System.out.println("Receiving the new good info...");
+                System.out.println("Receiving the new subscription info...");
 
                 int beachId = Integer.parseInt(request.getParameter("beachId"));
                 String type = request.getParameter("subType");
