@@ -9,6 +9,13 @@
         System.out.println("Retrieving the information for "+user+"...");
         int subscriptionId = DbManager.getSubscriptionFromUser(user);
         SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
+        String subType;
+        if(subscription == null){
+            subType = "None";
+        }
+        else{
+            subType = subscription.getType();
+        }
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>
@@ -29,7 +36,7 @@
 <div class="booking_content">
     <div id="auction_content_actions">
         <label>Your subscription</label>
-        <!--<input class="idSub" type="hidden" name="idSub" value="<%--=/* subscription.getType() */--%>">-->
+        <input class="idSub" type="hidden" name="idSub" value="<%= subType %>">
         <a id="addSub" href="<%= request.getContextPath() %>/SubscriptionServlet">Add a new subscription</a>
     </div>
 </div>

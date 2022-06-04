@@ -14,6 +14,13 @@
   // TODO: 04/06/2022 getSub can return [] !! 
   int subscriptionId = DbManager.getSubscriptionFromUser(user);
   SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
+  String type;
+  if(subscription == null){
+    type = "None";
+  }
+  else{
+    type = subscription.getType();
+  }
 %>
 <div class="header">
   <h2>Beach Booking</h2>
