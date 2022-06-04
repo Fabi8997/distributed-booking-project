@@ -233,8 +233,6 @@ public class DbManager {
 
     //SUBSCRIPTION
 
-    //TODO 04/04/2022: add a method with all the controls of the subscriptions!!!
-
     public static boolean addSubscription(int beach, String user, String type, String endDate){
         OtpConnection conn = null;
         try {
@@ -260,6 +258,30 @@ public class DbManager {
         return false;
     }
 
+    public static boolean insertSubscription(int beach, String user, String type, String endDate){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+
+                conn.sendRPC(registeredServer, "add_subscription", new OtpErlangObject[]{
+                        new OtpErlangInt(beach), new OtpErlangString(user),
+                        new OtpErlangString(type), new OtpErlangString(endDate)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+
+                return reply.toString().equals("ok");
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
 
     public static SubscriptionDTO getSubscription(int subscriptionId, String user){
         OtpConnection conn = null;
