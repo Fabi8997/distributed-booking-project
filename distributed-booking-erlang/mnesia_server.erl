@@ -13,7 +13,7 @@
   add_user/3, add_subscription/4, add_beach/2, is_subscription_present/1, is_beach_present/1,
   is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1,
-  update_subscription/2, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1]).
+  update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1]).
   %%all_beaches/1,
 
 -include_lib("stdlib/include/qlc.hrl").
@@ -244,10 +244,10 @@ add_subscription(BeachName, User, Type, EndDate) ->
         end,
   mnesia:activity(transaction, Fun).
 
-update_subscription(SubId, Status) ->
+update_subscription(SubId, Type, Status, EndDate) ->
   F = fun() ->
     [Subscription] = mnesia:read(subscription, SubId),
-    mnesia:write(Subscription#subscription{status = Status})
+    mnesia:write(Subscription#subscription{type = Type, status = Status, end_date = EndDate})
       end,
   mnesia:activity(transaction, F).
 

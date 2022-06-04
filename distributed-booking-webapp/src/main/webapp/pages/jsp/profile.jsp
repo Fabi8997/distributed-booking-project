@@ -25,9 +25,9 @@
 </div>
 
 <ul class="topnav">
-    <li><a href="<%= request.getContextPath() %>/HomepageServlet">Home</a></li>
-    <li><a href="<%= request.getContextPath() %>/AuctionsServlet">Beaches</a></li>
+    <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
     <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
+    <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
     <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
         <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
     </a></li>

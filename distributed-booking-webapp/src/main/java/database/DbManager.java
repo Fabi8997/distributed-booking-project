@@ -45,7 +45,6 @@ public class DbManager {
         return false;
     }
 
-    //Tested --> OK!
     public static boolean register(String user, String pass){
         OtpConnection conn = null;
         try {
@@ -234,6 +233,8 @@ public class DbManager {
 
     //SUBSCRIPTION
 
+    //TODO 04/04/2022: add a method with all the controls of the subscriptions!!!
+
     public static boolean addSubscription(int beach, String user, String type, String endDate){
         OtpConnection conn = null;
         try {
@@ -282,9 +283,32 @@ public class DbManager {
         return null;
     }
 
-    //TODO 02/06/2022: add updateSubscription method!
+    //TODO 02/06/2022: is the update method ok???
+    //we keep just one sub per user and update it each time
+    public static boolean updateSubscription(String user, int subId, String type, String status, String endDate){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
 
-    //when we add a new subscription we need to chek if we find another one for the same user first?
+                conn.sendRPC(registeredServer, "update_subscription", new OtpErlangObject[]{
+                        new OtpErlangInt(subId), new OtpErlangString(type),
+                        new OtpErlangString(status), new OtpErlangString(endDate)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+
+                return reply.toString().equals("ok");
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
 
     public static Integer getSubscriptionFromUser(String user){
         OtpConnection conn = null;
