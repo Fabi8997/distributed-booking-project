@@ -227,12 +227,22 @@ public class DbManager {
         for(int i = 0; i < list.arity(); i++){
             int idBooking = Integer.parseInt(String.valueOf(((OtpErlangTuple) list.elementAt(i)).elementAt(1)));
             //bookings.add(OtpErlangCommunication.get_info(idBooking,user));
+            bookings.add(getBooking(idBooking,user));
         }
         return bookings;
     }
 
     //SUBSCRIPTION
 
+    public static boolean insertSubscription(int beach, String user, String type, String endDate, String request){
+        if(request.equals("add")){
+            return addSubscription(beach, user, type, endDate);
+        }
+        else if(request.equals("update")){
+            return updateSubscription(user, beach, type, "active", endDate);
+        }
+        else return false;
+    }
     public static boolean addSubscription(int beach, String user, String type, String endDate){
         OtpConnection conn = null;
         try {
@@ -354,8 +364,9 @@ public class DbManager {
         ArrayList<SubscriptionDTO> subscriptions = new ArrayList<>();
 
         for(int i = 0; i < list.arity(); i++){
-            int idBooking = Integer.parseInt(String.valueOf(((OtpErlangTuple) list.elementAt(i)).elementAt(1)));
-            //bookings.add(OtpErlangCommunication.get_info(idBooking,user));
+            int idSub = Integer.parseInt(String.valueOf(((OtpErlangTuple) list.elementAt(i)).elementAt(1)));
+            subscriptions.add(getSubscription(idSub, user));
+            //subscriptions.add(OtpErlangCommunication.get_info(idSub,user));
         }
         return subscriptions;
     }

@@ -2,6 +2,7 @@
 <%@ page import="dto.SubscriptionDTO" %>
 <%@ page import="dto.BeachDTO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,15 +15,7 @@
   String user = (String) session.getAttribute("user");
   System.out.println("Retrieving the information for "+user+"...");
   // TODO: 04/06/2022 getSub can return [] !! --> Solved but still to test!
-  int subscriptionId = DbManager.getSubscriptionFromUser(user);
-  SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
-  String type;
-  if(subscription == null){
-    type = "none";
-  }
-  else{
-    type = subscription.getType();
-  }
+  List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
   List<BeachDTO> beaches = DbManager.getBeaches(user);
 %>
 <div class="header">

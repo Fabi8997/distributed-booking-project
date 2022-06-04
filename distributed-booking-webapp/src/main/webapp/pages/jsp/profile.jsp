@@ -1,5 +1,6 @@
 <%@ page import="database.DbManager" %>
 <%@ page import="dto.SubscriptionDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,7 @@
         else{
             subType = subscription.getType();
         }
+        List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>
