@@ -1,5 +1,8 @@
 <%@ page import="database.DbManager" %>
 <%@ page import="dto.SubscriptionDTO" %>
+<%@ page import="dto.BeachDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,27 +14,40 @@
 <%
   String user = (String) session.getAttribute("user");
   System.out.println("Retrieving the information for "+user+"...");
-  int subscriptionId = DbManager.getSubscriptionFromUser(user);
-  SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
+  List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
+  List<BeachDTO> beaches = DbManager.getBeaches(user);
 %>
 <div class="header">
   <h2>Beach Booking</h2>
 </div>
 
 <ul class="topnav">
-  <li><a href="<%= request.getContextPath() %>/HomepageServlet">Home</a></li>
-  <li><a href="<%= request.getContextPath() %>/AuctionsServlet">Beaches</a></li>
+  <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
   <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
+  <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
   <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
     <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
   </a></li>
 </ul>
 
+<%
+  //TODO 04/06/2022: test the form!!
+%>
 
 <div class="ViewBookingContent">
   <h3 id="titleAdd">Add a subscription to your account:</h3>
 
   <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
+    <label for="beachInput">Select the beach:</label>
+    <select name="beachId" id="beachInput">
+      <%
+        for(int i = 0; i < beaches.size(); i++) {
+      %>
+      <option value=<%=beaches.get(i).getBeachId()%>><label>
+        <textarea readonly rows="2"><%=beaches.get(i).getDescription().replace("\"", "")%></textarea>
+      </label></option>
+      <% } %>
+    </select>
     <label for="subInput">Select the subscription type:</label>
     <select name="subTypes" id="subInput">
       <option value="none" selected="selected" disabled>--</option>

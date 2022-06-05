@@ -1,19 +1,12 @@
 package servlet;
 
-import database.DbManager;
-import utility.Utils;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "AddSubscriptionServlet", value = "/AddSubscriptionServlet")
-public class AddSubscriptionServlet extends HttpServlet {
+@WebServlet(name = "BeachesServlet", value = "/BeachesServlet")
+public class BeachesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -42,23 +35,10 @@ public class AddSubscriptionServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
                 requestDispatcher.forward(request,response);
             }else{
-                System.out.println("Receiving the new subscription info...");
+                System.out.println("[WEBSERVER] Sending beaches...");
 
-                int beachId = Integer.parseInt(request.getParameter("beachId"));
-                String type = request.getParameter("subType");
-                String user = session.getAttribute("user").toString();
-                String targetJSP;
-
-                if(DbManager.addSubscription(beachId, user, type, Utils.getEndDate(type))){
-                    //if no errors occur then it goes to the confirmation page!
-                    targetJSP = "/pages/jsp/subscription.jsp";
-                    request.setAttribute("info", "Subscription correctly inserted!");
-                }else{
-                    //redirect to the previous page with an error msg!
-                    targetJSP = "/pages/jsp/subscription.jsp";
-                    request.setAttribute("error", "Something has gone wrong!");
-                }
-
+                //Open the goods page
+                String targetJSP = "/pages/jsp/beaches.jsp";
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
                 requestDispatcher.forward(request,response);
             }
