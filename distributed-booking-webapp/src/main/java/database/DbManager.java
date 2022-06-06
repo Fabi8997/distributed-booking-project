@@ -245,6 +245,9 @@ public class DbManager {
         else return false;
     }
     public static boolean addSubscription(int beach, String user, String type, String endDate){
+        if(beach == 0){
+            return false;
+        }
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
