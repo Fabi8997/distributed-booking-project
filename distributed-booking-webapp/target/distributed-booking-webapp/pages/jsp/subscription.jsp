@@ -2,6 +2,7 @@
 <%@ page import="dto.SubscriptionDTO" %>
 <%@ page import="dto.BeachDTO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,16 +14,7 @@
 <%
   String user = (String) session.getAttribute("user");
   System.out.println("Retrieving the information for "+user+"...");
-  // TODO: 04/06/2022 getSub can return [] !! 
-  int subscriptionId = DbManager.getSubscriptionFromUser(user);
-  SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
-  String type;
-  if(subscription == null){
-    type = "None";
-  }
-  else{
-    type = subscription.getType();
-  }
+  List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
   List<BeachDTO> beaches = DbManager.getBeaches(user);
 %>
 <div class="header">
@@ -38,13 +30,16 @@
   </a></li>
 </ul>
 
+<%
+  //TODO 04/06/2022: test the form!!
+%>
 
 <div class="ViewBookingContent">
   <h3 id="titleAdd">Add a subscription to your account:</h3>
 
   <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
     <label for="beachInput">Select the beach:</label>
-    <select name="subTypes" id="beachInput">
+    <select name="beachId" id="beachInput">
       <%
         for(int i = 0; i < beaches.size(); i++) {
       %>

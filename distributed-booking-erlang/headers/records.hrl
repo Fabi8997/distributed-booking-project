@@ -20,6 +20,7 @@
                 }).
 				
 -record(beach, {beach_id,
+				  name,
                   description,
 				  slots
                 }).
