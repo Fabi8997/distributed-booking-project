@@ -70,13 +70,14 @@ public class DbManager {
 
     //BEACHES
 
-    public static boolean addBeach(String user, String description, int slots){
+    public static boolean addBeach(String user, String name, String description, int slots){
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
             if(conn != null) {
 
-                conn.sendRPC(registeredServer, "add_beach", new OtpErlangObject[]{new OtpErlangString(description), new OtpErlangInt(slots)});
+                conn.sendRPC(registeredServer, "add_beach", new OtpErlangObject[]{
+                        new OtpErlangString(name), new OtpErlangString(description), new OtpErlangInt(slots)});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
@@ -137,6 +138,15 @@ public class DbManager {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    private static ArrayList<BeachDTO> toBeachesArray(OtpErlangList list){
+        ArrayList<BeachDTO> beaches = new ArrayList<>();
+
+        for(int i = 0; i < list.arity(); i++){
+            beaches.add(new BeachDTO((OtpErlangTuple) list.elementAt(i)));
+        }
+        return beaches;
     }
 
 
@@ -210,15 +220,6 @@ public class DbManager {
             e.printStackTrace();
         }
         return new ArrayList<>();
-    }
-
-    private static ArrayList<BeachDTO> toBeachesArray(OtpErlangList list){
-        ArrayList<BeachDTO> beaches = new ArrayList<>();
-
-        for(int i = 0; i < list.arity(); i++){
-            beaches.add(new BeachDTO((OtpErlangTuple) list.elementAt(i)));
-        }
-        return beaches;
     }
 
     private static ArrayList<BookingDTO> toBookingsArray(OtpErlangList list, String user){
@@ -318,7 +319,7 @@ public class DbManager {
         return false;
     }
 
-    public static Integer getSubscriptionFromUser(String user){
+    public static ArrayList<SubscriptionDTO> getSubscriptionFromUser(String user){
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
@@ -327,7 +328,9 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
-                return Integer.parseInt(reply.toString());
+                if (reply instanceof OtpErlangList) {
+                    return toSubscriptionsArray((OtpErlangList) reply, user);
+                }
             }
         } catch (IOException | OtpErlangExit | OtpAuthException e) {
             if(conn!= null){
@@ -335,7 +338,7 @@ public class DbManager {
             }
             e.printStackTrace();
         }
-        return -1;
+        return new ArrayList<>();
     }
 
     public static ArrayList<SubscriptionDTO> getAllSubscriptions(String user){

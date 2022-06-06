@@ -8,7 +8,7 @@
     <%
         String user = (String) session.getAttribute("user");
         System.out.println("Retrieving the information for "+user+"...");
-        List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
+        List<SubscriptionDTO> subscriptions = DbManager.getSubscriptionFromUser(user);
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>

@@ -4,11 +4,13 @@ import com.ericsson.otp.erlang.OtpErlangTuple;
 
 public class BeachDTO {
     int beachId;
+    String name;
     String description;
     int slots;
 
     public BeachDTO(OtpErlangTuple beach) {
-        this.beachId = Integer.parseInt(beach.elementAt(1).toString());
+        this.beachId = Integer.parseInt(beach.elementAt(0).toString());
+        this.name = beach.elementAt(1).toString();
         this.description = beach.elementAt(2).toString();
         this.slots = Integer.parseInt(beach.elementAt(3).toString());
     }
@@ -19,6 +21,10 @@ public class BeachDTO {
 
     public void setSlots(int slots) {
         this.slots = slots;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
@@ -33,6 +39,7 @@ public class BeachDTO {
     public String toString() {
         return "BeachDTO{" +
                 "beachId=" + beachId +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", slots=" + slots +
                 '}';

@@ -43,9 +43,12 @@
       <%
         for(int i = 0; i < beaches.size(); i++) {
       %>
-      <option value=<%=beaches.get(i).getBeachId()%>><label>
-        <textarea readonly rows="2"><%=beaches.get(i).getDescription().replace("\"", "")%></textarea>
-      </label></option>
+      <option value=<%= beaches.get(i).getBeachId() %>>
+        <%= beaches.get(i).getName() %>
+        <!--label>
+          <textarea readonly rows="2"><!%=/*beaches.get(i).getDescription().replace("\"", "")*/%></textarea>
+        </label-->
+      </option>
       <% } %>
     </select>
     <label for="subInput">Select the subscription type:</label>

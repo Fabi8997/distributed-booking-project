@@ -10,7 +10,7 @@
 
 %% API
 -export([init/0, login/2, register/2, all_user/0,
-  add_user/3, add_subscription/4, add_beach/2, is_subscription_present/1, is_beach_present/1,
+  add_user/3, add_subscription/4, add_beach/3, is_subscription_present/1, is_beach_present/1,
   is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1]).
@@ -177,10 +177,11 @@ get_user(Username) ->
 %%% BEACH OPERATIONS
 %%%===================================================================
   
-add_beach(Description, Slots) ->
+add_beach(Name, Description, Slots) ->
   Index = mnesia:dirty_update_counter(table_id, beach, 1),
   Fun = fun() ->
     mnesia:write(#beach{beach_id = Index,
+	  name = Name,
       description = Description,
       slots = Slots
     })

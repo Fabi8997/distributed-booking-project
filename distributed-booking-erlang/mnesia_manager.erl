@@ -1,6 +1,6 @@
 -module(mnesia_manager).
 -export([init/1, handle_call/3, handle_cast/2]).
--export([start_server/0, login/2, register/2, add_beach/2, get_beach/1, insert_booking/4, get_booking/1,
+-export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1,
 	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1, all_bookings/1, all_subscriptions/1]).
 -behavior(gen_server).
 
@@ -33,8 +33,8 @@ get_user(Username) ->
 %%% BEACH OPERATIONS
 %%%===================================================================
 
-add_beach(Description, Slots) ->
-	gen_server:call(mnesia_manager, {add_beach, {Description, Slots}}).
+add_beach(Name, Description, Slots) ->
+	gen_server:call(mnesia_manager, {add_beach, {Name, Description, Slots}}).
 
 get_beach(BeachId) ->
 	gen_server:call(mnesia_manager, {get_beach, BeachId}).
@@ -95,8 +95,8 @@ handle_call({get_user, Username}, _From, _Status) ->
 	Result = mnesia_server:get_user(Username),
 	{reply, Result, _Status };
 
-handle_call({add_beach, {Description, Slots}}, _From, _Status) ->
-	Result = mnesia_server:add_beach(Description, Slots),
+handle_call({add_beach, {Name, Description, Slots}}, _From, _Status) ->
+	Result = mnesia_server:add_beach(Name, Description, Slots),
 	{reply, Result, _Status };
 
 handle_call({get_beach, BeachId}, _From, _Status) ->
