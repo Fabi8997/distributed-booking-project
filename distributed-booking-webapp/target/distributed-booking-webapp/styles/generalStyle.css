@@ -137,6 +137,20 @@ table th {
     background-color: #54749f;
 }
 
+.BeachTable{
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    border: none;
+}
+
+.BeachRow{
+    height: 160px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
 .ViewBookingContentForm{
     margin-top: 10px;
     margin-right: 25%;

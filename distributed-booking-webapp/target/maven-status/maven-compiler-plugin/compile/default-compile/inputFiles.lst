@@ -1,11 +1,13 @@
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\LoginServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\AddSubscriptionServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\SubscriptionServlet.java
+C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\LogoutServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\database\DbManager.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\BookingDTO.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\ProfileServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\SubscriptionDTO.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\UserDTO.java
+C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\utility\Utils.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\SubscriptionStatus.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\BookingType.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\SubscriptionType.java
