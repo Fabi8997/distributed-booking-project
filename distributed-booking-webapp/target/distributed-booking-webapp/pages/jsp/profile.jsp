@@ -1,5 +1,6 @@
 <%@ page import="database.DbManager" %>
 <%@ page import="dto.SubscriptionDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,15 +8,7 @@
     <%
         String user = (String) session.getAttribute("user");
         System.out.println("Retrieving the information for "+user+"...");
-        int subscriptionId = DbManager.getSubscriptionFromUser(user);
-        SubscriptionDTO subscription = DbManager.getSubscription(subscriptionId, user);
-        String subType;
-        if(subscription == null){
-            subType = "None";
-        }
-        else{
-            subType = subscription.getType();
-        }
+        List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>
@@ -35,9 +28,33 @@
 
 <div class="booking_content">
     <div id="auction_content_actions">
-        <label>Your subscription</label>
-        <input class="idSub" type="hidden" name="idSub" value="<%= subType %>">
-        <a id="addSub" href="<%= request.getContextPath() %>/SubscriptionServlet">Add a new subscription</a>
+        <label>Your subscriptions</label>
+        <table id="myTable">
+            <thead>
+            <tr>
+                <th scope="col" style="display: none;"></th>
+                <th scope="col">Type</th>
+                <th scope="col">Beach</th>
+                <th scope="col">Status</th>
+                <th scope="col">EndDate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for(int i = 0; i < subscriptions.size(); i++) {
+            %>
+            <tr id = "row-<%=i%>">
+                <td style="display:none;"><input class="idGood" type="hidden" name="idGood" value="<%=subscriptions.get(i).getIdSubscription()%>"></td>
+                <td><%=subscriptions.get(i).getType().replace("\"", "")%></td>
+                <td><label>
+                    <textarea readonly rows="2"><%=DbManager.getBeach(subscriptions.get(i).getIdBeach(), user).getDescription().replace("\"", "")%></textarea>
+                </label></td>
+                <td><%=subscriptions.get(i).getStatus().replace("\"", "")%></td>
+                <td><%=subscriptions.get(i).getEndDate().replace("\"", "")%></td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
     </div>
 </div>
 </head>

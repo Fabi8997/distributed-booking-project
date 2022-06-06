@@ -19,11 +19,15 @@
         function addClickEvent() {
             let row;
 
-            row = document.getElementById("row-"+1);
+            rows = document.getElementsByClassName("BeachRow");
 
-            row.addEventListener("click", () => {
-                window.location.href = "<%=request.getContextPath()%>/#";
-            });
+            for(let i = 0; i < rows.length; i++)
+            {
+                row = rows[i];
+                row.addEventListener("click", () => {
+                    window.location.href = "<%=request.getContextPath()%>/#";
+                });
+            }
         }
     </script>
 
@@ -35,49 +39,35 @@
 </div>
 
 <ul class="topnav">
-    <li><a class="active" href="<%= request.getContextPath() %>/HomepageServlet">Home</a></li>
-    <li><a href="<%= request.getContextPath() %>/AuctionsServlet">Beaches</a></li>
+    <li><a class="active" href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
     <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
+    <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
     <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
         <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
     </a></li>
 </ul>
 
-<div class="auction_content">
+<div class="booking_content">
 
-    <h3>List of available auctions</h3>
-
-    <label for="myInputAuct"></label><input style= "background-image: url('<%= request.getContextPath() %>/images/searchicon.png');" type="text" id="myInputAuct" onkeyup="myFunction()" placeholder="Search for names..">
-
-    <table id="myTable">
-        <thead>
-        <tr>
-            <th scope="col">Good</th>
-            <th scope="col">Seller</th>
-            <th scope="col">CurrentPrice</th>
-            <th scope="col">Countdown</th>
-        </tr>
-        </thead>
+    <table class = "BeachTable" id="myTable">
         <tbody>
 
-        <tr id = "row-1">
-            <td>prova</td>
-            <td>prova</td>
-            <td>prova</td>
-            <td>prova</td>
+        <tr class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
+            <td>Spiaggia1</td>
+            <td>Descrizione</td>
+            <td>PostiDisponibili</td>
         </tr>
-        <tr id = "row-2">
-            <td>prova</td>
-            <td>prova</td>
-            <td>prova</td>
-            <td>prova</td>
+        <tr class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
+            <td>Spiaggia1</td>
+            <td>Descrizione</td>
+            <td>PostiDisponibili</td>
         </tr>
-        <tr id = "row-3">
-            <td>prova</td>
-            <td>prova</td>
-            <td>prova</td>
-            <td>prova</td>
+        <tr class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
+            <td>Spiaggia1</td>
+            <td>Descrizione</td>
+            <td>PostiDisponibili</td>
         </tr>
+
         </tbody>
     </table>
 </div>
