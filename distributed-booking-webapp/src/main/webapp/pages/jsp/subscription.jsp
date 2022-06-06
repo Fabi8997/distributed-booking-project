@@ -52,7 +52,7 @@
           if(!subPresent){
       %>
       <option value=<%= beaches.get(i).getBeachId() %>>
-        <%= beaches.get(i).getName() %>
+        <%= beaches.get(i).getName().replace("\"", "") %>
         <!--label>
           <textarea readonly rows="2"><!%=/*beaches.get(i).getDescription().replace("\"", "")*/%></textarea>
         </label-->
