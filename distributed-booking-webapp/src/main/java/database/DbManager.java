@@ -68,10 +68,10 @@ public class DbManager {
         return false;
     }
 
-    public static boolean deleteUser(String user){
+    public static boolean deleteUser(String admin, String user){
         OtpConnection conn = null;
         try {
-            conn = getConnectionDB(user);
+            conn = getConnectionDB(admin);
             if(conn != null) {
 
                 conn.sendRPC(registeredServer, "delete_user", new OtpErlangObject[]{new OtpErlangString(user)});
@@ -281,7 +281,7 @@ public class DbManager {
         return bookings;
     }
 
-    public static boolean deleteBoooking(String user, int BookingId){
+    public static boolean deleteBooking(String user, int BookingId){
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
