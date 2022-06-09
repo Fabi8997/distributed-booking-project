@@ -68,6 +68,29 @@ public class DbManager {
         return false;
     }
 
+    public static boolean deleteUser(String user){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+
+                conn.sendRPC(registeredServer, "delete_user", new OtpErlangObject[]{new OtpErlangString(user)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+
+                return Boolean.parseBoolean(reply.toString());
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
     //BEACHES
 
     public static boolean addBeach(String user, String name, String description, int slots){
@@ -147,6 +170,31 @@ public class DbManager {
             beaches.add(new BeachDTO((OtpErlangTuple) list.elementAt(i)));
         }
         return beaches;
+    }
+
+    public static boolean updateBeach(String user, int beachId, String desc, int slots){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+
+                conn.sendRPC(registeredServer, "update_beach", new OtpErlangObject[]{
+                        new OtpErlangInt(beachId), new OtpErlangString(desc),
+                        new OtpErlangInt(slots)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+
+                return reply.toString().equals("ok");
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 
 
@@ -231,6 +279,29 @@ public class DbManager {
             bookings.add(getBooking(idBooking,user));
         }
         return bookings;
+    }
+
+    public static boolean deleteBoooking(String user, int BookingId){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+
+                conn.sendRPC(registeredServer, "delete_booking", new OtpErlangObject[]{new OtpErlangInt(BookingId)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+
+                return Boolean.parseBoolean(reply.toString());
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 
     //SUBSCRIPTION
@@ -375,6 +446,29 @@ public class DbManager {
             //subscriptions.add(OtpErlangCommunication.get_info(idSub,user));
         }
         return subscriptions;
+    }
+
+    public static boolean deleteSubscription(String user, int SubscriptionId){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+
+                conn.sendRPC(registeredServer, "delete_booking", new OtpErlangObject[]{new OtpErlangInt(SubscriptionId)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+
+                return Boolean.parseBoolean(reply.toString());
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 
     public static OtpConnection getConnectionDB(String username) throws IOException {
