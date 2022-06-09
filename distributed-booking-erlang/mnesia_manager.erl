@@ -1,7 +1,8 @@
 -module(mnesia_manager).
 -export([init/1, handle_call/3, handle_cast/2]).
--export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1,
-	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1, all_bookings/1, all_subscriptions/1]).
+-export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1, 
+	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1,
+	all_bookings/1, all_subscriptions/1, delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3]).
 -behavior(gen_server).
 
 %%%===================================================================
@@ -28,6 +29,9 @@ register(Username, Password) ->
 
 get_user(Username) ->
 	gen_server:call(mnesia_manager, {get_user, Username}).
+	
+delete_user(Username) ->
+	gen_server:call(mnesia_manager, {delete_user, Username}).
 
 %%%===================================================================
 %%% BEACH OPERATIONS
@@ -38,6 +42,9 @@ add_beach(Name, Description, Slots) ->
 
 get_beach(BeachId) ->
 	gen_server:call(mnesia_manager, {get_beach, BeachId}).
+	
+update_beach(BeachId, Description, Slots) ->
+	gen_server:call(mnesia_manager, {update_beach, {BeachId, Description, Slots}}).
 
 %%%===================================================================
 %%% SUBSCRIPTION OPERATIONS
@@ -55,6 +62,9 @@ get_subscription(SubId) ->
 get_user_subscription(User) -> 
 	gen_server:call(mnesia_manager, {get_user_subscription, User}).
 	
+delete_subscription(SubId) ->
+	gen_server:call(mnesia_manager, {delete_subscription, SubId}).
+	
 all_subscriptions(User) -> 
 	gen_server:call(mnesia_manager, {all_subscriptions, User}).
 
@@ -68,6 +78,9 @@ insert_booking(Username, BeachId, Type, Timestamp) ->
 
 get_booking(BookingId) ->
 	gen_server:call(mnesia_manager, {get_booking, BookingId}).
+	
+delete_booking(BookingId) ->
+	gen_server:call(mnesia_manager, {delete_booking, BookingId}).
 	
 all_bookings(User) ->
 	gen_server:call(mnesia_manager, {all_bookings, {User}}).
@@ -94,6 +107,10 @@ handle_call({register, {Username, Password}}, _From, _Status) ->
 handle_call({get_user, Username}, _From, _Status) ->
 	Result = mnesia_server:get_user(Username),
 	{reply, Result, _Status };
+	
+handle_call({delete_user, Username}, _From, _Status) ->
+	Result = mnesia_server:delete_user(Username),
+	{reply, Result, _Status };
 
 handle_call({add_beach, {Name, Description, Slots}}, _From, _Status) ->
 	Result = mnesia_server:add_beach(Name, Description, Slots),
@@ -102,9 +119,13 @@ handle_call({add_beach, {Name, Description, Slots}}, _From, _Status) ->
 handle_call({get_beach, BeachId}, _From, _Status) ->
 	Result = mnesia_server:get_beach(BeachId),
 	{reply, Result, _Status };
+	
+handle_call({update_beach, {BeachId, Description, Slots}}, _From, _Status) ->
+	Result = mnesia_server:update_beach(BeachId, Description, Slots),
+	{reply, Result, _Status };
 
 handle_call({add_subscription, {Name, Description, User}}, _From, _Status) ->
-	Result = mnesia_server:add_good(Name, Description, User),
+	Result = mnesia_server:add_subscription(Name, Description, User),
 	{reply, Result, _Status };
 
 handle_call({update_subscription, {SubId, Type, Status, EndDate}}, _From, _Status) ->
@@ -119,6 +140,10 @@ handle_call({get_subscription, SubId}, _From, _Status) ->
 	Result = mnesia_server:get_subscription(SubId),
 	{reply, Result, _Status };
 	
+handle_call({delete_subscription, SubId}, _From, _Status) ->
+	Result = mnesia_server:delete_subscription(SubId),
+	{reply, Result, _Status };
+
 handle_call({all_subscriptions, User}, _From, _Status) ->
 	Result = mnesia_server:all_subscriptions(User),
 	{reply, Result, _Status };
@@ -129,6 +154,10 @@ handle_call({insert_booking, {Username, BeachId, Type, Timestamp}}, _From, _Stat
 
 handle_call({get_booking, BookingId}, _From, _Status) ->
 	Result = mnesia_server:get_booking(BookingId),
+	{reply, Result, _Status };
+	
+handle_call({delete_booking, BookingId}, _From, _Status) ->
+	Result = mnesia_server:delete_booking(BookingId),
 	{reply, Result, _Status };
 	
 handle_call({all_bookings, User}, _From, _Status) ->

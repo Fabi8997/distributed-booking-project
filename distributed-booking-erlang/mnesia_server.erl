@@ -13,7 +13,8 @@
   add_user/3, add_subscription/4, add_beach/3, is_subscription_present/1, is_beach_present/1,
   is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
-  update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1]).
+  update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
+  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3]).
   %%all_beaches/1,
 
 -include_lib("stdlib/include/qlc.hrl").
@@ -173,6 +174,18 @@ get_user(Username) ->
   {atomic, Res} = mnesia:transaction(F),
   Res.
   
+delete_user(Username) ->
+  F = fun() ->
+	case is_user_present(Username) of
+		true ->
+			mnesia:delete({user, Username});
+		false ->
+			false
+	end
+  end,
+  mnesia:activity(transaction, F).
+
+  
 %%%===================================================================
 %%% BEACH OPERATIONS
 %%%===================================================================
@@ -227,6 +240,14 @@ all_beaches() ->
       end,
   {atomic, Res} = mnesia:transaction(F),
  Res.
+ 
+update_beach(BeachId, Desc, Slots) ->
+  F = fun() ->
+    [Beach] = mnesia:read(beach, BeachId),
+    mnesia:write(Beach#beach{description = Desc, slots = Slots})
+      end,
+  mnesia:activity(transaction, F).
+ 
   
 %%%===================================================================
 %%% SUBSCRIPTION OPERATIONS
@@ -302,6 +323,17 @@ all_subscriptions(User) ->
       end,
   {atomic, Res} = mnesia:transaction(F),
   Res.
+  
+delete_subscription(SubId) ->
+  F = fun() ->
+	case is_subscription_present(SubId) of
+		true ->
+			mnesia:delete({subscription, SubId});
+		false ->
+			false
+	end
+  end,
+  mnesia:activity(transaction, F).
 
 %%%===================================================================
 %%% BOOKING OPERATIONS
@@ -348,3 +380,14 @@ all_bookings(User) ->
       end,
   {atomic, Res} = mnesia:transaction(F),
   Res.
+  
+delete_booking(BookingId) ->
+  F = fun() ->
+	case is_booking_present(BookingId) of
+		true ->
+			mnesia:delete({booking, BookingId});
+		false ->
+			false
+	end
+  end,
+  mnesia:activity(transaction, F).
