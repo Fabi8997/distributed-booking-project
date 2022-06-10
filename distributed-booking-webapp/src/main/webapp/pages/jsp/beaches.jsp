@@ -1,7 +1,3 @@
-<%@ page import="dto.BeachDTO" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="database.DbManager" %>
-<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,17 +21,44 @@
             {
                 row = rows[i];
                 row.addEventListener("click", () => {
-                    window.location.href = "<%=request.getContextPath()%>/#";
+                    openPopupWindow(500,570,i);
                 });
             }
+        }
+
+        //Open the popup window with width = w , height = h, newGood is a boolean to decide which page we need
+        //the last attribute is useful only if newGood is equal to false
+        function openPopupWindow(w, h,idBeach) {
+            const y = window.top.outerHeight / 2 + window.top.screenY - ( h / 2);
+            const x = window.top.outerWidth / 2 + window.top.screenX - ( w / 2);
+
+            popupWindow = window.open('<%=request.getContextPath()%>/NewBookingServlet?idBeach=' + idBeach.toString(), 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=no,width='+w+',height='+h+' top='+y+', left='+x);
+
+            document.getElementById("overlay").style.display = "block";
+            document.body.style.filter = "blur(1px)";
+        }
+
+        //focus on the popup window if exists, otherwise remove the overlay from the parent page
+        function parent_disable() {
+            if(popupWindow && !popupWindow.closed)
+                popupWindow.focus();
+            else {
+                document.getElementById("overlay").style.display = "none";
+                document.body.style.filter = "none";
+            }
+
         }
     </script>
 
 </head>
-<body onload="addClickEvent()">
+<body onload="addClickEvent();" onfocus="parent_disable();" onclick="parent_disable();">
+
+<div id="overlay">
+
+</div>
 
 <div class="header">
-    <h2>Distributed Auction</h2>
+    <h2>Beach Booking</h2>
 </div>
 
 <ul class="topnav">
@@ -52,20 +75,20 @@
     <table class = "BeachTable" id="myTable">
         <tbody>
 
-        <tr class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
-            <td>Spiaggia1</td>
+        <tr id="beach1" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
+            <td>Plagemesu</td>
             <td>Descrizione</td>
-            <td>PostiDisponibili</td>
+            <td>600 slots</td>
         </tr>
-        <tr class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
-            <td>Spiaggia1</td>
+        <tr id="beach2" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/masua.jpg')">
+            <td>Masua</td>
             <td>Descrizione</td>
-            <td>PostiDisponibili</td>
+            <td>100 slots</td>
         </tr>
-        <tr class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
-            <td>Spiaggia1</td>
+        <tr id="beach3" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/portopino.jpg')">
+            <td>Porto Pino</td>
             <td>Descrizione</td>
-            <td>PostiDisponibili</td>
+            <td>1500 slots</td>
         </tr>
 
         </tbody>

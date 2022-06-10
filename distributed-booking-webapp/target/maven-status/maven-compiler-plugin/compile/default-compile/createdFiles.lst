@@ -1,3 +1,10 @@
 servlet\LogoutServlet.class
 utility\Utils.class
+servlet\NewBookingServlet.class
+servlet\DeleteUserServlet.class
+servlet\DeleteSubscriptionServlet.class
+servlet\DeleteBookingServlet.class
 servlet\BeachesServlet.class
+servlet\UpdateBeachServlet.class
+servlet\AddBookingServlet.class
+servlet\AdminServlet.class
