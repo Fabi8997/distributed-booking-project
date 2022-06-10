@@ -4,14 +4,14 @@ import com.ericsson.otp.erlang.OtpErlangTuple;
 
 public class BookingDTO {
 
-    String idBooking;
+    int idBooking;
     String username;
     int idBeach;
     String type;
     String status;
     String date;
 
-    public BookingDTO( String idBooking, String username, int idBeach, String type, String date){
+    public BookingDTO( int idBooking, String username, int idBeach, String type, String date){
         this.idBooking = idBooking;
         this.username = username;
         this.idBeach = idBeach;
@@ -20,7 +20,7 @@ public class BookingDTO {
     }
 
     public BookingDTO(OtpErlangTuple bookingInfo) {
-        idBooking = bookingInfo.elementAt(0).toString();
+        idBooking = Integer.parseInt(bookingInfo.elementAt(0).toString());
         username = bookingInfo.elementAt(1).toString();
         idBeach = Integer.parseInt(bookingInfo.elementAt(2).toString());
         type = bookingInfo.elementAt(3).toString();
@@ -28,7 +28,7 @@ public class BookingDTO {
         date = bookingInfo.elementAt(5).toString();
     }
 
-    public String getIdBooking() {
+    public int getIdBooking() {
         return idBooking;
     }
 

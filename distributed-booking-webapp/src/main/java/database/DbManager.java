@@ -7,6 +7,7 @@ import dto.SubscriptionDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DbManager {
 
@@ -69,11 +70,18 @@ public class DbManager {
     }
 
     public static boolean deleteUser(String admin, String user){
+        List<SubscriptionDTO> userSubscriptions = getAllSubscriptions(user);
+        List<BookingDTO> userBookings = getAllBookings(user);
+        for(SubscriptionDTO s: userSubscriptions){
+            deleteSubscription(user, s.getIdSubscription());
+        }
+        for(BookingDTO b: userBookings){
+            deleteBooking(user, b.getIdBooking());
+        }
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(admin);
             if(conn != null) {
-
                 conn.sendRPC(registeredServer, "delete_user", new OtpErlangObject[]{new OtpErlangString(user)});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);

@@ -3,6 +3,7 @@
 <%@ page import="dto.BeachDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="utility.Utils" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,13 @@
   <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
   <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
   <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
+  <% if(Utils.isAdmin(user))
+  {
+  %>
+  <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
+  <%
+    }
+  %>
   <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
     <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
   </a></li>

@@ -22,6 +22,15 @@ public class Utils {
         return localDateTime.toString();
     }
 
+    public static boolean isAdmin(String user){
+        if(user.equals("admin")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public static void main(String args[]){
         System.out.println(getEndDate("weekly"));
     }
