@@ -4,6 +4,7 @@ import com.ericsson.otp.erlang.*;
 import dto.BeachDTO;
 import dto.BookingDTO;
 import dto.SubscriptionDTO;
+import dto.UserDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,6 +98,37 @@ public class DbManager {
             return false;
         }
         return false;
+    }
+
+    public static ArrayList<UserDTO> getUsers(String user){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+                conn.sendRPC(registeredServer, "all_user", new OtpErlangObject[]{});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+                if (reply instanceof OtpErlangList) {
+                    return toUsersArray((OtpErlangList) reply);
+                }
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    private static ArrayList<UserDTO> toUsersArray(OtpErlangList list){
+        ArrayList<UserDTO> users = new ArrayList<>();
+
+        for(int i = 0; i < list.arity(); i++){
+            users.add(new UserDTO((OtpErlangTuple) list.elementAt(i)));
+        }
+        return users;
     }
 
     //BEACHES
@@ -480,7 +512,6 @@ public class DbManager {
     }
 
     public static OtpConnection getConnectionDB(String username) throws IOException {
-
         String nodeId = username + "_client@localhost";
         OtpSelf self = new OtpSelf(nodeId,cookie);
         OtpPeer auctionServerNode = new OtpPeer(remoteNodeId);
@@ -492,5 +523,4 @@ public class DbManager {
         }
         return null;
     }
-
 }

@@ -1,5 +1,7 @@
 package dto;
 
+import com.ericsson.otp.erlang.OtpErlangTuple;
+
 public class UserDTO {
     Integer userId;
     String username;
@@ -16,6 +18,13 @@ public class UserDTO {
     public UserDTO(Integer userId, String username) {
         this.userId = userId;
         this.username = username;
+    }
+
+    public UserDTO(OtpErlangTuple userInfo) {
+        userId = Integer.parseInt(userInfo.elementAt(0).toString());
+        username = userInfo.elementAt(1).toString();
+        password = userInfo.elementAt(2).toString();
+        subscribed = Boolean.parseBoolean(userInfo.elementAt(3).toString());
     }
 
     public Integer getUserId() {

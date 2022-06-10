@@ -4,6 +4,7 @@
 <%@ page import="dto.BeachDTO" %>
 <%@ page import="utility.Utils" %>
 <%@ page import="dto.BookingDTO" %>
+<%@ page import="dto.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,7 @@
         String user = (String) session.getAttribute("user");
         System.out.println("Retrieving the information for "+user+"...");
         List<BeachDTO> beaches = DbManager.getBeaches(user);
+        List<UserDTO> users = DbManager.getUsers(user);
     %>
 
     %>
@@ -58,16 +60,14 @@
                         }
                     %>
                 </select>
-                <label for="subInput">Select the subscription type:</label>
-                <select name="subTypes" id="subInput">
-                    <option value="none" selected="selected" disabled>--</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                </select>
-                <button type="submit">ADD</button>
+                <label>Insert new description</label>
+                <input type="text" id="description">
+                <label>Insert new number of slots</label>
+                <input type="number" id="slots">
+                <button type="submit">UPDATE</button>
             </form>
             <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteUserServlet">
-                <label for="beachInput">Select the user:</label>
+                <label for="userToDelete">Select the user:</label>
                 <select name="userId" id="userToDelete">
                     <option value="0" selected="selected" disabled>--</option>
                     <%
@@ -81,7 +81,7 @@
                         }
                     %>
                 </select>
-                <button type="submit">ADD</button>
+                <button type="submit">DELETE</button>
             </form>
             <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
                 <label for="beachInput">Select the user:</label>
@@ -90,35 +90,40 @@
                     <%
 
                         List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
-                        for(int i = 0; i < beaches.size(); i++)
+                        for(int i = 0; i < subscriptions.size(); i++)
                         {
                     %>
-                    <option value=<%= beaches.get(i).getBeachId() %>>
-                        <%= beaches.get(i).getName().replace("\"", "") %>
+                    <option value=<%= subscriptions.get(i).getIdSubscription() %>>
+                        <%= subscriptions.get(i).getUsername().replace("\"", "") %>,
+                        <%= subscriptions.get(i).getIdBeach() %>,
+                        <%= subscriptions.get(i).getType().replace("\"", "") %>,
+                        <%= subscriptions.get(i).getEndDate().replace("\"", "") %>
                     </option>
                     <%
                         }
                     %>
                 </select>
-                <button type="submit">ADD</button>
+                <button type="submit">DELETE</button>
             </form>
             <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
-                <label for="beachInput">Select the user:</label>
-                <select name="userId" id="bookingToDelete">
+                <label for="bookingToDelete">Select the booking:</label>
+                <select name="bookingId" id="bookingToDelete">
                     <option value="0" selected="selected" disabled>--</option>
                     <%
                         List<BookingDTO> bookings = DbManager.getAllBookings(user);
-                        for(int i = 0; i < beaches.size(); i++)
+                        for(int i = 0; i < bookings.size(); i++)
                         {
                     %>
-                    <option value=<%= beaches.get(i).getBeachId() %>>
-                        <%= beaches.get(i).getName().replace("\"", "") %>
+                    <option value=<%= bookings.get(i).getIdBooking() %>>
+                        <%= bookings.get(i).getUsername().replace("\"", "") %>,
+                        <%= bookings.get(i).getIdBeach() %>,
+                        <%= bookings.get(i).getDate().replace("\"", "") %>
                     </option>
                     <%
                         }
                     %>
                 </select>
-                <button type="submit">ADD</button>
+                <button type="submit">DELETE</button>
             </form>
         </div>
     </div>

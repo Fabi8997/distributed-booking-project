@@ -45,7 +45,7 @@ public class UpdateBeachServlet extends HttpServlet {
                 System.out.println("Receiving the updated beach nfo...");
 
                 int beachId = Integer.parseInt(request.getParameter("beachId"));
-                String desc = request.getParameter("desc");
+                String desc = request.getParameter("description");
                 String user = session.getAttribute("user").toString();
                 int slots = Integer.parseInt(request.getParameter("slots"));
                 String targetJSP;
