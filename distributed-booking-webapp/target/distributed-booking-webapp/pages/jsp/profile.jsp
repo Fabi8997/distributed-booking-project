@@ -1,6 +1,7 @@
 <%@ page import="database.DbManager" %>
 <%@ page import="dto.SubscriptionDTO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="utility.Utils" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
     <%
         String user = (String) session.getAttribute("user");
         System.out.println("Retrieving the information for "+user+"...");
-        List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
+        List<SubscriptionDTO> subscriptions = DbManager.getSubscriptionFromUser(user);
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>
@@ -21,6 +22,13 @@
     <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
     <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
     <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
+    <% if(Utils.isAdmin(user))
+    {
+    %>
+    <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
+    <%
+    }
+    %>
     <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
         <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
     </a></li>

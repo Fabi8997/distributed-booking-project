@@ -22,17 +22,26 @@ public class Utils {
         return localDateTime.toString();
     }
 
-    public static boolean isAdmin(String user){
-        if(user.equals("admin")){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public static String getDateNow(){
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")).truncatedTo(ChronoUnit.DAYS);
+        return  localDateTime.toLocalDate().toString();
     }
 
-    public static void main(String args[]){
-        System.out.println(getEndDate("weekly"));
+    public static String getDateNext(int days){
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
+        ).plus(days, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS);
+        return  localDateTime.toLocalDate().toString();
+    }
+
+    public static boolean isAdmin(String user){
+        return user.equals("admin");
+    }
+
+    public static void main(String[] args){
+        System.out.println(getDateNow());
+        System.out.println(getDateNext(2));
     }
 
 }
