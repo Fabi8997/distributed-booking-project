@@ -66,16 +66,17 @@
                 <input type="number" id="slots">
                 <button type="submit">UPDATE</button>
             </form>
+            <% //TODO: show bookings and subscriptions only for the selected user? %>
             <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteUserServlet">
                 <label for="userToDelete">Select the user:</label>
                 <select name="userId" id="userToDelete">
                     <option value="0" selected="selected" disabled>--</option>
                     <%
-                        for(int i = 0; i < beaches.size(); i++)
+                        for(int i = 0; i < users.size(); i++)
                         {
                     %>
-                    <option value=<%= beaches.get(i).getBeachId() %>>
-                        <%= beaches.get(i).getName().replace("\"", "") %>
+                    <option value=<%= users.get(i).getUserId() %>>
+                        <%= users.get(i).getUsername().replace("\"", "") %>
                     </option>
                     <%
                         }
