@@ -2,7 +2,8 @@
 -export([init/1, handle_call/3, handle_cast/2]).
 -export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1, 
 	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1,
-	all_bookings/1, all_subscriptions/1, delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3]).
+	all_bookings/1, all_subscriptions/1, delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3,
+	decrease_slots/3, increase_slots/3, is_user_booking_present/4]).
 -behavior(gen_server).
 
 %%%===================================================================
@@ -85,6 +86,22 @@ delete_booking(BookingId) ->
 all_bookings(User) ->
 	gen_server:call(mnesia_manager, {all_bookings, {User}}).
 
+is_user_booking_present(Username, BeachId, Type, Date) ->
+	gen_server:call(mnesia_manager, {is_user_booking_present, {Username, BeachId, Type, Date}}).
+
+%%%===================================================================
+%%% SLOT OPERATIONS
+%%%===================================================================
+
+insert_slots(BeachId, Date, SlotsNumber) ->
+	gen_server:call(mnesia_manager, {insert_slots, {BeachId, Date, SlotsNumber}}).
+
+decrease_slots(BeachId, Date, Type) ->
+	gen_server:call(mnesia_manager, {decrease_slots, {BeachId, Date, Type}}).
+
+increase_slots(BeachId, Date, Type) ->
+	gen_server:call(mnesia_manager, {increase_slots, {BeachId, Date, Type}}).
+
 %%%===================================================================
 %%% CALLBACK FUNCTIONS
 %%%===================================================================
@@ -162,6 +179,22 @@ handle_call({delete_booking, BookingId}, _From, _Status) ->
 	
 handle_call({all_bookings, User}, _From, _Status) ->
 	Result = mnesia_server:all_bookings(User),
+	{reply, Result, _Status };
+
+handle_call({is_user_booking_present, {Username, BeachId, Type, Date}}, _From, _Status) ->
+	Result = mnesia_server:is_user_booking_present(Username, BeachId, Type, Date),
+	{reply, Result, _Status };
+
+handle_call({insert_slots, {BeachId, Date, SlotsNumber}}, _From, _Status) ->
+	Result = mnesia_server:insert_slots(BeachId, Date, SlotsNumber),
+	{reply, Result, _Status };
+
+handle_call({decrease_slots, {BeachId, Date, Type}}, _From, _Status) ->
+	Result = mnesia_server:decrease_slots(BeachId, Date, Type),
+	{reply, Result, _Status };
+
+handle_call({increase_slots, {BeachId, Date, Type}}, _From, _Status) ->
+	Result = mnesia_server:increase_slots(BeachId, Date, Type),
 	{reply, Result, _Status }.
 
 handle_cast(reset, _Status) ->
