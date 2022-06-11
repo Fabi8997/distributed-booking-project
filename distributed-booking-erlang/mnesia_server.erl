@@ -14,7 +14,15 @@
   is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
-  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3]).
+  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3, is_user_booking_present/4]).
+
+-export([]).
+
+-export([]).
+
+%% Slots functions
+-export([insert_slots/3, all_beach_slot/1, all_beach_date_slot/2, get_available_slots/2, decrease_slots/3,
+         increase_slots/3, update_slots/3]).
   %%all_beaches/1,
 
 -include_lib("stdlib/include/qlc.hrl").
@@ -26,7 +34,7 @@
 init() ->
   mnesia:create_schema([node()]),
   mnesia:start(),
-  case mnesia:wait_for_tables([user, auction, good, offer, table_id], 5000) == ok of
+  case mnesia:wait_for_tables([user, auction, good, offer, slot, table_id], 5000) == ok of
     true ->
       ok;
     false ->
@@ -43,10 +51,14 @@ init() ->
           {type, bag},
           {disc_copies, [node()]}
         ]),
-	  mnesia:create_table(subscription,
+	    mnesia:create_table(subscription,
         [{attributes, record_info(fields, subscription)},
           {disc_copies, [node()]}
         ]),	
+      mnesia:create_table(slot,
+        [{attributes, record_info(fields, slot)},
+          {disc_copies, [node()]}
+        ]), 
       mnesia:create_table(table_id,
         [{attributes, record_info(fields, table_id)},
           {disc_copies, [node()]}
@@ -73,7 +85,10 @@ start_all_counters() ->
       mnesia:write(#table_id{table_name=booking, 
         last_id=0
       }),
-	  mnesia:write(#table_id{table_name=subscription, 
+      mnesia:write(#table_id{table_name=slot, 
+        last_id=0
+      }),
+	    mnesia:write(#table_id{table_name=subscription, 
         last_id=0
       })
           end,
@@ -84,7 +99,8 @@ empty_all_tables() ->
       mnesia:clear_table(user),
       mnesia:clear_table(beach),
       mnesia:clear_table(booking),
-	  mnesia:clear_table(subscription),
+	    mnesia:clear_table(subscription),
+      mnesia:clear_table(slot),
       mnesia:clear_table(table_id).
 
 get_all_counters() ->
@@ -339,7 +355,7 @@ delete_subscription(SubId) ->
 %%% BOOKING OPERATIONS
 %%%===================================================================
 insert_booking(Username, BeachId, Type, Timestamp) ->
-  Index = mnesia:dirty_update_counter(table_id, subscription, 1),
+  Index = mnesia:dirty_update_counter(table_id, booking, 1),
   Fun = fun() ->
     mnesia:write(#booking{booking_id = Index,
 	  username = Username,
@@ -358,7 +374,30 @@ is_booking_present(BookingId) ->
       false ->
         true
     end
-      end,
+  end,
+  mnesia:activity(transaction, F).
+
+is_user_booking_present(Username, BeachId, Type, Date) ->
+  F = fun() ->
+    case Type of 
+      TypeValue when TypeValue =:= morning; TypeValue =:= afternoon ->
+        Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.beach_id == BeachId, E#booking.type == Type, E#booking.timestamp == Date]),
+        case qlc:e(Q) =:= [] of
+          true ->
+            false;
+          false ->
+            true
+        end;
+      all_day ->
+        Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.beach_id == BeachId, E#booking.timestamp == Date]),
+        case qlc:e(Q) =:= [] of
+          true ->
+            false;
+          false ->
+            true
+        end
+    end
+  end,
   mnesia:activity(transaction, F).
 
 get_booking(BookingId) ->
@@ -391,3 +430,131 @@ delete_booking(BookingId) ->
 	end
   end,
   mnesia:activity(transaction, F).
+
+
+%%%===================================================================
+%%% SLOTS OPERATIONS
+%%%===================================================================
+
+%%To be executed only one time at the creation of the database FARLO SU SERVER SPIAGGIA
+insert_slots(BeachId, Date, SlotsNumber) ->
+  Index = mnesia:dirty_update_counter(table_id, slot, 1),
+  Fun = fun() ->
+    mnesia:write(#slot{ slot_id = Index,
+    beach_id = BeachId,
+    date = Date,
+    morning_free_slots = SlotsNumber,
+    afternoon_free_slots = SlotsNumber
+    })
+  end,
+  mnesia:activity(transaction, Fun).
+
+all_beach_slot(BeachId) ->
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(slot),E#slot.beach_id == BeachId]),
+    qlc:e(Q)
+      end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+%%Useless?
+all_beach_date_slot(BeachId, Date) ->
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(slot),E#slot.beach_id == BeachId, E#slot.date == Date]),
+    qlc:e(Q)
+      end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+get_available_slots(BeachId, Date) ->
+  F = fun() ->
+    Q = qlc:q([{E#slot.slot_id,E#slot.morning_free_slots,E#slot.afternoon_free_slots} || E <- mnesia:table(slot),E#slot.beach_id == BeachId, E#slot.date == Date]),
+    qlc:e(Q)
+      end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+update_slots(SlotId, Type, NewSlots) ->
+  F = fun() ->
+    [Slots] = mnesia:read(slot, SlotId),
+    case Type of
+      morning -> 
+        mnesia:write(Slots#slot{morning_free_slots = NewSlots});
+      afternoon ->
+        mnesia:write(Slots#slot{afternoon_free_slots = NewSlots})
+    end
+  end,
+  mnesia:activity(transaction, F).
+
+
+decrease_slots(BeachId, Date, Type) ->
+  F = fun() ->
+    [Slots] = get_available_slots(BeachId, Date),
+    MorningSlots = element(2,Slots),
+    AfternoonSlots = element(3,Slots),
+    case Type of
+      morning ->
+        case MorningSlots > 0 of
+          true ->
+            update_slots(element(1,Slots), morning, MorningSlots - 1),
+            true;
+          false ->
+            false
+        end;
+      afternoon ->
+        case AfternoonSlots > 0 of
+          true ->
+            update_slots(element(1,Slots), afternoon, AfternoonSlots - 1),
+            true;
+          false ->
+            false
+        end;
+      all_day ->
+          case (MorningSlots > 0) and (AfternoonSlots > 0) of
+          true ->
+            update_slots(element(1,Slots), morning, MorningSlots - 1),
+            update_slots(element(1,Slots), afternoon, AfternoonSlots - 1),
+            true;
+          false ->
+            false
+      end
+    end
+  end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+increase_slots(BeachId, Date, Type) ->
+  F = fun() ->
+    [Slots] = get_available_slots(BeachId, Date),
+    MorningSlots = element(2,Slots),
+    AfternoonSlots = element(3,Slots),
+    case Type of
+      morning ->
+        case MorningSlots > 0 of
+          true ->
+            update_slots(element(1,Slots), morning, MorningSlots + 1),
+            true;
+          false ->
+            false
+        end;
+      afternoon ->
+        case AfternoonSlots > 0 of
+          true ->
+            update_slots(element(1,Slots), afternoon, AfternoonSlots + 1),
+            true;
+          false ->
+            false
+        end;
+      all_day ->
+          case (MorningSlots > 0) and (AfternoonSlots > 0) of
+          true ->
+            update_slots(element(1,Slots), morning, MorningSlots + 1),
+            update_slots(element(1,Slots), afternoon, AfternoonSlots + 1),
+            true;
+          false ->
+            false
+      end
+    end
+  end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.

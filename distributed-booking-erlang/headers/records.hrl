@@ -25,6 +25,14 @@
 				  slots
                 }).
 
+-record(slot, {slot_id,
+				beach_id,
+				date,
+				morning_free_slots,
+				afternoon_free_slots
+				}).
+
+
 -record(table_id, {table_name,
 					last_id
 				  }).
