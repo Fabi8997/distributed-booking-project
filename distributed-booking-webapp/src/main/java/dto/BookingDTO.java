@@ -8,7 +8,6 @@ public class BookingDTO {
     String username;
     int idBeach;
     String type;
-    String status;
     String date;
 
     public BookingDTO( int idBooking, String username, int idBeach, String type, String date){
@@ -20,11 +19,10 @@ public class BookingDTO {
     }
 
     public BookingDTO(OtpErlangTuple bookingInfo) {
-        idBooking = Integer.parseInt(bookingInfo.elementAt(0).toString());
-        username = bookingInfo.elementAt(1).toString();
-        idBeach = Integer.parseInt(bookingInfo.elementAt(2).toString());
-        type = bookingInfo.elementAt(3).toString();
-        status = bookingInfo.elementAt(4).toString();
+        idBooking = Integer.parseInt(bookingInfo.elementAt(1).toString());
+        username = bookingInfo.elementAt(2).toString();
+        idBeach = Integer.parseInt(bookingInfo.elementAt(3).toString());
+        type = bookingInfo.elementAt(4).toString();
         date = bookingInfo.elementAt(5).toString();
     }
 
@@ -44,10 +42,6 @@ public class BookingDTO {
         return type;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
     public String getDate() {
         return date;
     }
@@ -55,11 +49,11 @@ public class BookingDTO {
     @Override
     public String toString() {
         return "BookingDTO{" +
-                "idBooking='" + idBooking + '\'' +
-                ", username='" + username + '\'' +
-                ", idBeach='" + idBeach + '\'' +
-                ", type='" + type + '\'' +
-                ", date='" + date + '\'' +
+                "idBooking=" + idBooking +
+                ", username=" + username +
+                ", idBeach=" + idBeach +
+                ", type=" + type +
+                ", date=" + date  +
                 '}';
     }
 }

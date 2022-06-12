@@ -17,12 +17,9 @@
         <label>
             <textarea placeholder="Insert a description of the good" rows="4" name="description" required></textarea>
         </label>
-        <label for="date"></label><input type="date" id="date" name="booking-date"
-                                         value=<%=Utils.getDateNow()%>
-                                         min=<%=Utils.getDateNow()%>
-                                         max=<%=Utils.getDateNext(2)%>>
+        <label for="date"></label><input required type="date" id="date" name="booking-date" value=<%=Utils.getDateNow()%> min=<%=Utils.getDateNow()%> max=<%=Utils.getDateNext(2)%>>
 
-        <input type="submit" class="login login-submit" value="Insert good" name="start_auction">
+        <input type="submit" class="login login-submit" value="Insert booking" name="add_booking">
     </form>
     <button id="back_btn" class="login login-submit" value="back" name="back" onclick="reloadAndClose()">Back</button>
     <%

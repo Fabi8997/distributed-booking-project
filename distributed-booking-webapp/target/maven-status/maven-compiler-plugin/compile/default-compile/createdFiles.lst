@@ -1,10 +1,12 @@
 servlet\LogoutServlet.class
+servlet\DeleteSubscriptionServlet.class
+servlet\BeachesServlet.class
+servlet\UpdateBeachServlet.class
+dto\SlotsDTO.class
+servlet\AdminServlet.class
 utility\Utils.class
 servlet\NewBookingServlet.class
 servlet\DeleteUserServlet.class
-servlet\DeleteSubscriptionServlet.class
+communication\BookingManager.class
 servlet\DeleteBookingServlet.class
-servlet\BeachesServlet.class
-servlet\UpdateBeachServlet.class
 servlet\AddBookingServlet.class
-servlet\AdminServlet.class

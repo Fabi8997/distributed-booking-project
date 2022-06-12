@@ -1,7 +1,5 @@
-<%@ page import="dto.BeachDTO" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="dto.SlotsDTO" %>
 <%@ page import="database.DbManager" %>
-<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,10 +9,16 @@
 
     <%
         String user = (String) session.getAttribute("user");
+        SlotsDTO slotsBeach0 = DbManager.getAvailableSlots(user, 0);
+        SlotsDTO slotsBeach1 = DbManager.getAvailableSlots(user, 1);
+        SlotsDTO slotsBeach2 = DbManager.getAvailableSlots(user, 2);
 
-    %>
+        assert slotsBeach0 != null;%>
 
     <script>
+
+        //variable to track the popupwindow
+        let popupWindow = null;
 
         function addClickEvent() {
             let row;
@@ -36,7 +40,7 @@
             const y = window.top.outerHeight / 2 + window.top.screenY - ( h / 2);
             const x = window.top.outerWidth / 2 + window.top.screenX - ( w / 2);
 
-            popupWindow = window.open('<%=request.getContextPath()%>/NewBookingServlet?idBeach=' + idBeach.toString(), 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=no,width='+w+',height='+h+' top='+y+', left='+x);
+            popupWindow = window.open('<%=request.getContextPath()%>/NewBookingServlet?idBeach=' + idBeach.toString(), 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=no,width=' + w + ',height=' + h + ' top=' + y + ', left=' + x);
 
             document.getElementById("overlay").style.display = "block";
             document.body.style.filter = "blur(1px)";
@@ -62,7 +66,7 @@
 </div>
 
 <div class="header">
-    <h2>Distributed Auction</h2>
+    <h2>Beach Booking</h2>
 </div>
 
 <ul class="topnav">
@@ -82,17 +86,52 @@
         <tr id="beach1" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
             <td>Plagemesu</td>
             <td>Descrizione</td>
-            <td>600 slots</td>
+            <td>
+                <% if(slotsBeach0.getMorningSlots() > 0){%>
+                <p>Morning: <em class="FreeSlots"><%=slotsBeach0.getMorningSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Morning: <em class="Full">Full</em></p>
+                <%}%>
+                <% if(slotsBeach0.getAfternoonSlots() > 0){%>
+                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach0.getAfternoonSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Afternoon: <em class="Full">Full</em></p>
+                <%}%>
+            </td>
         </tr>
         <tr id="beach2" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/masua.jpg')">
             <td>Masua</td>
             <td>Descrizione</td>
-            <td>100 slots</td>
+            <td>
+                <% assert slotsBeach1 != null;
+                if(slotsBeach1.getMorningSlots() > 0){%>
+                <p>Morning: <em class="FreeSlots"><%=slotsBeach1.getMorningSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Morning: <em class="Full">Full</em></p>
+                <%}%>
+                <% if(slotsBeach1.getAfternoonSlots() > 0){%>
+                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach1.getAfternoonSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Afternoon: <em class="Full">Full</em></p>
+                <%}%>
+            </td>
         </tr>
         <tr id="beach3" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/portopino.jpg')">
             <td>Porto Pino</td>
             <td>Descrizione</td>
-            <td>1500 slots</td>
+            <td>
+                <% assert slotsBeach2 != null;
+                if(slotsBeach2.getMorningSlots() > 0){%>
+                <p>Morning: <em class="FreeSlots"><%=slotsBeach2.getMorningSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Morning: <em class="Full">Full</em></p>
+                <%}%>
+                <% if(slotsBeach2.getAfternoonSlots() > 0){%>
+                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach2.getAfternoonSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Afternoon: <em class="Full">Full</em></p>
+                <%}%>
+            </td>
         </tr>
 
         </tbody>

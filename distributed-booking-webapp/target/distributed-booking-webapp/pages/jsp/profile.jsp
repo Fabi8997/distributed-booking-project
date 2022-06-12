@@ -20,7 +20,7 @@
 
 <ul class="topnav">
     <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
-    <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
+    <li><a class="active" href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
     <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
     <% if(Utils.isAdmin(user))
     {

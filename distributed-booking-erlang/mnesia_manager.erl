@@ -3,7 +3,7 @@
 -export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1, 
 	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1,
 	all_bookings/1, all_subscriptions/1, delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3,
-	decrease_slots/3, increase_slots/3, is_user_booking_present/4]).
+	decrease_slots/3, increase_slots/3, is_user_booking_present/4, insert_slots/3, get_available_slots/2]).
 -behavior(gen_server).
 
 %%%===================================================================
@@ -84,7 +84,7 @@ delete_booking(BookingId) ->
 	gen_server:call(mnesia_manager, {delete_booking, BookingId}).
 	
 all_bookings(User) ->
-	gen_server:call(mnesia_manager, {all_bookings, {User}}).
+	gen_server:call(mnesia_manager, {all_bookings, User}).
 
 is_user_booking_present(Username, BeachId, Type, Date) ->
 	gen_server:call(mnesia_manager, {is_user_booking_present, {Username, BeachId, Type, Date}}).
@@ -101,6 +101,9 @@ decrease_slots(BeachId, Date, Type) ->
 
 increase_slots(BeachId, Date, Type) ->
 	gen_server:call(mnesia_manager, {increase_slots, {BeachId, Date, Type}}).
+
+get_available_slots(BeachId, Date) -> 
+	gen_server:call(mnesia_manager, {get_available_slots, {BeachId, Date}}).
 
 %%%===================================================================
 %%% CALLBACK FUNCTIONS
@@ -195,6 +198,10 @@ handle_call({decrease_slots, {BeachId, Date, Type}}, _From, _Status) ->
 
 handle_call({increase_slots, {BeachId, Date, Type}}, _From, _Status) ->
 	Result = mnesia_server:increase_slots(BeachId, Date, Type),
+	{reply, Result, _Status };
+
+handle_call({get_available_slots, {BeachId, Date}}, _From, _Status) ->
+	Result = mnesia_server:get_available_slots(BeachId, Date),
 	{reply, Result, _Status }.
 
 handle_cast(reset, _Status) ->
