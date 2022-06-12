@@ -156,9 +156,18 @@ table th {
 }
 
 .BeachRow td:last-child{
-    color: #229905;
-    font-weight: bold;
+    font-size: 25px;
     background-color: #ffffffa6;
+}
+
+.FreeSlots{
+    font-weight: bold;
+    color: #229905;
+}
+
+.Full {
+    font-weight: bold;
+    color: #ab081c;
 }
 
 #beach1{

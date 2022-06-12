@@ -1,10 +1,8 @@
 package database;
 
 import com.ericsson.otp.erlang.*;
-import dto.BeachDTO;
-import dto.BookingDTO;
-import dto.SubscriptionDTO;
-import dto.UserDTO;
+import dto.*;
+import utility.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ public class DbManager {
 
     public static void main(String[] args) {
 
-        //System.out.println(DbManager.getAllAuctions("Provaj"));
+        System.out.println(DbManager.getAvailableSlots("Fabi",0));
     }
 
     //USERS
@@ -314,9 +312,7 @@ public class DbManager {
         ArrayList<BookingDTO> bookings = new ArrayList<>();
 
         for(int i = 0; i < list.arity(); i++){
-            int idBooking = Integer.parseInt(String.valueOf(((OtpErlangTuple) list.elementAt(i)).elementAt(1)));
-            //bookings.add(OtpErlangCommunication.get_info(idBooking,user));
-            bookings.add(getBooking(idBooking,user));
+            bookings.add(new BookingDTO((OtpErlangTuple) list.elementAt(i)));
         }
         return bookings;
     }
@@ -520,6 +516,29 @@ public class DbManager {
         } catch (OtpAuthException | IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public static SlotsDTO getAvailableSlots(String user, int BeachId){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(user);
+            if(conn != null) {
+                String currentDate = Utils.getDateNow();
+                conn.sendRPC(registeredServer, "get_available_slots", new OtpErlangObject[]{new OtpErlangInt(BeachId), new OtpErlangString(currentDate)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+                if (reply instanceof OtpErlangTuple) {
+                    return new SlotsDTO((OtpErlangTuple) reply);
+                }
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
         }
         return null;
     }
