@@ -3,6 +3,7 @@ package communication;
 import com.ericsson.otp.erlang.*;
 import database.DbManager;
 import dto.BookingDTO;
+import utility.ResultMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class BookingManager {
         System.out.println(BookingManager.newBooking("Fabi",0,"morning", "2022-06-15"));
     }
 
-    public static boolean newBooking(String user, int BeachId, String Type, String Date){
+    public static ResultMessage newBooking(String user, int BeachId, String Type, String Date){
         OtpConnection conn = null;
         try {
             conn = getConnection(user);
@@ -29,7 +30,9 @@ public class BookingManager {
                 System.out.println("Received " + reply);
                 conn.close();
                 if (reply instanceof OtpErlangTuple) {
-                    return Boolean.parseBoolean(((OtpErlangTuple)reply).elementAt(0).toString());
+                    boolean result = Boolean.parseBoolean(((OtpErlangTuple)reply).elementAt(0).toString());
+                    String message = ((OtpErlangTuple)reply).elementAt(1).toString();
+                    return new ResultMessage(result,message);
                 }
             }
         } catch (IOException | OtpErlangExit | OtpAuthException e) {
@@ -37,9 +40,10 @@ public class BookingManager {
                 conn.close();
             }
             e.printStackTrace();
-            return false;
+            return new ResultMessage(false, "Something has gone wrong!" );
         }
-        return false;
+        return new ResultMessage(false, "Something has gone wrong!" );
+
     }
 
     public static ArrayList<BookingDTO> getBookings(String username){

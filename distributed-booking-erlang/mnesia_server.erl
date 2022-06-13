@@ -34,7 +34,7 @@
 init() ->
   mnesia:create_schema([node()]),
   mnesia:start(),
-  case mnesia:wait_for_tables([user, auction, good, offer, slot, table_id], 5000) == ok of
+  case mnesia:wait_for_tables([user, beach, booking, subscription, slot, table_id], 5000) == ok of
     true ->
       ok;
     false ->
@@ -210,13 +210,12 @@ add_beach(Name, Description, Slots) ->
   Index = mnesia:dirty_update_counter(table_id, beach, 1),
   Fun = fun() ->
     mnesia:write(#beach{beach_id = Index,
-	  name = Name,
+      name = Name,
       description = Description,
       slots = Slots
     })
         end,
-  mnesia:activity(transaction, Fun),
-  Index.
+  mnesia:activity(transaction, Fun).
 
 %%update_auction(AuctionId, CurrentPrice, CurrentWinner) ->
 %%  F = fun() ->
@@ -471,7 +470,8 @@ all_beach_date_slot(BeachId, Date) ->
 get_available_slots(BeachId, Date) ->
   F = fun() ->
     Q = qlc:q([{E#slot.slot_id,E#slot.morning_free_slots,E#slot.afternoon_free_slots} || E <- mnesia:table(slot),E#slot.beach_id == BeachId, E#slot.date == Date]),
-    qlc:e(Q)
+    [Slots] = qlc:e(Q),
+    Slots
       end,
   {atomic, Res} = mnesia:transaction(F),
   Res.
@@ -491,7 +491,7 @@ update_slots(SlotId, Type, NewSlots) ->
 
 decrease_slots(BeachId, Date, Type) ->
   F = fun() ->
-    [Slots] = get_available_slots(BeachId, Date),
+    Slots = get_available_slots(BeachId, Date),
     MorningSlots = element(2,Slots),
     AfternoonSlots = element(3,Slots),
     case Type of

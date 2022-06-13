@@ -6,21 +6,11 @@ public class BeachDTO {
     int beachId;
     String name;
     String description;
-    int slots;
 
     public BeachDTO(OtpErlangTuple beach) {
-        this.beachId = Integer.parseInt(beach.elementAt(0).toString());
-        this.name = beach.elementAt(1).toString();
-        this.description = beach.elementAt(2).toString();
-        this.slots = Integer.parseInt(beach.elementAt(3).toString());
-    }
-
-    public int getSlots() {
-        return slots;
-    }
-
-    public void setSlots(int slots) {
-        this.slots = slots;
+        this.beachId = Integer.parseInt(beach.elementAt(1).toString());
+        this.name = beach.elementAt(2).toString().replace("\"", "");
+        this.description = beach.elementAt(3).toString().replace("\"", "");
     }
 
     public String getName() {
@@ -39,9 +29,8 @@ public class BeachDTO {
     public String toString() {
         return "BeachDTO{" +
                 "beachId=" + beachId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", slots=" + slots +
+                ", name=" + name +
+                ", description=" + description +
                 '}';
     }
 }

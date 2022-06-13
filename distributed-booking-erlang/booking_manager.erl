@@ -67,9 +67,9 @@ init_slots(_,0) ->
 init_slots(StartingDate, DaysToInit) ->
 	{DateToInitYear, DateToInitMonth, DateToInitDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToInit),
 	DateToInitStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToInitYear, DateToInitMonth, DateToInitDay])),
-	mnesia_manager:insert_slots(0,DateToInitStr,1000),
-	mnesia_manager:insert_slots(1,DateToInitStr,250),
-	mnesia_manager:insert_slots(2,DateToInitStr,1500),
+	mnesia_manager:insert_slots(1,DateToInitStr,1000),
+	mnesia_manager:insert_slots(2,DateToInitStr,250),
+	mnesia_manager:insert_slots(3,DateToInitStr,1500),
 	init_slots(StartingDate, DaysToInit - 1).
 	
 

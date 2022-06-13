@@ -19,7 +19,7 @@ public class Utils {
         }
 
         System.out.println(localDateTime);
-        return localDateTime.toString();
+        return localDateTime.toLocalDate().toString();
     }
 
     public static String getDateNow(){
