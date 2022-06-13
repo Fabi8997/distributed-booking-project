@@ -9,11 +9,11 @@
 
     <%
         String user = (String) session.getAttribute("user");
-        SlotsDTO slotsBeach0 = DbManager.getAvailableSlots(user, 0);
         SlotsDTO slotsBeach1 = DbManager.getAvailableSlots(user, 1);
         SlotsDTO slotsBeach2 = DbManager.getAvailableSlots(user, 2);
+        SlotsDTO slotsBeach3 = DbManager.getAvailableSlots(user, 3);
 
-        assert slotsBeach0 != null;%>
+        assert slotsBeach1 != null;%>
 
     <script>
 
@@ -29,7 +29,7 @@
             {
                 row = rows[i];
                 row.addEventListener("click", () => {
-                    openPopupWindow(500,570,i);
+                    openPopupWindow(500,570,i+1);
                 });
             }
         }
@@ -87,24 +87,7 @@
             <td>Plagemesu</td>
             <td>Descrizione</td>
             <td>
-                <% if(slotsBeach0.getMorningSlots() > 0){%>
-                <p>Morning: <em class="FreeSlots"><%=slotsBeach0.getMorningSlots()%></em> slots</p>
-                <%} else {%>
-                <p>Morning: <em class="Full">Full</em></p>
-                <%}%>
-                <% if(slotsBeach0.getAfternoonSlots() > 0){%>
-                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach0.getAfternoonSlots()%></em> slots</p>
-                <%} else {%>
-                <p>Afternoon: <em class="Full">Full</em></p>
-                <%}%>
-            </td>
-        </tr>
-        <tr id="beach2" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/masua.jpg')">
-            <td>Masua</td>
-            <td>Descrizione</td>
-            <td>
-                <% assert slotsBeach1 != null;
-                if(slotsBeach1.getMorningSlots() > 0){%>
+                <% if(slotsBeach1.getMorningSlots() > 0){%>
                 <p>Morning: <em class="FreeSlots"><%=slotsBeach1.getMorningSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Morning: <em class="Full">Full</em></p>
@@ -116,8 +99,8 @@
                 <%}%>
             </td>
         </tr>
-        <tr id="beach3" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/portopino.jpg')">
-            <td>Porto Pino</td>
+        <tr id="beach2" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/masua.jpg')">
+            <td>Masua</td>
             <td>Descrizione</td>
             <td>
                 <% assert slotsBeach2 != null;
@@ -128,6 +111,23 @@
                 <%}%>
                 <% if(slotsBeach2.getAfternoonSlots() > 0){%>
                 <p>Afternoon: <em class="FreeSlots"><%=slotsBeach2.getAfternoonSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Afternoon: <em class="Full">Full</em></p>
+                <%}%>
+            </td>
+        </tr>
+        <tr id="beach3" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/portopino.jpg')">
+            <td>Porto Pino</td>
+            <td>Descrizione</td>
+            <td>
+                <% assert slotsBeach3 != null;
+                if(slotsBeach3.getMorningSlots() > 0){%>
+                <p>Morning: <em class="FreeSlots"><%=slotsBeach3.getMorningSlots()%></em> slots</p>
+                <%} else {%>
+                <p>Morning: <em class="Full">Full</em></p>
+                <%}%>
+                <% if(slotsBeach3.getAfternoonSlots() > 0){%>
+                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach3.getAfternoonSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Afternoon: <em class="Full">Full</em></p>
                 <%}%>

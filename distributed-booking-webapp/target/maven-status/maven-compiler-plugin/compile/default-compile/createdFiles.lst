@@ -8,5 +8,6 @@ utility\Utils.class
 servlet\NewBookingServlet.class
 servlet\DeleteUserServlet.class
 communication\BookingManager.class
+utility\ResultMessage.class
 servlet\DeleteBookingServlet.class
 servlet\AddBookingServlet.class

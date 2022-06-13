@@ -16,7 +16,7 @@ public class DbManager {
 
     public static void main(String[] args) {
 
-        System.out.println(DbManager.getAvailableSlots("Fabi",0));
+        System.out.println(DbManager.getBeach(1,"Prova"));
     }
 
     //USERS
