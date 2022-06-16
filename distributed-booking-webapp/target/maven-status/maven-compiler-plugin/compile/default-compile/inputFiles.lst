@@ -2,12 +2,16 @@ C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\utility\ResultMessage.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\AddSubscriptionServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\SubscriptionServlet.java
+C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\websocket\BeachesEndpoint.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\DeleteUserServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\BookingDTO.java
+C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\websocket\MessageEncoder.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\ProfileServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\DeleteSubscriptionServlet.java
+C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\websocket\MessageDecoder.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\AdminServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\SubscriptionType.java
+C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\model\Message.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\UpdateBeachServlet.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\dto\BeachDTO.java
 C:\Repositories\distributed-booking-project\distributed-booking-webapp\src\main\java\servlet\LogoutServlet.java

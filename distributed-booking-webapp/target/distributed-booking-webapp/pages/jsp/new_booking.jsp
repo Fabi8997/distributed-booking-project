@@ -8,7 +8,6 @@
     <title>New Booking</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/indexStyle.css">
     <script src="<%= request.getContextPath() %>/javascript/utils.js"></script>
-
 </head>
 <body>
 
@@ -45,6 +44,7 @@
     <p id="error"><%= request.getAttribute("error")%></p>
     <% }else if(request.getAttribute("info") != null){%>
     <p id="info"><%= request.getAttribute("info")%></p>
+    <script>window.opener.send("<%=beach.getBeachId()%>")</script>
     <% }%>
 </div>
 </body>

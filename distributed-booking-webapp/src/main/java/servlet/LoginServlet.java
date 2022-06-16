@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if(DbManager.login(request.getParameter("user"), request.getParameter("pass"))){
-            String targetJSP = "/pages/jsp/beaches.jsp"; //the correct one!
+            String targetJSP = "/pages/jsp/redirect_beaches.jsp"; //the correct one!
             String user = request.getParameter("user");
 
             HttpSession session=request.getSession(false);
