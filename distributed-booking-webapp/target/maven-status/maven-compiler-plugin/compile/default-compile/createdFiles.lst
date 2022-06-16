@@ -1,7 +1,10 @@
 servlet\LogoutServlet.class
+websocket\MessageDecoder.class
 servlet\DeleteSubscriptionServlet.class
+model\Message.class
 servlet\BeachesServlet.class
 servlet\UpdateBeachServlet.class
+websocket\MessageEncoder.class
 dto\SlotsDTO.class
 servlet\AdminServlet.class
 utility\Utils.class
@@ -11,3 +14,4 @@ communication\BookingManager.class
 utility\ResultMessage.class
 servlet\DeleteBookingServlet.class
 servlet\AddBookingServlet.class
+websocket\BeachesEndpoint.class

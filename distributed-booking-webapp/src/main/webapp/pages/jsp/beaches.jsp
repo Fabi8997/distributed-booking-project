@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
-    <title>Auctions</title>
+    <title>Beaches</title>
 
     <%
         String user = (String) session.getAttribute("user");
@@ -59,7 +59,7 @@
     </script>
 
 </head>
-<body onload="addClickEvent();" onfocus="parent_disable();" onclick="parent_disable();">
+<body onload="addClickEvent(); connect();" onfocus="parent_disable();" onclick="parent_disable();">
 
 <div id="overlay">
 
@@ -88,12 +88,12 @@
             <td>Descrizione</td>
             <td>
                 <% if(slotsBeach1.getMorningSlots() > 0){%>
-                <p>Morning: <em class="FreeSlots"><%=slotsBeach1.getMorningSlots()%></em> slots</p>
+                <p>Morning: <em class="FreeSlotsMorning"><%=slotsBeach1.getMorningSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Morning: <em class="Full">Full</em></p>
                 <%}%>
                 <% if(slotsBeach1.getAfternoonSlots() > 0){%>
-                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach1.getAfternoonSlots()%></em> slots</p>
+                <p>Afternoon: <em class="FreeSlotsAfternoon"><%=slotsBeach1.getAfternoonSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Afternoon: <em class="Full">Full</em></p>
                 <%}%>
@@ -105,12 +105,12 @@
             <td>
                 <% assert slotsBeach2 != null;
                 if(slotsBeach2.getMorningSlots() > 0){%>
-                <p>Morning: <em class="FreeSlots"><%=slotsBeach2.getMorningSlots()%></em> slots</p>
+                <p>Morning: <em class="FreeSlotsMorning"><%=slotsBeach2.getMorningSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Morning: <em class="Full">Full</em></p>
                 <%}%>
                 <% if(slotsBeach2.getAfternoonSlots() > 0){%>
-                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach2.getAfternoonSlots()%></em> slots</p>
+                <p>Afternoon: <em class="FreeSlotsAfternoon"><%=slotsBeach2.getAfternoonSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Afternoon: <em class="Full">Full</em></p>
                 <%}%>
@@ -122,12 +122,12 @@
             <td>
                 <% assert slotsBeach3 != null;
                 if(slotsBeach3.getMorningSlots() > 0){%>
-                <p>Morning: <em class="FreeSlots"><%=slotsBeach3.getMorningSlots()%></em> slots</p>
+                <p>Morning: <em class="FreeSlotsMorning"><%=slotsBeach3.getMorningSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Morning: <em class="Full">Full</em></p>
                 <%}%>
                 <% if(slotsBeach3.getAfternoonSlots() > 0){%>
-                <p>Afternoon: <em class="FreeSlots"><%=slotsBeach3.getAfternoonSlots()%></em> slots</p>
+                <p>Afternoon: <em class="FreeSlotsAfternoon"><%=slotsBeach3.getAfternoonSlots()%></em> slots</p>
                 <%} else {%>
                 <p>Afternoon: <em class="Full">Full</em></p>
                 <%}%>
@@ -138,4 +138,5 @@
     </table>
 </div>
 </body>
+<script src="${pageContext.request.contextPath}/javascript/websocket.js"></script>
 </html>

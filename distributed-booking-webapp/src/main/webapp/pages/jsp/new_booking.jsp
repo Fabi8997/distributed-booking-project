@@ -8,7 +8,6 @@
     <title>New Booking</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/indexStyle.css">
     <script src="<%= request.getContextPath() %>/javascript/utils.js"></script>
-
 </head>
 <body>
 
@@ -43,8 +42,12 @@
         if(request.getAttribute("error") != null){
     %>
     <p id="error"><%= request.getAttribute("error")%></p>
-    <% }else if(request.getAttribute("info") != null){%>
+    <% }else if(request.getAttribute("info") != null){
+        // TODO: 16/06/2022 aggiungere il controllo solo sulla data odierna
+        //if(date == current-date => send!)
+    %>
     <p id="info"><%= request.getAttribute("info")%></p>
+    <script>window.opener.send("<%=beach.getBeachId()%>")</script>
     <% }%>
 </div>
 </body>
