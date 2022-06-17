@@ -34,8 +34,8 @@ get_user(Username) ->
 delete_user(Username) ->
 	gen_server:call(mnesia_manager, {delete_user, Username}).
 	
-all_user(Username) ->
-	gen_server:call(mnesia_manager, {all_user, Username}).
+all_user() ->
+	gen_server:call(mnesia_manager, all_user).
 
 %%%===================================================================
 %%% BEACH OPERATIONS
@@ -135,8 +135,9 @@ handle_call({delete_user, Username}, _From, _Status) ->
 	Result = mnesia_server:delete_user(Username),
 	{reply, Result, _Status };
 	
-handle_call({all_user}, _From, Status) ->
-	gen_server:call(mnesia_manager, {all_user}).
+handle_call(all_user, _From, _Status) ->
+	Result = mnesia_server:all_user(),
+	{reply, Result, _Status };
 
 handle_call({add_beach, {Name, Description, Slots}}, _From, _Status) ->
 	Result = mnesia_server:add_beach(Name, Description, Slots),
