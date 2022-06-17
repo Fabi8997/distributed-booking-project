@@ -424,7 +424,13 @@ delete_booking(BookingId) ->
   F = fun() ->
 	case is_booking_present(BookingId) of
 		true ->
-			mnesia:delete({booking, BookingId});
+			Booking = get_booking(BookingId),
+			case increase_slots(element(3, Booking), element(5, Booking), element(4, Booking)) of
+				true ->
+					mnesia:delete({booking, BookingId});
+				false ->
+					false
+			end;
 		false ->
 			false
 	end

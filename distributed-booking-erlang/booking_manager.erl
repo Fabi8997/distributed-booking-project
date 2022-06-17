@@ -54,19 +54,6 @@ handle_call(initialize_slots, _From, _Status) ->
 	Result = init_slots(CurrentDate, 10),
 	{ reply, Result, _Status }.
 
-handle_call({add_subscription, {BeachId, Type, Date, SubType}}, _From, _Status) ->
-	case mnesia_manager:is_user_booking_present(Username, BeachId, Type, Date) of
-		false -> 
-		case mnesia_manager:decrease_slots(BeachId, Date, Type) of
-			true -> 
-				mnesia_manager:insert_booking(Username, BeachId, Type, Date),
-				{ reply, {true, ""}, _Status };
-			false -> 
-				{ reply, {false, "No available slots"}, _Status }
-		end;
-		true->
-			{ reply, {false, "Booking already present"}, _Status }
-	end;
 
 handle_cast(reset, _Status) ->
 	{
