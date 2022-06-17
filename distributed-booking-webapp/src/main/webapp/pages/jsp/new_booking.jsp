@@ -43,8 +43,6 @@
     %>
     <p id="error"><%= request.getAttribute("error")%></p>
     <% }else if(request.getAttribute("info") != null){
-        // TODO: 16/06/2022 aggiungere il controllo solo sulla data odierna
-        //if(date == current-date => send!)
     %>
     <p id="info"><%= request.getAttribute("info")%></p>
     <script>window.opener.send("<%=beach.getBeachId()%>")</script>

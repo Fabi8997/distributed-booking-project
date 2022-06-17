@@ -378,11 +378,11 @@ is_booking_present(BookingId) ->
 
 
 %% Delete beach id in the match and considering also the bookings in other beaches, we cannot booking two beaches in the same moment of the day
-is_user_booking_present(Username, BeachId, Type, Date) ->
+is_user_booking_present(Username, _BeachId, Type, Date) ->
   F = fun() ->
     case Type of 
       TypeValue when TypeValue =:= morning; TypeValue =:= afternoon ->
-        Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.beach_id == BeachId, E#booking.type == Type, E#booking.timestamp == Date]),
+        Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.type == Type, E#booking.timestamp == Date]),
         case qlc:e(Q) =:= [] of
           true ->
             false;
@@ -390,7 +390,7 @@ is_user_booking_present(Username, BeachId, Type, Date) ->
             true
         end;
       all_day ->
-        Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.beach_id == BeachId, E#booking.timestamp == Date]),
+        Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.timestamp == Date]),
         case qlc:e(Q) =:= [] of
           true ->
             false;

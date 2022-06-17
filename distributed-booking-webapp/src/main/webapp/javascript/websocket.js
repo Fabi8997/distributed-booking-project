@@ -8,10 +8,8 @@ function connect() {
     console.log("Connected to " + url);
 
     ws.onmessage = function(event) {
-        const log = document.getElementById("log");
         //console.log(event.data);
         const message = JSON.parse(event.data);
-        log.innerHTML += message.from + " : " + message.morningSlots + "," + message.afternoonSlots+"\n";
         const idBeach = message.idBeach;
         let beachRow = document.getElementById("beach"+idBeach);
         let morningsSlots = beachRow.getElementsByClassName("FreeSlotsMorning");
