@@ -13,9 +13,9 @@ public class Utils {
             localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
             ).plus(7, ChronoUnit.DAYS).truncatedTo(ChronoUnit.SECONDS);
         }
-        else if(type.equals("monthly")){
+        else if(type.equals("biweekly")){
             localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
-            ).plus(1, ChronoUnit.MONTHS).truncatedTo(ChronoUnit.SECONDS);
+            ).plus(14, ChronoUnit.DAYS).truncatedTo(ChronoUnit.SECONDS);
         }
 
         System.out.println(localDateTime);

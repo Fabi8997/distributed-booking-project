@@ -342,7 +342,7 @@ public class DbManager {
 
     //SUBSCRIPTION
 
-    public static boolean insertSubscription(int beach, String user, String type, String endDate, String request){
+    /*public static boolean insertSubscription(int beach, String user, String type, String endDate, String request){
         if(request.equals("add")){
             return addSubscription(beach, user, type, endDate);
         }
@@ -350,7 +350,8 @@ public class DbManager {
             return updateSubscription(user, beach, type, "active", endDate);
         }
         else return false;
-    }
+    }*/
+
     public static boolean addSubscription(int beach, String user, String type, String endDate){
         if(beach == 0){
             return false;
