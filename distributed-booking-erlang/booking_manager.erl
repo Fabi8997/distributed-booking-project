@@ -84,5 +84,3 @@ init_slots(StartingDate, DaysToInit) ->
 	mnesia_manager:insert_slots(2,DateToInitStr,250),
 	mnesia_manager:insert_slots(3,DateToInitStr,1500),
 	init_slots(StartingDate, DaysToInit - 1).
-	
-

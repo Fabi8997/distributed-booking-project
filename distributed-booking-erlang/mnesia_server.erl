@@ -377,7 +377,6 @@ is_booking_present(BookingId) ->
   mnesia:activity(transaction, F).
 
 
-%% Delete beach id in the match and considering also the bookings in other beaches, we cannot booking two beaches in the same moment of the day
 is_user_booking_present(Username, _BeachId, Type, Date) ->
   F = fun() ->
     case Type of 

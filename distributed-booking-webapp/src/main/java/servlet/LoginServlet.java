@@ -1,6 +1,7 @@
 package servlet;
 
 import database.DbManager;
+import utility.Utils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if(DbManager.login(request.getParameter("user"), request.getParameter("pass"))){
+
             String targetJSP = "/pages/jsp/redirect_beaches.jsp"; //the correct one!
             String user = request.getParameter("user");
 

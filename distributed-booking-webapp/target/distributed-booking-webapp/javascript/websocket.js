@@ -5,7 +5,6 @@ function connect() {
     const pathname = document.location.pathname;
     const url = "ws://" +host  + pathname;
     ws = new WebSocket(url);
-    console.log("Connected to " + url);
 
     ws.onmessage = function(event) {
         //console.log(event.data);
