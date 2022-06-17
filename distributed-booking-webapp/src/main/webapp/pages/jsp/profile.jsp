@@ -2,6 +2,7 @@
 <%@ page import="dto.SubscriptionDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="utility.Utils" %>
+<%@ page import="dto.BookingDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +11,7 @@
         String user = (String) session.getAttribute("user");
         System.out.println("Retrieving the information for "+user+"...");
         List<SubscriptionDTO> subscriptions = DbManager.getSubscriptionFromUser(user);
+        List<BookingDTO> bookings = DbManager.getAllBookings(user);
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>
@@ -35,8 +37,8 @@
 </ul>
 
 <div class="booking_content">
-    <div id="auction_content_actions">
-        <label>Your subscriptions</label>
+    <div>
+        <h3>Your subscriptions</h3>
         <table id="myTable">
             <thead>
             <tr>
@@ -59,6 +61,34 @@
                 </label></td>
                 <td><%=subscriptions.get(i).getStatus().replace("\"", "")%></td>
                 <td><%=subscriptions.get(i).getEndDate().replace("\"", "")%></td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h3>Your bookings</h3>
+        <table id="bookingTable">
+            <thead>
+            <tr>
+                <th scope="col" style="display: none;"></th>
+                <th scope="col">Type</th>
+                <th scope="col">Beach</th>
+                <th scope="col">Status</th>
+                <th scope="col">EndDate</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for(int i = 0; i < bookings.size(); i++) {
+            %>
+            <tr id = "row-<%=i%>">
+                <td style="display:none;"><input class="idGood" type="hidden" name="idGood" value="<%=bookings.get(i).getIdBooking()%>"></td>
+                <td><%=bookings.get(i).getType().replace("\"", "")%></td>
+                <td><label>
+                    <textarea readonly rows="2"><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></textarea>
+                </label></td>
+                <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
             </tr>
             <% } %>
             </tbody>
