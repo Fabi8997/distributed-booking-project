@@ -235,6 +235,12 @@ public class DbManager {
     //SUBSCRIPTION
 
     public static boolean addSubscription(int beach, String user, String type, String endDate){
+<<<<<<< Updated upstream
+=======
+        if(beach == 0 || endDate.equals("")){
+            return false;
+        }
+>>>>>>> Stashed changes
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
@@ -310,9 +316,9 @@ public class DbManager {
 
         String nodeId = username + "_client@localhost";
         OtpSelf self = new OtpSelf(nodeId,cookie);
-        OtpPeer auctionServerNode = new OtpPeer(remoteNodeId);
+        OtpPeer bookingServerNode = new OtpPeer(remoteNodeId);
         try {
-            return self.connect(auctionServerNode);
+            return self.connect(bookingServerNode);
         } catch (OtpAuthException | IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

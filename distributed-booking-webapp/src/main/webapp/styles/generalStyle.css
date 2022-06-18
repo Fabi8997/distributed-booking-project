@@ -1,0 +1,349 @@
+body {
+    margin: 0;
+    background-color: rgb(229 228 225);
+}
+
+ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #141E27;
+    position: sticky;
+    top: 0;
+    font-size: 18px;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #EEEDDE;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #203239;
+}
+
+.active {
+    background-color: #54749f;
+}
+
+#credit, #logout{
+    float: right;
+}
+
+#logout{
+    background-color: #486286;
+}
+
+
+
+#logout img{
+    size: 32px;
+}
+
+table {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+.booking_content table tbody tr, #current_auction table tbody tr {
+    cursor: pointer;
+}
+
+tbody tr:hover{
+    background-color: rgba(32, 50, 57, 0.4);
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background-color: #141E27;
+    color: #EEEDDE;
+}
+
+#myInput {
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    width: 70%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #EEEDDE;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+#myInputAuct{
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    width: 95%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #EEEDDE;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.booking_content{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.booking_content h3, #titleAdd{
+    text-align: center;
+}
+
+.ViewBookingContent{
+    margin-top: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    align-content: center;
+    color: #141E27;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ViewBookingContent th{
+    width: 20%;
+    background-color: #54749f;
+}
+
+.BeachTable{
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    border: none;
+    font-size: 30px;
+}
+
+.BeachTable td{
+    background-color: #ffffff57;
+}
+
+.BeachRow{
+    height: 160px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.BeachRow td:last-child{
+    font-size: 25px;
+    background-color: #ffffffa6;
+}
+
+.FreeSlotsMorning, .FreeSlotsAfternoon{
+    font-weight: bold;
+    color: #229905;
+}
+
+.Full {
+    font-weight: bold;
+    color: #ab081c;
+}
+
+#beach1{
+    background-position: 50% 56%
+}
+
+#beach2{
+    background-position: 50% 20%;
+}
+
+#beach3{
+    background-position: 50% 28%;
+}
+
+.ViewBookingContentForm{
+    margin-top: 10px;
+    margin-right: 25%;
+    margin-left: 25%;
+    background: #EEEDDE;
+    color: #141E27;
+}
+
+.ViewBookingContent form.ViewBookingContentForm input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid #CCC;
+    float: left;
+    width: 64%;
+    background: #f8f8f8;
+}
+
+.ViewBookingContent button, #content button{
+    float: left;
+    width: 30%;
+    padding: 10px;
+    background: #54749f;
+    color: #EEEDDE;
+    font-size: 17px;
+    border: 1px solid #CCC;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+}
+
+.ViewBookingContent button:hover, #content button:hover {
+    background: #486286;
+}
+
+#other_actions button{
+    width: 100%;
+    margin-bottom: 5%;
+}
+
+.ViewBookingContent form.ViewBookingContentForm::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.ViewBookingContent p{
+    text-align: center;
+    font-size: 16px;
+}
+#error{
+    font-weight: bold;
+    color: red;
+}
+
+#info{
+    font-weight: bold;
+    color: green;
+}
+
+#content{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+#current_auction, #other_actions{
+    display: inline-block;
+    margin-bottom: 5%;
+}
+
+#current_auction{
+    width: 40%;
+    float: left;
+}
+
+#other_actions{
+    width: 40%;
+    float: right;
+
+}
+
+#overlay {
+    background-color: rgba(204, 204, 204, 0.48); /*or semitransparent image*/
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    -webkit-filter: blur(5px);
+}
+
+#insertGood {
+
+    font-size: 17px;
+    width: 22%;
+    display: inline-block;
+    float: right;
+    padding: 12px 20px 12px 20px;
+    margin-top: 12px;
+    text-align: center;
+    border: 0;
+    color: #fff;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    background-color: #54749f;
+}
+
+#insertGood:hover{
+    border: 0;
+    text-shadow: 0 1px rgba(0,0,0,0.3);
+    background-color: #486286;
+}
+
+h3{
+    font-size: 30px;
+    text-align: center;
+}
+
+.profileLabel{
+    color: #141E27;
+}
+
+.ViewSubscriptionContentForm{
+    margin-top: 10px;
+    margin-right: 25%;
+    margin-left: 25%;
+    background: #EEEDDE;
+    padding: 2px;
+    border: 1px solid black;
+    color: #141E27;
+    display:block;
+    width:500px;
+    height:300px;
+}
+
+select{
+    display:block;
+    margin-bottom: 70px;
+}
+
+#titleAdd{
+    font-family: Calibri;
+    display:block;
+    color: #141E27;
+}
+.subFormLabel{
+    font-size:20px;
+    font-family: Calibri;
+}
+
+#addSub{
+    display:block;
+    width: 30%;
+    padding: 10px;
+    background: #54749f;
+    color: #EEEDDE;
+    font-size: 17px;
+    border: 1px solid #CCC;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+}

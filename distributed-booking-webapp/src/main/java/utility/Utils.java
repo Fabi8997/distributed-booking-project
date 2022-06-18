@@ -1,0 +1,50 @@
+package utility;
+import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+public class Utils {
+
+    //gets the endDate of a subscription based on the type of the subscription
+    public static String getEndDate(String type){
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00"));
+        if(type.equals("weekly")){
+            localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
+            ).plus(7, ChronoUnit.DAYS).truncatedTo(ChronoUnit.SECONDS);
+        }
+        else if(type.equals("biweekly")){
+            localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
+            ).plus(14, ChronoUnit.DAYS).truncatedTo(ChronoUnit.SECONDS);
+        }
+        else{
+            return "";
+        }
+
+        System.out.println(localDateTime);
+        return localDateTime.toLocalDate().toString();
+    }
+
+    public static String getDateNow(){
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")).truncatedTo(ChronoUnit.DAYS);
+        return  localDateTime.toLocalDate().toString();
+    }
+
+    public static String getDateNext(int days){
+        Instant instant = Instant.now();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
+        ).plus(days, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS);
+        return  localDateTime.toLocalDate().toString();
+    }
+
+    public static boolean isAdmin(String user){
+        return user.equals("admin");
+    }
+
+    public static void main(String[] args){
+        System.out.println(getDateNow());
+        System.out.println(getDateNext(2));
+    }
+
+}
