@@ -24,13 +24,6 @@
         <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
         <li><a class="active" href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
         <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
-        <% if(Utils.isAdmin(user))
-        {
-        %>
-        <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
-        <%
-            }
-        %>
         <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
             <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
         </a></li>
@@ -55,7 +48,7 @@
                     for(int i = 0; i < subscriptions.size(); i++) {
                 %>
                 <tr id = "row-<%=i%>">
-                    <td style="display:none;"><input class="idGood" type="hidden" name="idGood" value="<%=subscriptions.get(i).getIdSubscription()%>"></td>
+                    <td style="display:none;"><input class="idSubCell" type="hidden" name="subCell" value="<%=subscriptions.get(i).getIdSubscription()%>"></td>
                     <td><%=subscriptions.get(i).getType().replace("\"", "")%></td>
                     <td><%=DbManager.getBeach(subscriptions.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
                     <td><label>

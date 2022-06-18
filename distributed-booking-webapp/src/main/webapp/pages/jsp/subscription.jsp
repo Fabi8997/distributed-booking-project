@@ -26,21 +26,10 @@
   <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
   <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
   <li><a class="active" href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
-  <% if(Utils.isAdmin(user))
-  {
-  %>
-  <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
-  <%
-    }
-  %>
   <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
     <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
   </a></li>
 </ul>
-
-<%
-  //TODO 04/06/2022: test the form!!
-%>
 
 <div class="ViewBookingContent">
   <h3 id="titleAdd">Add a subscription to your account:</h3>

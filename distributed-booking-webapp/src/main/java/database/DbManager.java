@@ -21,7 +21,6 @@ public class DbManager {
 
     //USERS
 
-    //TODO 02/06/2022: All of these have to be tested!!
     public static boolean login(String user, String pass){
         OtpConnection conn = null;
         try {
@@ -211,6 +210,10 @@ public class DbManager {
     }
 
     public static boolean updateBeach(String user, int beachId, String desc, int slots){
+        if(desc.equals("Desc")){
+            desc = getBeach(beachId,user).getDescription();
+        }
+        //TODO: slots???
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
