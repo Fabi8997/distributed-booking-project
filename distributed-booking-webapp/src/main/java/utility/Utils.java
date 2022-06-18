@@ -17,9 +17,6 @@ public class Utils {
             localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.of("+02:00")
             ).plus(14, ChronoUnit.DAYS).truncatedTo(ChronoUnit.SECONDS);
         }
-        else{
-            return "";
-        }
 
         System.out.println(localDateTime);
         return localDateTime.toLocalDate().toString();

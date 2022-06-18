@@ -45,10 +45,10 @@
 <div class="ViewBookingContent">
   <h3 id="titleAdd">Add a subscription to your account:</h3>
 
-  <form class="ViewSubscriptionContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
-    <label class="subFormLabel" for="beachInput">Select the beach:</label>
+  <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
+    <label for="beachInput">Select the beach:</label>
     <select name="beachId" id="beachInput">
-      <option value="0" selected="selected">--</option>
+      <option value="0" selected="selected" disabled>--</option>
       <%
         for(int i = 0; i < beaches.size(); i++) {
           boolean subPresent = false;
@@ -70,9 +70,9 @@
         }
       %>
     </select>
-    <label class="subFormLabel" for="subInput">Select the subscription type:</label>
+    <label for="subInput">Select the subscription type:</label>
     <select name="subTypes" id="subInput">
-      <option value="none" selected="selected">--</option>
+      <option value="none" selected="selected" disabled>--</option>
       <option value="weekly">Weekly</option>
       <option value="biweekly">Biweekly</option>
     </select>

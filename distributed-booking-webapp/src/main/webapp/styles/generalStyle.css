@@ -130,9 +130,6 @@ table th {
     margin-left: 20%;
     margin-right: 20%;
     align-content: center;
-    color: #141E27;
-    justify-content: center;
-    flex-direction: column;
 }
 
 .ViewBookingContent th{
@@ -190,7 +187,6 @@ table th {
     margin-right: 25%;
     margin-left: 25%;
     background: #EEEDDE;
-    color: #141E27;
 }
 
 .ViewBookingContent form.ViewBookingContentForm input[type=text] {
@@ -301,42 +297,10 @@ table th {
 h3{
     font-size: 30px;
     text-align: center;
-}
-
-.profileLabel{
-    color: #141E27;
-}
-
-.ViewSubscriptionContentForm{
-    margin-top: 10px;
-    margin-right: 25%;
-    margin-left: 25%;
-    background: #EEEDDE;
-    padding: 2px;
-    border: 1px solid black;
-    color: #141E27;
-    display:block;
-    width:500px;
-    height:300px;
-}
-
-select{
-    display:block;
-    margin-bottom: 70px;
-}
-
-#titleAdd{
-    font-family: Calibri;
-    display:block;
-    color: #141E27;
-}
-.subFormLabel{
-    font-size:20px;
-    font-family: Calibri;
+    color: #EEEDDE;
 }
 
 #addSub{
-    display:block;
     width: 30%;
     padding: 10px;
     background: #54749f;

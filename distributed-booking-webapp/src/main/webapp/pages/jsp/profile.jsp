@@ -38,7 +38,7 @@
 
 <div class="booking_content">
     <div>
-        <h3 class="profileLabel">Your subscriptions</h3>
+        <h3>Your subscriptions</h3>
         <table id="myTable">
             <thead>
             <tr>
@@ -67,15 +67,15 @@
         </table>
     </div>
     <div>
-        <h3 class="profileLabel">Your bookings</h3>
+        <h3>Your bookings</h3>
         <table id="bookingTable">
             <thead>
             <tr>
                 <th scope="col" style="display: none;"></th>
                 <th scope="col">Type</th>
                 <th scope="col">Beach</th>
+                <th scope="col">Status</th>
                 <th scope="col">EndDate</th>
-                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -85,9 +85,10 @@
             <tr id = "row-<%=i%>">
                 <td style="display:none;"><input class="idGood" type="hidden" name="idGood" value="<%=bookings.get(i).getIdBooking()%>"></td>
                 <td><%=bookings.get(i).getType().replace("\"", "")%></td>
-                <td><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
+                <td><label>
+                    <textarea readonly rows="2"><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></textarea>
+                </label></td>
                 <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
-                <td><button>DELETE</button></td>
             </tr>
             <% } %>
             </tbody>

@@ -45,7 +45,7 @@ public class AddSubscriptionServlet extends HttpServlet {
                 System.out.println("Receiving the new subscription info...");
 
                 int beachId = Integer.parseInt(request.getParameter("beachId"));
-                String type = request.getParameter("subTypes");
+                String type = request.getParameter("subType");
                 String user = session.getAttribute("user").toString();
                 String targetJSP;
 
