@@ -1,4 +1,4 @@
-+-module(mnesia_manager).
+-module(mnesia_manager).
 -export([init/1, handle_call/3, handle_cast/2]).
 -export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1, 
 	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1,
