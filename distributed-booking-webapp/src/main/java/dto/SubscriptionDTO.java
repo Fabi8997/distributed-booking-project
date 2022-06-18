@@ -21,12 +21,12 @@ public class SubscriptionDTO{
     }
 
     public SubscriptionDTO(OtpErlangTuple subscriptionInfo) {
-        idSubscription = Integer.parseInt(subscriptionInfo.elementAt(0).toString());
-        username = subscriptionInfo.elementAt(1).toString();
-        idBeach = Integer.parseInt(subscriptionInfo.elementAt(2).toString());
-        type = subscriptionInfo.elementAt(3).toString();
-        status = subscriptionInfo.elementAt(4).toString();
-        endDate = subscriptionInfo.elementAt(5).toString();
+        idSubscription = Integer.parseInt(subscriptionInfo.elementAt(1).toString());
+        username = subscriptionInfo.elementAt(2).toString();
+        idBeach = Integer.parseInt(subscriptionInfo.elementAt(3).toString());
+        type = subscriptionInfo.elementAt(4).toString();
+        status = subscriptionInfo.elementAt(5).toString();
+        endDate = subscriptionInfo.elementAt(6).toString();
     }
 
     public int getIdSubscription() {

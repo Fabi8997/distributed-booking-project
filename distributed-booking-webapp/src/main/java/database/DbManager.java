@@ -353,7 +353,7 @@ public class DbManager {
     }*/
 
     public static boolean addSubscription(int beach, String user, String type, String endDate){
-        if(beach == 0){
+        if(beach == 0 || endDate.equals("")){
             return false;
         }
         OtpConnection conn = null;
