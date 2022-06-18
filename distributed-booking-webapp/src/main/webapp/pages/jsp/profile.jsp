@@ -45,6 +45,7 @@
                     <th scope="col" style="display: none;"></th>
                     <th scope="col">Type</th>
                     <th scope="col">Beach</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Status</th>
                     <th scope="col">EndDate</th>
                 </tr>
@@ -56,6 +57,7 @@
                 <tr id = "row-<%=i%>">
                     <td style="display:none;"><input class="idGood" type="hidden" name="idGood" value="<%=subscriptions.get(i).getIdSubscription()%>"></td>
                     <td><%=subscriptions.get(i).getType().replace("\"", "")%></td>
+                    <td><%=DbManager.getBeach(subscriptions.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
                     <td><label>
                         <textarea readonly rows="2"><%=DbManager.getBeach(subscriptions.get(i).getIdBeach(), user).getDescription().replace("\"", "")%></textarea>
                     </label></td>
