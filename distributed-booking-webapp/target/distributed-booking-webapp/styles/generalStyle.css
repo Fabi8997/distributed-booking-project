@@ -130,6 +130,9 @@ table th {
     margin-left: 20%;
     margin-right: 20%;
     align-content: center;
+    color: #141E27;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .ViewBookingContent th{
@@ -187,6 +190,7 @@ table th {
     margin-right: 25%;
     margin-left: 25%;
     background: #EEEDDE;
+    color: #141E27;
 }
 
 .ViewBookingContent form.ViewBookingContentForm input[type=text] {
@@ -273,34 +277,74 @@ table th {
     -webkit-filter: blur(5px);
 }
 
-#insertGood {
-
-    font-size: 17px;
-    width: 22%;
-    display: inline-block;
-    float: right;
-    padding: 12px 20px 12px 20px;
-    margin-top: 12px;
-    text-align: center;
-    border: 0;
-    color: #fff;
-    text-shadow: 0 1px rgba(0,0,0,0.1);
-    background-color: #54749f;
-}
-
-#insertGood:hover{
-    border: 0;
-    text-shadow: 0 1px rgba(0,0,0,0.3);
-    background-color: #486286;
-}
-
 h3{
     font-size: 30px;
     text-align: center;
-    color: #EEEDDE;
 }
 
-#addSub{
+.profileLabel{
+    color: #141E27;
+}
+
+.ViewSubscriptionContentForm{
+    margin-top: 10px;
+    margin-right: 25%;
+    margin-left: 25%;
+    background: #EEEDDE;
+    padding: 2px;
+    border: 1px solid black;
+    color: #141E27;
+    display:block;
+    width:500px;
+    height:300px;
+}
+
+.AdminForm{
+    margin-top: 10px;
+    margin-right: 25%;
+    margin-left: 25%;
+    background: #EEEDDE;
+    padding: 2px;
+    border: 1px solid black;
+    color: #141E27;
+    display:block;
+    width:500px;
+    height:200px;
+}
+
+.AdminForm input{
+    display: block;
+}
+
+.AdminForm select{
+    display:block;
+    margin-bottom: 40px;
+}
+
+
+.adminFormLabel{
+    font-size:20px;
+    font-family: Calibri;
+}
+
+select{
+    display:block;
+    margin-bottom: 70px;
+}
+
+#titleAdd{
+    font-family: Calibri;
+    display:block;
+    color: #141E27;
+}
+
+.subFormLabel{
+    font-size:20px;
+    font-family: Calibri;
+}
+
+#addSub {
+    display: block;
     width: 30%;
     padding: 10px;
     background: #54749f;

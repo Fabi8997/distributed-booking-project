@@ -179,7 +179,8 @@ all_user() ->
     Q = qlc:q([E || E <- mnesia:table(user)]),
     qlc:e(Q)
       end,
-  mnesia:transaction(F).
+  {atomic, Res} = mnesia:transaction(F),
+ Res.
 
 get_user(Username) -> 
   F = fun() ->

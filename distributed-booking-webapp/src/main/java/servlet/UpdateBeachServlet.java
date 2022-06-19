@@ -42,7 +42,7 @@ public class UpdateBeachServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);
                 requestDispatcher.forward(request,response);
             }else{
-                System.out.println("Receiving the updated beach nfo...");
+                System.out.println("Receiving the updated beach info...");
 
                 int beachId = Integer.parseInt(request.getParameter("beachId"));
                 String desc = request.getParameter("description");

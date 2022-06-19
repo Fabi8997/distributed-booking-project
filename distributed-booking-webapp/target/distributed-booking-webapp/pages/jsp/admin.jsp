@@ -16,7 +16,6 @@
         List<UserDTO> users = DbManager.getUsers(user);
     %>
 
-    %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Administration Panel</title>
 
@@ -25,25 +24,16 @@
     </div>
 
     <ul class="topnav">
-        <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
-        <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
-        <li><a href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
-        <% if(Utils.isAdmin(user))
-        {
-        %>
         <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
-        <%
-            }
-        %>
         <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
             <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
         </a></li>
     </ul>
 
     <div class="booking_content">
-        <div id="auction_content_actions">
-            <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/UpdateBeachServlet">
-                <label for="beachInput">Select the beach:</label>
+        <div id="ViewBookingContent">
+            <form class="AdminForm" action="<%= request.getContextPath() %>/UpdateBeachServlet">
+                <label class="adminFormLabel" for="beachInput">Select the beach:</label>
                 <select name="beachId" id="beachInput">
                     <option value="0" selected="selected" disabled>--</option>
                     <%
@@ -60,17 +50,17 @@
                         }
                     %>
                 </select>
-                <label>Insert new description</label>
+                <label class="adminFormLabel">Insert new description</label>
                 <input type="text" id="description">
-                <label>Insert new number of slots</label>
+                <label class="adminFormLabel">Insert new number of slots</label>
                 <input type="number" id="slots">
                 <button type="submit">UPDATE</button>
             </form>
             <% //TODO: show bookings and subscriptions only for the selected user? %>
-            <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteUserServlet">
-                <label for="userToDelete">Select the user:</label>
+            <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteUserServlet">
+                <label class="adminFormLabel" for="userToDelete">Select the user:</label>
                 <select name="userId" id="userToDelete">
-                    <option value="0" selected="selected" disabled>--</option>
+                    <option value="0" selected="selected">--</option>
                     <%
                         for(int i = 0; i < users.size(); i++)
                         {
@@ -84,10 +74,10 @@
                 </select>
                 <button type="submit">DELETE</button>
             </form>
-            <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
-                <label for="beachInput">Select the user:</label>
+            <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
+                <label class="adminFormLabel" for="beachInput">Select the subscription:</label>
                 <select name="userId" id="subscriptionToDelete">
-                    <option value="0" selected="selected" disabled>--</option>
+                    <option value="0" selected="selected">--</option>
                     <%
 
                         List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
@@ -106,10 +96,10 @@
                 </select>
                 <button type="submit">DELETE</button>
             </form>
-            <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
-                <label for="bookingToDelete">Select the booking:</label>
+            <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
+                <label class="adminFormLabel" for="bookingToDelete">Select the booking:</label>
                 <select name="bookingId" id="bookingToDelete">
-                    <option value="0" selected="selected" disabled>--</option>
+                    <option value="0" selected="selected">--</option>
                     <%
                         List<BookingDTO> bookings = DbManager.getAllBookings(user);
                         for(int i = 0; i < bookings.size(); i++)

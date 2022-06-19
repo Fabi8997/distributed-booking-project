@@ -21,10 +21,10 @@ public class UserDTO {
     }
 
     public UserDTO(OtpErlangTuple userInfo) {
-        userId = Integer.parseInt(userInfo.elementAt(0).toString());
-        username = userInfo.elementAt(1).toString();
-        password = userInfo.elementAt(2).toString();
-        subscribed = Boolean.parseBoolean(userInfo.elementAt(3).toString());
+        userId = Integer.parseInt(userInfo.elementAt(1).toString());
+        username = userInfo.elementAt(2).toString();
+        password = userInfo.elementAt(3).toString();
+        subscribed = Boolean.parseBoolean(userInfo.elementAt(4).toString());
     }
 
     public Integer getUserId() {

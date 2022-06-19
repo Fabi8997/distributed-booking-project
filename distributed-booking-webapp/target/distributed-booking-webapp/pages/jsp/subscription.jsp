@@ -26,29 +26,18 @@
   <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
   <li><a href="<%= request.getContextPath() %>/ProfileServlet">Profile</a></li>
   <li><a class="active" href="<%= request.getContextPath() %>/SubscriptionServlet">Subscriptions</a></li>
-  <% if(Utils.isAdmin(user))
-  {
-  %>
-  <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
-  <%
-    }
-  %>
   <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
     <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
   </a></li>
 </ul>
 
-<%
-  //TODO 04/06/2022: test the form!!
-%>
-
 <div class="ViewBookingContent">
   <h3 id="titleAdd">Add a subscription to your account:</h3>
 
-  <form class="ViewBookingContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
-    <label for="beachInput">Select the beach:</label>
+  <form class="ViewSubscriptionContentForm" action="<%= request.getContextPath() %>/AddSubscriptionServlet">
+    <label class="subFormLabel" for="beachInput">Select the beach:</label>
     <select name="beachId" id="beachInput">
-      <option value="0" selected="selected" disabled>--</option>
+      <option value="0" selected="selected">--</option>
       <%
         for(int i = 0; i < beaches.size(); i++) {
           boolean subPresent = false;
@@ -70,9 +59,9 @@
         }
       %>
     </select>
-    <label for="subInput">Select the subscription type:</label>
+    <label class="subFormLabel" for="subInput">Select the subscription type:</label>
     <select name="subTypes" id="subInput">
-      <option value="none" selected="selected" disabled>--</option>
+      <option value="none" selected="selected">--</option>
       <option value="weekly">Weekly</option>
       <option value="biweekly">Biweekly</option>
     </select>
