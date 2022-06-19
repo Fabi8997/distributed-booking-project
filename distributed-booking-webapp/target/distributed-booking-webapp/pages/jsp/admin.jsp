@@ -51,9 +51,9 @@
                     %>
                 </select>
                 <label class="adminFormLabel">Insert new description</label>
-                <input type="text" id="description">
+                <input type="text" id="description" value ="Desc">
                 <label class="adminFormLabel">Insert new number of slots</label>
-                <input type="number" id="slots">
+                <input type="number" id="slots" value="0">
                 <button type="submit">UPDATE</button>
             </form>
             <% //TODO: show bookings and subscriptions only for the selected user? %>
