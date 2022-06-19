@@ -74,7 +74,7 @@
     <select name="subTypes" id="subInput">
       <option value="none" selected="selected" disabled>--</option>
       <option value="weekly">Weekly</option>
-      <option value="monthly">Monthly</option>
+      <option value="biweekly">Biweekly</option>
     </select>
     <button type="submit">ADD</button>
   </form>

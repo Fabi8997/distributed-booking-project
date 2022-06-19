@@ -16,7 +16,7 @@ public class DbManager {
 
     public static void main(String[] args) {
 
-        System.out.println(DbManager.getBeach(1,"Prova"));
+        System.out.println(DbManager.login("Prova","Pro12345"));
     }
 
     //USERS
