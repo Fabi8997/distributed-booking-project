@@ -1,6 +1,6 @@
 -module(booking_manager).
 -export([init/1, handle_call/3, handle_cast/2]).
--export([new_booking/4, start_server/0, reset/0, initialize_slots/0, get_bookings/1]).
+-export([new_booking/4, start_server/0, reset/0, initialize_slots/0, get_bookings/1, new_subscription/5]).
 -behavior(gen_server).
 
 %%API
@@ -19,6 +19,10 @@ new_booking(Username, BeachId, Type, Date) ->
 
 get_bookings(Username) ->
  	gen_server:call(booking_manager, {get_bookings, Username}).
+
+new_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
+	gen_server:call(booking_manager, {new_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
+	
 
 %%CALLBACK
 
@@ -45,13 +49,23 @@ handle_call({new_booking, {Username, BeachId, Type, Date}}, _From, _Status) ->
 	end;
 
 
+handle_call({new_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
+
+	case mnesia_manager:is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
+
+		{true,_} -> 
+			{ reply, {true,""}, _Status };
+		{false, Result}  ->
+			{ reply, {false, Result}, _Status }
+	end;
+
 handle_call({get_bookings, Username}, _From, _Status) ->
 	Result = mnesia_manager:all_bookings(Username),
 	{ reply, Result, _Status };
 
 handle_call(initialize_slots, _From, _Status) ->
 	{CurrentDate, _} = calendar:now_to_datetime(erlang:timestamp()),
-	Result = init_slots(CurrentDate, 10),
+	Result = init_slots(CurrentDate, 50),
 	{ reply, Result, _Status }.
 
 

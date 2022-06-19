@@ -14,7 +14,8 @@
   is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
-  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3, is_user_booking_present/4]).
+  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3, is_user_booking_present/4,
+  is_subscription_possible/5, are_subscription_slots_available/4]).
 
 -export([]).
 
@@ -476,8 +477,14 @@ all_beach_date_slot(BeachId, Date) ->
 get_available_slots(BeachId, Date) ->
   F = fun() ->
     Q = qlc:q([{E#slot.slot_id,E#slot.morning_free_slots,E#slot.afternoon_free_slots} || E <- mnesia:table(slot),E#slot.beach_id == BeachId, E#slot.date == Date]),
-    [Slots] = qlc:e(Q),
-    Slots
+    Slots = qlc:e(Q),
+    case Slots =:= [] of
+      true ->
+        false;
+      false ->
+        [Result] = Slots,
+        Result
+    end
       end,
   {atomic, Res} = mnesia:transaction(F),
   Res.
@@ -533,7 +540,7 @@ decrease_slots(BeachId, Date, Type) ->
 
 increase_slots(BeachId, Date, Type) ->
   F = fun() ->
-    [Slots] = get_available_slots(BeachId, Date),
+    Slots = get_available_slots(BeachId, Date),
     MorningSlots = element(2,Slots),
     AfternoonSlots = element(3,Slots),
     case Type of
@@ -566,3 +573,86 @@ increase_slots(BeachId, Date, Type) ->
   end,
   {atomic, Res} = mnesia:transaction(F),
   Res.
+
+check_decrease_slots(BeachId, Date, Type) ->
+  F = fun() ->
+    Slots = get_available_slots(BeachId, Date),
+    case Slots of 
+      false ->
+        false;
+      _ ->
+        MorningSlots = element(2,Slots),
+        AfternoonSlots = element(3,Slots),
+        case Type of
+          morning ->
+            case MorningSlots > 0 of
+              true ->
+                true;
+              false ->
+                false
+            end;
+          afternoon ->
+            case AfternoonSlots > 0 of
+              true ->
+                true;
+              false ->
+                false
+            end;
+          all_day ->
+              case (MorningSlots > 0) and (AfternoonSlots > 0) of
+              true ->
+                true;
+              false ->
+                false
+          end
+        end
+    end
+  end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) -> 
+  F = fun() ->
+    is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0)
+  end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+is_subscription_possible(_, _, _, _, SubscriptionDuration, SubscriptionDuration) ->
+  {true,""};
+is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, DaysToAdd) ->
+  {DateToCheckYear, DateToCheckMonth, DateToCheckDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToAdd),
+  DateToCheckStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToCheckYear, DateToCheckMonth, DateToCheckDay])),
+  case is_user_booking_present(Username, BeachId, SubscriptionType, DateToCheckStr) of 
+    true ->
+      ResultStr = string:concat("Booking already present on: ",DateToCheckStr),
+      {false, ResultStr};
+    false ->
+      case check_decrease_slots(BeachId, DateToCheckStr, SubscriptionType) of 
+        true ->
+          is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, DaysToAdd + 1);
+        false ->
+          ResultStr = string:concat("No available slots on: ",DateToCheckStr),
+          {false, ResultStr}
+      end
+  end.
+
+%%DELETE THIS TOMORROW
+are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
+  F = fun() ->
+    are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0)
+  end,
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
+
+are_subscription_slots_available(_, _, _, SubscriptionDuration, SubscriptionDuration) ->
+  true;
+are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration, DaysToAdd) ->
+  {DateToCheckYear, DateToCheckMonth, DateToCheckDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToAdd),
+  DateToCheckStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToCheckYear, DateToCheckMonth, DateToCheckDay])),
+  case check_decrease_slots(BeachId, DateToCheckStr, SubscriptionType) of 
+    true ->
+      are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration, DaysToAdd + 1);
+    false ->
+      false
+  end.
