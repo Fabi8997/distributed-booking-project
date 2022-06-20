@@ -355,3 +355,7 @@ select{
     border-right: none;
     cursor: pointer;
 }
+
+.subSelect {
+    display: none;
+}

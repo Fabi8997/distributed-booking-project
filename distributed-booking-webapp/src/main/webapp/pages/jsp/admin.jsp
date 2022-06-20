@@ -19,6 +19,23 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Administration Panel</title>
 
+    <script>
+        function displaySelect(elementValue) {
+            let selectedId = elementValue.value;
+            let subSelects = document.getElementsByClassName("subSelect");
+            for(let i = 0; i < subSelects.length; i++)
+            {
+                let currentSelect = subSelects[i];
+                currentSelect.style.display = currentSelect.id == selectedId ? 'block' : 'none';
+            }
+        }
+    </script>
+    <style>
+        .subSelect {
+            display: none;
+        }
+    </style>
+
     <div class="header">
         <h2>Beach Booking</h2>
     </div>
@@ -35,7 +52,7 @@
             <form class="AdminForm" action="<%= request.getContextPath() %>/UpdateBeachServlet">
                 <label class="adminFormLabel" for="beachInput">Select the beach:</label>
                 <select name="beachId" id="beachInput">
-                    <option value="0" selected="selected" disabled>--</option>
+                    <option value=0 selected="selected" disabled>--</option>
                     <%
                         for(int i = 0; i < beaches.size(); i++)
                         {
@@ -53,7 +70,7 @@
                 <label class="adminFormLabel">Insert new description</label>
                 <input type="text" id="description" value ="Desc">
                 <label class="adminFormLabel">Insert new number of slots</label>
-                <input type="number" id="slots" value="0">
+                <input type="number" id="slots" value=0>
                 <button type="submit">UPDATE</button>
             </form>
             <% //TODO: show bookings and subscriptions only for the selected user? %>
@@ -75,28 +92,62 @@
                 <button type="submit">DELETE</button>
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
-                <label class="adminFormLabel" for="beachInput">Select the subscription:</label>
-                <select name="userId" id="subscriptionToDelete">
+                <label class="adminFormLabel" for="userToDelete">Select the user:</label>
+                <select name="userId" id="userToFindForSubscriptions" onchange="displaySelect(this)">
                     <option value="0" selected="selected">--</option>
                     <%
-
-                        List<SubscriptionDTO> subscriptions = DbManager.getAllSubscriptions(user);
-                        for(int i = 0; i < subscriptions.size(); i++)
+                        for(int i = 0; i < users.size(); i++)
                         {
                     %>
-                    <option value=<%= subscriptions.get(i).getIdSubscription() %>>
-                        <%= subscriptions.get(i).getUsername().replace("\"", "") %>,
-                        <%= subscriptions.get(i).getIdBeach() %>,
-                        <%= subscriptions.get(i).getType().replace("\"", "") %>,
-                        <%= subscriptions.get(i).getEndDate().replace("\"", "") %>
+                    <option value=<%= users.get(i).getUserId() %>>
+                        <%= users.get(i).getUsername().replace("\"", "") %>
                     </option>
                     <%
                         }
                     %>
                 </select>
+                <label class="adminFormLabel" for="beachInput">Select the subscription:</label>
+                <% for(int i = 0; i < users.size(); i++)
+                    {
+                %>
+                <select name="subscriptionId" id="<%=users.get(i).getUserId()%>" class = "subSelect">
+                    <option value="0" selected="selected">--</option>
+                    <%
+                            String currentUser = users.get(i).getUsername().replace("\"", "");
+                            List<SubscriptionDTO> subscriptions = DbManager.getSubscriptionFromAnotherUser(currentUser, user);
+                            for(int j = 0; j < subscriptions.size(); j++)
+                            {
+                    %>
+                    <option value=<%= subscriptions.get(j).getIdSubscription() %>>
+                        <%= subscriptions.get(j).getUsername().replace("\"", "") %>,
+                        <%= subscriptions.get(j).getIdBeach() %>,
+                        <%= subscriptions.get(j).getType().replace("\"", "") %>,
+                        <%= subscriptions.get(j).getEndDate().replace("\"", "") %>
+                    </option>
+                    <%
+                            }
+                    %>
+                </select>
+                 <%
+                     }
+                 %>
                 <button type="submit">DELETE</button>
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
+                <label class="adminFormLabel" for="userToDelete">Select the user:</label>
+                <select name="userId" id="userToFindForBookings">
+                    <option value="0" selected="selected">--</option>
+                    <%
+                        for(int i = 0; i < users.size(); i++)
+                        {
+                    %>
+                    <option value=<%= users.get(i).getUserId() %>>
+                        <%= users.get(i).getUsername().replace("\"", "") %>
+                    </option>
+                    <%
+                        }
+                    %>
+                </select>
                 <label class="adminFormLabel" for="bookingToDelete">Select the booking:</label>
                 <select name="bookingId" id="bookingToDelete">
                     <option value="0" selected="selected">--</option>
