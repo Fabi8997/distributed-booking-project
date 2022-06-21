@@ -15,7 +15,7 @@
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
   delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3, is_user_booking_present/4,
-  is_subscription_possible/5, are_subscription_slots_available/4]).
+  is_subscription_possible/5, are_subscription_slots_available/4, insert_booking_subscription/5]).
 
 -export([]).
 
@@ -270,11 +270,11 @@ update_beach(BeachId, Desc, Slots) ->
 %%% SUBSCRIPTION OPERATIONS
 %%%===================================================================
   
-add_subscription(BeachName, User, Type, EndDate) ->
+add_subscription(BeachId, User, Type, EndDate) ->
   Index = mnesia:dirty_update_counter(table_id, subscription, 1),
   Fun = fun() ->
     mnesia:write(#subscription{subscription_id = Index,
-	  beach_id = BeachName,
+	  beach_id = BeachId,
 	  username = User,
 	  type = Type,
 	  status = active,
@@ -637,22 +637,30 @@ is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, Subs
       end
   end.
 
-%%DELETE THIS TOMORROW
-are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
+
+insert_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) -> 
   F = fun() ->
-    are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0)
+    case is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of
+      {true,""} ->
+        insert_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0),
+        {true,""};
+      {false,Msg} -> 
+        {false,Msg}  
+    end
   end,
   {atomic, Res} = mnesia:transaction(F),
   Res.
 
-are_subscription_slots_available(_, _, _, SubscriptionDuration, SubscriptionDuration) ->
-  true;
-are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration, DaysToAdd) ->
-  {DateToCheckYear, DateToCheckMonth, DateToCheckDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToAdd),
-  DateToCheckStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToCheckYear, DateToCheckMonth, DateToCheckDay])),
-  case check_decrease_slots(BeachId, DateToCheckStr, SubscriptionType) of 
-    true ->
-      are_subscription_slots_available(BeachId, SubscriptionType, StartingDate, SubscriptionDuration, DaysToAdd + 1);
-    false ->
-      false
-  end.
+insert_booking_subscription(_, _, _, _, SubscriptionDuration, SubscriptionDuration) ->
+  {true,""};
+insert_booking_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd) ->
+  {DateToAddYear, DateToAddMonth, DateToAddDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToAdd),
+  DateToAddStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToAddYear, DateToAddMonth, DateToAddDay])),
+  case decrease_slots(BeachId, DateToAddStr, Type) of
+      true -> 
+        insert_booking(Username, BeachId, Type, DateToAddStr),
+        insert_booking_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd + 1);
+      false -> 
+        ResultStr = string:concat("No available slots on: ",DateToAddStr),
+        {false, ResultStr}
+    end.
