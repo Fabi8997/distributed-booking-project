@@ -51,9 +51,11 @@ handle_call({new_booking, {Username, BeachId, Type, Date}}, _From, _Status) ->
 
 handle_call({new_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
 
-	case mnesia_manager:is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
-
+	case mnesia_manager:insert_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
 		{true,_} -> 
+			{EndDateYear, EndDateMonth, EndDateDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + SubscriptionDuration - 1),
+  			EndDateStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[EndDateYear, EndDateMonth, EndDateDay])),
+			mnesia_manager:add_subscription(BeachId, Username, SubscriptionType, EndDateStr),
 			{ reply, {true,""}, _Status };
 		{false, Result}  ->
 			{ reply, {false, Result}, _Status }

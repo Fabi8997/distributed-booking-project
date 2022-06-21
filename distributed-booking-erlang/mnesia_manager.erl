@@ -4,7 +4,7 @@
 	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1,
 	all_bookings/1, all_subscriptions/1, delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3,
 	decrease_slots/3, increase_slots/3, is_user_booking_present/4, insert_slots/3, get_available_slots/2, all_user/0,
-	all_beaches/0, is_subscription_possible/5]).
+	all_beaches/0, is_subscription_possible/5, insert_booking_subscription/5]).
 -behavior(gen_server).
 
 %%%===================================================================
@@ -78,6 +78,9 @@ all_subscriptions(User) ->
 
 is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
 	gen_server:call(mnesia_manager, {is_subscription_possible, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
+
+insert_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) -> 
+	gen_server:call(mnesia_manager, {insert_booking_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
 
 %%%===================================================================
 %%% BOOKING OPERATIONS
@@ -161,8 +164,8 @@ handle_call({update_beach, {BeachId, Description, Slots}}, _From, _Status) ->
 	Result = mnesia_server:update_beach(BeachId, Description, Slots),
 	{reply, Result, _Status };
 
-handle_call({add_subscription, {BeachName, User, Type, EndDate}}, _From, _Status) ->
-	Result = mnesia_server:add_subscription(BeachName, User, Type, EndDate),
+handle_call({add_subscription, {BeachId, User, Type, EndDate}}, _From, _Status) ->
+	Result = mnesia_server:add_subscription(BeachId, User, Type, EndDate),
 	{reply, Result, _Status };
 
 handle_call({update_subscription, {SubId, Type, Status, EndDate}}, _From, _Status) ->
@@ -187,6 +190,10 @@ handle_call({all_subscriptions, User}, _From, _Status) ->
 
 handle_call({is_subscription_possible, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
 	Result = mnesia_server:is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration),
+	{reply, Result, _Status };
+
+handle_call({insert_booking_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
+	Result = mnesia_server:insert_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration),
 	{reply, Result, _Status };
 	
 handle_call({insert_booking, {Username, BeachId, Type, Timestamp}}, _From, _Status) ->
