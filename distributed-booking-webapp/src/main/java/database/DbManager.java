@@ -455,6 +455,28 @@ public class DbManager {
         return new ArrayList<>();
     }
 
+    public static ArrayList<SubscriptionDTO> getSubscriptionFromAnotherUser(String user, String connectionUser){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(connectionUser);
+            if(conn != null) {
+                conn.sendRPC(registeredServer, "get_user_subscription", new OtpErlangObject[]{new OtpErlangString(user)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+                if (reply instanceof OtpErlangList) {
+                    return toSubscriptionsArray((OtpErlangList) reply, user);
+                }
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     public static ArrayList<SubscriptionDTO> getAllSubscriptions(String user){
         OtpConnection conn = null;
         try {

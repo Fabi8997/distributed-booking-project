@@ -44,8 +44,8 @@ public class DeleteSubscriptionServlet extends HttpServlet {
                 requestDispatcher.forward(request, response);
             } else {
                 System.out.println("Receiving the subscription to delete info...");
-
-                int subscription = Integer.parseInt(request.getParameter("subscriptionToDelete"));
+                String selectedUser = request.getParameter("userToFindForSubscriptions");
+                int subscription = Integer.parseInt(request.getParameter(selectedUser));
                 String admin = session.getAttribute("user").toString();
                 String targetJSP;
 
