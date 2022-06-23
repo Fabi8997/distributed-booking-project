@@ -8,6 +8,8 @@
     <title>New Booking</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/indexStyle.css">
     <script src="<%= request.getContextPath() %>/javascript/utils.js"></script>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
+
 </head>
 <body>
 
