@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/indexStyle.css">
     <title>Registration</title>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
 </head>
 <body>
 

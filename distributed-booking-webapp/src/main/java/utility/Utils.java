@@ -62,7 +62,7 @@ public class Utils {
 
     public static void main(String[] args){
 
-        System.out.println(fromDateToTuple("2022-06-29"));
+        System.out.println(getDateNow());
     }
 
 }

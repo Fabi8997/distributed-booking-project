@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Redirect to homepage</title>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
 </head>
 <body onload="window.location.href = '<%=request.getContextPath()%>/BeachesServlet'">
 

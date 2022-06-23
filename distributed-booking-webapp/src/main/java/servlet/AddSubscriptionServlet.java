@@ -47,14 +47,16 @@ public class AddSubscriptionServlet extends HttpServlet {
             }else{
                 System.out.println("Receiving the new subscription info...");
 
-                int idBeach = Integer.parseInt(request.getParameter("beachId"));
-                String type = request.getParameter("type");
+                int idBeach = Integer.parseInt(request.getParameter("idBeach"));
+                String type = request.getParameter("booking-type");
                 String user = session.getAttribute("user").toString();
-                String startingDate = request.getParameter("startingDate");
-                SubscriptionType subscriptionType = SubscriptionType.valueOf(request.getParameter("subscriptionType"));
+                String startingDate = request.getParameter("starting-date");
+                SubscriptionType subscriptionType = SubscriptionType.valueOf(request.getParameter("subscription-type"));
                 int duration = SubscriptionType.parseInt(subscriptionType);
                 String targetJSP;
 
+                System.out.println(idBeach + "\n" + type  + "\n" + user  + "\n" + startingDate  + "\n" + duration );
+                
                 ResultMessage resultMessage = BookingManager.newSubscription(user,idBeach,type,startingDate, duration);
 
                 if(resultMessage.isResult()){

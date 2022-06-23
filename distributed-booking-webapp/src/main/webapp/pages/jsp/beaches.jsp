@@ -6,6 +6,7 @@
 <head>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Beaches</title>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
 
     <%
         String user = (String) session.getAttribute("user");
@@ -65,9 +66,13 @@
 
 </div>
 
-<div class="header">
-    <h2>Beach Booking</h2>
-</div>
+<header>
+    <div class = "title">
+        <h1><span>B</span>each <span>B</span>ooking</h1>
+        <img src='<%= request.getContextPath() %>/images/sunbed.png' alt="BB">
+    </div>
+</header>
+
 
 <ul class="topnav">
     <li><a class="active" href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
