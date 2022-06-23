@@ -1,7 +1,13 @@
 package utility;
+import com.ericsson.otp.erlang.OtpErlangInt;
+import com.ericsson.otp.erlang.OtpErlangObject;
+import com.ericsson.otp.erlang.OtpErlangTuple;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 public class Utils {
 
@@ -38,13 +44,25 @@ public class Utils {
         return  localDateTime.toLocalDate().toString();
     }
 
+    public static OtpErlangTuple fromDateToTuple(String date){
+        DateTimeFormatter DATEFORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ld = LocalDate.parse(date, DATEFORMATTER);
+        int year = ld.getYear();
+        int month = ld.getMonthValue();
+        int day = ld.getDayOfMonth();
+
+        return new OtpErlangTuple(new OtpErlangObject []{
+            new OtpErlangInt(year), new OtpErlangInt(month), new OtpErlangInt(day)
+        });
+    }
+
     public static boolean isAdmin(String user){
         return user.equals("admin");
     }
 
     public static void main(String[] args){
-        System.out.println(getDateNow());
-        System.out.println(getDateNext(2));
+
+        System.out.println(fromDateToTuple("2022-06-29"));
     }
 
 }
