@@ -311,6 +311,28 @@ public class DbManager {
         return new ArrayList<>();
     }
 
+    public static ArrayList<BookingDTO> getUserBookings(String user, String connectionUser){
+        OtpConnection conn = null;
+        try {
+            conn = getConnectionDB(connectionUser);
+            if(conn != null) {
+                conn.sendRPC(registeredServer, "all_bookings", new OtpErlangObject[]{new OtpErlangString(user)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+                if (reply instanceof OtpErlangList) {
+                    return toBookingsArray((OtpErlangList) reply, user);
+                }
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if(conn!= null){
+                conn.close();
+            }
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     private static ArrayList<BookingDTO> toBookingsArray(OtpErlangList list, String user){
         ArrayList<BookingDTO> bookings = new ArrayList<>();
 

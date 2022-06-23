@@ -70,21 +70,21 @@
                     <th scope="col">Type</th>
                     <th scope="col">Beach</th>
                     <th scope="col">EndDate</th>
-                    <th scope="col"></th>
+                    <!--<th scope="col"></th>-->
                 </tr>
                 </thead>
                 <tbody>
                 <%
                     for(int i = 0; i < bookings.size(); i++) {
                 %>
-                <tr id = "row-<%=i%>">
-                    <td style="display:none;"><input class="idGood" type="hidden" name="idGood" value="<%=bookings.get(i).getIdBooking()%>"></td>
-                    <td><%=bookings.get(i).getType().replace("\"", "")%></td>
-                    <td><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
-                    <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
-                    <td><button>DELETE</button></td>
-                </tr>
-                <% } %>
+                    <tr id = "row-<%=i%>">
+                        <td style="display:none;"><input type="hidden" value="<%=bookings.get(i).getIdBooking()%>"></td>
+                        <td><%=bookings.get(i).getType().replace("\"", "")%></td>
+                        <td><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
+                        <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
+                        <!--<td><button>DELETE</button></td>-->
+                    </tr>
+                    <% } %>
                 </tbody>
             </table>
         </div>
