@@ -1,6 +1,9 @@
 package servlet;
 
+import communication.BookingManager;
 import database.DbManager;
+import dto.SubscriptionType;
+import utility.ResultMessage;
 import utility.Utils;
 
 import javax.servlet.RequestDispatcher;
@@ -44,19 +47,24 @@ public class AddSubscriptionServlet extends HttpServlet {
             }else{
                 System.out.println("Receiving the new subscription info...");
 
-                int beachId = Integer.parseInt(request.getParameter("beachId"));
-                String type = request.getParameter("subTypes");
+                int idBeach = Integer.parseInt(request.getParameter("beachId"));
+                String type = request.getParameter("type");
                 String user = session.getAttribute("user").toString();
+                String startingDate = request.getParameter("startingDate");
+                SubscriptionType subscriptionType = SubscriptionType.valueOf(request.getParameter("subscriptionType"));
+                int duration = SubscriptionType.parseInt(subscriptionType);
                 String targetJSP;
 
-                if(DbManager.addSubscription(beachId, user, type, Utils.getEndDate(type))){
+                ResultMessage resultMessage = BookingManager.newSubscription(user,idBeach,type,startingDate, duration);
+
+                if(resultMessage.isResult()){
                     //if no errors occur then it goes to the confirmation page!
                     targetJSP = "/pages/jsp/subscription.jsp";
-                    request.setAttribute("info", "Subscription correctly inserted!");
+                    request.setAttribute("info", "Subscription inserted correctly!");
                 }else{
                     //redirect to the previous page with an error msg!
                     targetJSP = "/pages/jsp/subscription.jsp";
-                    request.setAttribute("error", "Something has gone wrong!");
+                    request.setAttribute("error", resultMessage.getMessage());
                 }
 
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetJSP);

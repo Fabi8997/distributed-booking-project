@@ -30,6 +30,11 @@
             }
         }
     </script>
+    <style>
+        .subSelect {
+            display: none;
+        }
+    </style>
 
     <div class="header">
         <h2>Beach Booking</h2>
