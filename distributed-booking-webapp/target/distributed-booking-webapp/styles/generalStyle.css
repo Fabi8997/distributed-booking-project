@@ -389,9 +389,7 @@ select{
     border-left: none;
     border-right: none;
     cursor: pointer;
-
 }
-
 
 header{
     background-repeat: no-repeat;
@@ -434,5 +432,4 @@ header h1 img{
     float: left;
     position: relative;
 }
-
 

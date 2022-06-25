@@ -44,7 +44,7 @@ public class DeleteBookingServlet extends HttpServlet {
             }else{
                 System.out.println("Receiving the booking to delete info...");
                 String selectedUser = request.getParameter("userToFindForBookings");
-                int booking = Integer.parseInt(request.getParameter(selectedUser));
+                int booking = Integer.parseInt(request.getParameter("bookingId"));
                 String admin = session.getAttribute("user").toString();
                 String targetJSP;
 

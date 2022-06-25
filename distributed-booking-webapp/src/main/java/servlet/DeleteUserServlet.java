@@ -44,7 +44,7 @@ public class DeleteUserServlet extends HttpServlet {
             }else{
                 System.out.println("Receiving the user to delete info...");
 
-                String user = request.getParameter("userToDelete");
+                String user = request.getParameter("userId");
                 String admin = session.getAttribute("user").toString();
                 String targetJSP;
 

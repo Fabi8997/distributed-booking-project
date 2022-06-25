@@ -209,19 +209,14 @@ public class DbManager {
         return beaches;
     }
 
-    public static boolean updateBeach(String user, int beachId, String desc, int slots){
-        if(desc.equals("Desc")){
-            desc = getBeach(beachId,user).getDescription();
-        }
-        //TODO: slots???
+    public static boolean updateBeach(String user, int beachId, String desc){
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(user);
             if(conn != null) {
 
                 conn.sendRPC(registeredServer, "update_beach", new OtpErlangObject[]{
-                        new OtpErlangInt(beachId), new OtpErlangString(desc),
-                        new OtpErlangInt(slots)});
+                        new OtpErlangInt(beachId), new OtpErlangString(desc)});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();

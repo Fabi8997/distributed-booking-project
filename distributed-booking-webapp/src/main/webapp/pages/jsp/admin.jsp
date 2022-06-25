@@ -91,9 +91,7 @@
                     %>
                 </select>
                 <label class="adminFormLabel">Insert new description</label>
-                <input type="text" id="description" value ="Desc">
-                <label class="adminFormLabel">Insert new number of slots</label>
-                <input type="number" id="slots" value=0>
+                <input type="text" name="description" id="description" value ="Desc">
                 <button type="submit">UPDATE</button>
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteUserServlet">
@@ -115,7 +113,7 @@
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
                 <label class="adminFormLabel" for="userToDelete">Select the user:</label>
-                <select name="userId" id="userToFindForSubscriptions" onchange="displaySelectSub(this)">
+                <select name="userIdSub" id="userToFindForSubscriptions" onchange="displaySelectSub(this)">
                     <option value="0" selected="selected">--</option>
                     <%
                         for(int i = 0; i < users.size(); i++)
@@ -159,7 +157,7 @@
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
                 <label class="adminFormLabel" for="userToFindForBookings">Select the user:</label>
-                <select name="userId" id="userToFindForBookings" onchange="displaySelectBookings(this)">
+                <select name="userIdBook" id="userToFindForBookings" onchange="displaySelectBookings(this)">
                     <option value="0" selected="selected">--</option>
                     <%
                         for(int i = 0; i < users.size(); i++)

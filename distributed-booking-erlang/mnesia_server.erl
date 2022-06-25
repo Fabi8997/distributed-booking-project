@@ -14,8 +14,8 @@
   is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
-  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/3, is_user_booking_present/4,
-  is_subscription_possible/5, are_subscription_slots_available/4, insert_booking_subscription/5]).
+  delete_user/1, delete_booking/1, delete_subscription/1, update_beach/2, is_user_booking_present/4,
+  is_subscription_possible/5, insert_booking_subscription/5]).
 
 -export([]).
 
@@ -258,10 +258,10 @@ all_beaches() ->
   {atomic, Res} = mnesia:transaction(F),
  Res.
  
-update_beach(BeachId, Desc, Slots) ->
+update_beach(BeachId, Desc) ->
   F = fun() ->
     [Beach] = mnesia:read(beach, BeachId),
-    mnesia:write(Beach#beach{description = Desc, slots = Slots})
+    mnesia:write(Beach#beach{description = Desc})
       end,
   mnesia:activity(transaction, F).
  
