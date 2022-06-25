@@ -2,7 +2,6 @@
 <%@ page import="dto.SubscriptionDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dto.BeachDTO" %>
-<%@ page import="utility.Utils" %>
 <%@ page import="dto.BookingDTO" %>
 <%@ page import="dto.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -18,6 +17,8 @@
 
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Administration Panel</title>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
+
 
     <script>
         function displaySelectSub(elementValue) {

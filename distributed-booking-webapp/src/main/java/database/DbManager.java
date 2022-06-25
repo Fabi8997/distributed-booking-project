@@ -16,7 +16,7 @@ public class DbManager {
 
     public static void main(String[] args) {
 
-        System.out.println(DbManager.login("Prova","Pro12345"));
+        System.out.println(DbManager.getAvailableSlots("Prova", 1));
     }
 
     //USERS
@@ -460,7 +460,7 @@ public class DbManager {
         try {
             conn = getConnectionDB(user);
             if(conn != null) {
-                conn.sendRPC(registeredServer, "get_user_subscription", new OtpErlangObject[]{new OtpErlangString(user)});
+                conn.sendRPC(registeredServer, "all_subscriptions", new OtpErlangObject[]{new OtpErlangString(user)});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();

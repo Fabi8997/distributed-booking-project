@@ -67,7 +67,7 @@ handle_call({get_bookings, Username}, _From, _Status) ->
 
 handle_call(initialize_slots, _From, _Status) ->
 	{CurrentDate, _} = calendar:now_to_datetime(erlang:timestamp()),
-	Result = init_slots(CurrentDate, 50),
+	Result = init_slots(CurrentDate, 75),
 	{ reply, Result, _Status }.
 
 

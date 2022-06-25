@@ -15,10 +15,16 @@
     %>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles/generalStyle.css">
     <title>Your personal area</title>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
 
-    <div class="header">
-        <h2>Beach Booking</h2>
-    </div>
+</head>
+<body>
+    <header>
+        <div class = "title">
+            <h1><span>B</span>each <span>B</span>ooking</h1>
+            <img src='<%= request.getContextPath() %>/images/sunbed.png' alt="BB">
+        </div>
+    </header>
 
     <ul class="topnav">
         <li><a href="<%= request.getContextPath() %>/BeachesServlet">Home</a></li>
@@ -89,6 +95,5 @@
             </table>
         </div>
     </div>
-</head>
 </body>
 </html>
