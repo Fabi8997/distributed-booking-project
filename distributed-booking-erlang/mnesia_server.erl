@@ -435,12 +435,14 @@ all_bookings(User) ->
   {atomic, Res} = mnesia:transaction(F),
   Res.
   
+ 
+ 
 delete_booking(BookingId) ->
   F = fun() ->
 	case is_booking_present(BookingId) of
 		true ->
 			Booking = get_booking(BookingId),
-			case increase_slots(element(1, Booking), element(3, Booking), element(2, Booking)) of
+			case increase_slots(element(4, Booking), element(6, Booking), element(5, Booking)) of
 				true ->
 					mnesia:delete(booking, BookingId, write);
 				false ->
