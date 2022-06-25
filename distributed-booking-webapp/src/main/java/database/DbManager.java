@@ -332,7 +332,9 @@ public class DbManager {
         ArrayList<BookingDTO> bookings = new ArrayList<>();
 
         for(int i = 0; i < list.arity(); i++){
-            bookings.add(new BookingDTO((OtpErlangTuple) list.elementAt(i)));
+            //bookings.add(new BookingDTO((OtpErlangTuple) list.elementAt(i)));
+            int idBooking = Integer.parseInt(String.valueOf(((OtpErlangTuple) list.elementAt(i)).elementAt(1)));
+            bookings.add(getBooking(idBooking, user));
         }
         return bookings;
     }
@@ -533,7 +535,7 @@ public class DbManager {
             conn = getConnectionDB(user);
             if(conn != null) {
 
-                conn.sendRPC(registeredServer, "delete_booking", new OtpErlangObject[]{new OtpErlangInt(SubscriptionId)});
+                conn.sendRPC(registeredServer, "delete_subscription", new OtpErlangObject[]{new OtpErlangInt(SubscriptionId)});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();

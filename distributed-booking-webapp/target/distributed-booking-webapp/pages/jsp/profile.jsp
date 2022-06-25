@@ -17,6 +17,12 @@
     <title>Your personal area</title>
     <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
 
+    <script>
+        function deleteBooking(){
+
+        }
+    </script>
+
 </head>
 <body>
     <header>
@@ -76,7 +82,7 @@
                     <th scope="col">Type</th>
                     <th scope="col">Beach</th>
                     <th scope="col">EndDate</th>
-                    <!--<th scope="col"></th>-->
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -88,7 +94,7 @@
                         <td><%=bookings.get(i).getType().replace("\"", "")%></td>
                         <td><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
                         <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
-                        <!--<td><button>DELETE</button></td>-->
+                        <td><button onclick="window.location.href='<%=request.getContextPath()%>/DeleteBookingServlet?bookingID=<%=bookings.get(i).getIdBooking()%>'">DELETE</button></td>
                     </tr>
                     <% } %>
                 </tbody>

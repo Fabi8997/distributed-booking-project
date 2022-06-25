@@ -4,6 +4,7 @@
 <%@ page import="dto.BeachDTO" %>
 <%@ page import="dto.BookingDTO" %>
 <%@ page import="dto.UserDTO" %>
+<%@ page import="java.awt.datatransfer.SystemFlavorMap" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +113,7 @@
                 <button type="submit">DELETE</button>
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
-                <label class="adminFormLabel" for="userToDelete">Select the user:</label>
+                <label class="adminFormLabel" for="userToDelete">Select the user for subscriptions:</label>
                 <select name="userIdSub" id="userToFindForSubscriptions" onchange="displaySelectSub(this)">
                     <option value="0" selected="selected">--</option>
                     <%
@@ -156,14 +157,14 @@
                 </div>
             </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
-                <label class="adminFormLabel" for="userToFindForBookings">Select the user:</label>
+                <label class="adminFormLabel" for="userToFindForBookings">Select the user for bookings:</label>
                 <select name="userIdBook" id="userToFindForBookings" onchange="displaySelectBookings(this)">
                     <option value="0" selected="selected">--</option>
                     <%
                         for(int i = 0; i < users.size(); i++)
                         {
                     %>
-                    <option value=<%= users.get(i).getUserId() %>>
+                    <option value="<%= users.get(i).getUserId() %>b">
                         <%= users.get(i).getUsername().replace("\"", "") %>
                     </option>
                     <%
@@ -175,8 +176,8 @@
                     <% for(int i = 0; i < users.size(); i++)
                     {
                     %>
-                    <select hidden="hidden" name="bookingId" id="<%=users.get(i).getUserId()%>" class="bookingSelect">
-                        <option value="0" selected="selected">--</option>
+                    <select hidden="hidden" name="bookingID" id="<%=users.get(i).getUserId()%>b" class="bookingSelect">
+                        <option value="0">--</option>
                         <%
                             String currentUser = users.get(i).getUsername().replace("\"", "");
                             List<BookingDTO> bookings = DbManager.getUserBookings(currentUser, user);

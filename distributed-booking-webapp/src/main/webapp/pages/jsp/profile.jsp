@@ -94,7 +94,7 @@
                         <td><%=bookings.get(i).getType().replace("\"", "")%></td>
                         <td><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
                         <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
-                        <td><button onclick="window.location.href='<%=request.getContextPath()%>/DeleteBookingServlet?bookingId=<%=bookings.get(i).getIdBooking()%>'">DELETE</button></td>
+                        <td><button onclick="window.location.href='<%=request.getContextPath()%>/DeleteBookingServlet?bookingID=<%=bookings.get(i).getIdBooking()%>'">DELETE</button></td>
                     </tr>
                     <% } %>
                 </tbody>
