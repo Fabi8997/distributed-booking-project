@@ -11,7 +11,7 @@
 %% API
 -export([init/0, login/2, register/2, all_user/0,
   add_user/3, add_subscription/4, add_beach/3, is_subscription_present/1, is_beach_present/1,
-  is_user_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
+  is_user_present/1, is_user_id_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
   delete_user/1, delete_booking/1, delete_subscription/1, update_beach/2, is_user_booking_present/4,
@@ -174,6 +174,18 @@ is_user_present(Username) ->
    {atomic,Res} = mnesia:transaction(F),
    Res.
 
+is_user_id_present(UserId) ->
+  F = fun() ->
+    Q = qlc:q([E || E <- mnesia:table(user),E#user.userId == UserId]),
+    case qlc:e(Q) =:= [] of
+      true ->
+        false;
+      false ->
+        true
+    end
+      end,
+   {atomic,Res} = mnesia:transaction(F),
+   Res.
 
 all_user() ->
   F = fun() ->
@@ -194,9 +206,9 @@ get_user(Username) ->
   
 delete_user(Username) ->
   F = fun() ->
-	case is_user_present(Username) of
+	case is_user_id_present(Username) of
 		true ->
-			mnesia:delete({user, Username});
+			mnesia:delete(user, Username, write);
 		false ->
 			false
 	end
@@ -345,7 +357,7 @@ delete_subscription(SubId) ->
   F = fun() ->
 	case is_subscription_present(SubId) of
 		true ->
-			mnesia:delete({subscription, SubId});
+			mnesia:delete(subscription, SubId, write);
 		false ->
 			false
 	end
@@ -412,7 +424,8 @@ get_booking(BookingId) ->
         false
     end
   end,
-  mnesia:activity(transaction, F).
+  {atomic, Res} = mnesia:transaction(F),
+  Res.
  
 all_bookings(User) ->
   F = fun() ->
@@ -427,9 +440,9 @@ delete_booking(BookingId) ->
 	case is_booking_present(BookingId) of
 		true ->
 			Booking = get_booking(BookingId),
-			case increase_slots(element(3, Booking), element(5, Booking), element(4, Booking)) of
+			case increase_slots(element(1, Booking), element(3, Booking), element(2, Booking)) of
 				true ->
-					mnesia:delete({booking, BookingId});
+					mnesia:delete(booking, BookingId, write);
 				false ->
 					false
 			end;
