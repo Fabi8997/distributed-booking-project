@@ -36,13 +36,17 @@
             display: none;
         }
     </style>
-
-    <div class="header">
-        <h2>Beach Booking</h2>
-    </div>
+</head>
+<body>
+    <header>
+        <div class = "title">
+            <h1><span>B</span>each <span>B</span>ooking</h1>
+            <img src='<%= request.getContextPath() %>/images/sunbed.png' alt="BB">
+        </div>
+    </header>
 
     <ul class="topnav">
-        <li><a href="<%= request.getContextPath() %>/AdminServlet">AdminPanel</a></li>
+        <li><a class="active" href="<%= request.getContextPath() %>/AdminServlet">Admin Panel</a></li>
         <li id="logout"><a href="<%= request.getContextPath() %>/LogoutServlet" >
             <img src="<%= request.getContextPath() %>/images/logout3.png" alt="logout">
         </a></li>
@@ -170,6 +174,5 @@
             </form>
         </div>
     </div>
-</head>
 </body>
 </html>

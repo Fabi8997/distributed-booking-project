@@ -4,6 +4,7 @@
 <head>
     <link rel="stylesheet" href="styles/indexStyle.css">
     <title>Login</title>
+    <link rel="icon" type="image/png" href='<%= request.getContextPath() %>/images/sunbed.png'/>
 </head>
 <body>
 
@@ -16,7 +17,7 @@
         <label>
             <input type="password" name="pass" placeholder="Password" required>
         </label>
-        <input type="submit" name="login" class="login login-submit" value="login">
+        <input type="submit" name="login" class="login login-submit" value="Login">
     </form>
 
     <div class="login-help">
