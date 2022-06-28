@@ -84,7 +84,14 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
-
+                List<BookingDTO> bookingList = getAllBookings(user);
+                for(BookingDTO booking: bookingList){
+                    deleteBooking(admin, booking.getIdBooking());
+                }
+                List<SubscriptionDTO> subList = getSubscriptionFromAnotherUser(user, admin);
+                for(SubscriptionDTO subscription: subList){
+                    deleteSubscription(admin, subscription.getIdSubscription());
+                }
                 return Boolean.parseBoolean(reply.toString());
             }
         } catch (IOException | OtpErlangExit | OtpAuthException e) {
@@ -539,7 +546,10 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
+                /*List<BookingDTO> bookingList = getAllBookings(user);
+                for(BookingDTO booking: bookingList){
 
+                }*/
                 return Boolean.parseBoolean(reply.toString());
             }
         } catch (IOException | OtpErlangExit | OtpAuthException e) {
