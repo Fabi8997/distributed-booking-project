@@ -66,7 +66,7 @@ handle_call({new_subscription, {Username, BeachId, SubscriptionType, StartingDat
 	
 handle_call({remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
 
-	case mnesia_manager:delete_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
+	case mnesia_manager:delete_booking_subscription(SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
 		{true,_} -> 
 			mnesia_manager:delete_subscription(SubscriptionId),
 			{ reply, {true,""}, _Status };

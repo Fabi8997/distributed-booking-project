@@ -15,7 +15,7 @@
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
   delete_user/1, delete_booking/1, delete_subscription/1, update_beach/2, is_user_booking_present/4,
-  is_subscription_possible/5, insert_booking_subscription/5, retrieve_booking/4, delete_booking_subscription/5]).
+  is_subscription_possible/5, insert_booking_subscription/5, retrieve_booking/4, delete_booking_subscription/6, delete_booking_from_subscription/6]).
 
 -export([]).
 
@@ -687,11 +687,11 @@ insert_booking_subscription(Username, BeachId, Type, StartingDate, SubscriptionD
     end.
 	
 %% to test
-delete_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) -> 
+delete_booking_subscription(SubId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) -> 
   F = fun() ->
-    case is_subscription_possible(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of
+    case is_subscription_present(SubId) of
       {true,""} ->
-        delete_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0),
+        delete_booking_from_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0),
         {true,""};
       {false,Msg} -> 
         {false,Msg}  
@@ -700,16 +700,16 @@ delete_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, S
   {atomic, Res} = mnesia:transaction(F),
   Res.
 
-delete_booking_subscription(_, _, _, _, SubscriptionDuration, SubscriptionDuration) ->
+delete_booking_from_subscription(_, _, _, _, SubscriptionDuration, SubscriptionDuration) ->
   {true,""};
-delete_booking_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd) ->
+delete_booking_from_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd) ->
   {DateToAddYear, DateToAddMonth, DateToAddDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToAdd),
   DateToAddStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToAddYear, DateToAddMonth, DateToAddDay])),
   case increase_slots(BeachId, DateToAddStr, Type) of
       true -> 
 		Booking = retrieve_booking(Username, BeachId, Type, StartingDate),
         delete_booking(element(2, Booking)),
-        delete_booking_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd + 1);
+        delete_booking_from_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd + 1);
       false -> 
         ResultStr = string:concat("No available slots on: ",DateToAddStr),
         {false, ResultStr}
