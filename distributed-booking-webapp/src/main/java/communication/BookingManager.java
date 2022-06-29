@@ -104,7 +104,7 @@ public class BookingManager {
         int beachId = subscription.getIdBeach();
         String type = subscription.getType();
         String date = subscription.getEndDate();
-        int duration = SubscriptionType.parseInt(SubscriptionType.valueOf(type));
+        int duration = subscription.getDuration();
         OtpConnection conn = null;
         try {
             conn = getConnection(connUser);

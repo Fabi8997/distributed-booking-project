@@ -58,7 +58,7 @@ handle_call({new_subscription, {Username, BeachId, SubscriptionType, StartingDat
 		{true,_} -> 
 			{EndDateYear, EndDateMonth, EndDateDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + SubscriptionDuration - 1),
   			EndDateStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[EndDateYear, EndDateMonth, EndDateDay])),
-			mnesia_manager:add_subscription(BeachId, Username, SubscriptionType, EndDateStr),
+			mnesia_manager:add_subscription(BeachId, Username, SubscriptionType, EndDateStr, SubscriptionDuration),
 			{ reply, {true,""}, _Status };
 		{false, Result}  ->
 			{ reply, {false, Result}, _Status }

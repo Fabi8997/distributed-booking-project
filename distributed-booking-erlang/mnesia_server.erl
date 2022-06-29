@@ -10,7 +10,7 @@
 
 %% API
 -export([init/0, login/2, register/2, all_user/0,
-  add_user/3, add_subscription/4, add_beach/3, is_subscription_present/1, is_beach_present/1,
+  add_user/3, add_subscription/5, add_beach/3, is_subscription_present/1, is_beach_present/1,
   is_user_present/1, is_user_id_present/1, start_all_counters/0, start_counter/1, all_beaches/0, all_bookings/1, all_subscriptions/1,
   get_all_counters/0, empty_all_tables/0, get_subscription/1, get_beach/1, get_user/1, is_subscription_active/2,
   update_subscription/4, get_user_subscription/1, insert_booking/4, is_booking_present/1, get_booking/1,
@@ -282,7 +282,7 @@ update_beach(BeachId, Desc) ->
 %%% SUBSCRIPTION OPERATIONS
 %%%===================================================================
   
-add_subscription(BeachId, User, Type, EndDate) ->
+add_subscription(BeachId, User, Type, EndDate, Duration) ->
   Index = mnesia:dirty_update_counter(table_id, subscription, 1),
   Fun = fun() ->
     mnesia:write(#subscription{subscription_id = Index,
@@ -290,7 +290,8 @@ add_subscription(BeachId, User, Type, EndDate) ->
 	  username = User,
 	  type = Type,
 	  status = active,
-	  end_date = EndDate
+	  end_date = EndDate,
+	  duration = Duration
     })
         end,
   mnesia:activity(transaction, Fun).
@@ -329,7 +330,7 @@ is_subscription_active(Username, BeachId) ->
 
 get_user_subscription(User) ->
   F = fun() ->
-    mnesia:match_object(subscription, {subscription,'_',User,'_','_',active,'_'}, read)  
+    mnesia:match_object(subscription, {subscription,'_',User,'_','_',active,'_', '_'}, read)  
     end,
   mnesia:activity(transaction, F).
 
@@ -429,7 +430,7 @@ get_booking(BookingId) ->
  
 retrieve_booking(Username, BeachId, Type, StartingDate) ->
   F = fun() ->
-    mnesia:match_object(booking, {booking,Username,BeachId,Type,StartingDate}, read)  
+    mnesia:match_object(booking, {booking,'_',Username,BeachId,Type,StartingDate}, read)  
     end,
   mnesia:activity(transaction, F). 
  

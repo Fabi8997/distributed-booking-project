@@ -1,7 +1,7 @@
 -module(mnesia_manager).
 -export([init/1, handle_call/3, handle_cast/2]).
 -export([start_server/0, login/2, register/2, add_beach/3, get_beach/1, insert_booking/4, get_booking/1, 
-	get_user/1, add_subscription/4, update_subscription/4, get_subscription/1, get_user_subscription/1,
+	get_user/1, add_subscription/5, update_subscription/4, get_subscription/1, get_user_subscription/1,
 	all_bookings/1, all_subscriptions/1, delete_user/1, delete_booking/1, delete_subscription/1, update_beach/2,
 	decrease_slots/3, increase_slots/3, is_user_booking_present/4, insert_slots/3, get_available_slots/2, all_user/0,
 	all_beaches/0, is_subscription_possible/5, insert_booking_subscription/5]).
@@ -58,8 +58,8 @@ all_beaches() ->
 %%% SUBSCRIPTION OPERATIONS
 %%%===================================================================
 
-add_subscription(BeachName, User, Type, EndDate) ->
-	gen_server:call(mnesia_manager, {add_subscription, {BeachName, User, Type, EndDate}}).
+add_subscription(BeachName, User, Type, EndDate, Duration) ->
+	gen_server:call(mnesia_manager, {add_subscription, {BeachName, User, Type, EndDate, Duration}}).
 
 update_subscription(SubId, Type, Status, EndDate) ->
 	gen_server:call(mnesia_manager, {update_subscription, {SubId, Type, Status, EndDate}}).
@@ -164,8 +164,8 @@ handle_call({update_beach, {BeachId, Description}}, _From, _Status) ->
 	Result = mnesia_server:update_beach(BeachId, Description),
 	{reply, Result, _Status };
 
-handle_call({add_subscription, {BeachId, User, Type, EndDate}}, _From, _Status) ->
-	Result = mnesia_server:add_subscription(BeachId, User, Type, EndDate),
+handle_call({add_subscription, {BeachId, User, Type, EndDate, Duration}}, _From, _Status) ->
+	Result = mnesia_server:add_subscription(BeachId, User, Type, EndDate, Duration),
 	{reply, Result, _Status };
 
 handle_call({update_subscription, {SubId, Type, Status, EndDate}}, _From, _Status) ->

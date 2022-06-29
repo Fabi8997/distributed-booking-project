@@ -11,13 +11,16 @@ public class SubscriptionDTO{
     String status;
     String endDate;
 
-    public SubscriptionDTO( int idSubscription, String username, int idBeach, String type, String status, String endDate){
+    int duration;
+
+    public SubscriptionDTO( int idSubscription, String username, int idBeach, String type, String status, String endDate, int duration){
         this.idSubscription = idSubscription;
         this.username = username;
         this.idBeach = idBeach;
         this.type = type;
         this.status = status;
         this.endDate = endDate;
+        this.duration = duration;
     }
 
     public SubscriptionDTO(OtpErlangTuple subscriptionInfo) {
@@ -27,6 +30,7 @@ public class SubscriptionDTO{
         type = subscriptionInfo.elementAt(4).toString();
         status = subscriptionInfo.elementAt(5).toString();
         endDate = subscriptionInfo.elementAt(6).toString();
+        duration = Integer.parseInt(subscriptionInfo.elementAt((7)).toString());
     }
 
     public int getIdSubscription() {
@@ -53,6 +57,10 @@ public class SubscriptionDTO{
         return endDate;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
     @Override
     public String toString() {
         return "SubscriptionDTO{" +
@@ -62,6 +70,7 @@ public class SubscriptionDTO{
                 ", type='" + type + '\'' +
                 ", status='" + status + '\'' +
                 ", endDate='" + endDate + '\'' +
+                ", duration='" + duration + '\'' +
                 '}';
     }
 }

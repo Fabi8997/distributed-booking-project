@@ -10,7 +10,8 @@
                beach_id,
 			   type,
 			   status,
-               end_date
+               end_date,
+			   duration
               }).
 
 -record(user, {userId,
