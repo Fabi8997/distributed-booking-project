@@ -55,7 +55,7 @@ public class AddSubscriptionServlet extends HttpServlet {
                 int duration = SubscriptionType.parseInt(subscriptionType);
                 String targetJSP;
 
-                System.out.println(idBeach + "\n" + type  + "\n" + user  + "\n" + startingDate  + "\n" + duration );
+                //.out.println(idBeach + "\n" + type  + "\n" + user  + "\n" + startingDate  + "\n" + duration );
                 
                 ResultMessage resultMessage = BookingManager.newSubscription(user,idBeach,type,startingDate, duration);
 
