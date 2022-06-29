@@ -62,7 +62,7 @@ public class Utils {
 
     public static void main(String[] args){
 
-        System.out.println(getDateNow());
+        System.out.println(getDateNow().compareTo("2022-06-28"));
     }
 
 }
