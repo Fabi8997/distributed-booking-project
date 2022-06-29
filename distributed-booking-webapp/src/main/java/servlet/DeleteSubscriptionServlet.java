@@ -1,7 +1,9 @@
 package servlet;
 
 
+import communication.BookingManager;
 import database.DbManager;
+import utility.ResultMessage;
 import utility.Utils;
 
 import javax.servlet.RequestDispatcher;
@@ -47,8 +49,8 @@ public class DeleteSubscriptionServlet extends HttpServlet {
                 int subscription = Integer.parseInt(request.getParameter("subscriptionId"));
                 String admin = session.getAttribute("user").toString();
                 String targetJSP;
-
-                if(DbManager.deleteSubscription(admin, subscription)){
+                ResultMessage resultMessage = BookingManager.removeSubscription(admin, subscription);
+                if(resultMessage.isResult()){
                     //if no errors occur then it goes to the confirmation page!
                     targetJSP = "/pages/jsp/admin.jsp";
                     request.setAttribute("info", "Subscription correctly inserted!");

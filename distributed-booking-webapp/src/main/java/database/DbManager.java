@@ -70,14 +70,6 @@ public class DbManager {
     }
 
     public static boolean deleteUser(String admin, String user){
-        List<SubscriptionDTO> userSubscriptions = getAllSubscriptions(user);
-        List<BookingDTO> userBookings = getAllBookings(user);
-        for(SubscriptionDTO s: userSubscriptions){
-            deleteSubscription(user, s.getIdSubscription());
-        }
-        for(BookingDTO b: userBookings){
-            deleteBooking(user, b.getIdBooking());
-        }
         OtpConnection conn = null;
         try {
             conn = getConnectionDB(admin);
@@ -86,13 +78,13 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
-                List<SubscriptionDTO> subList = getSubscriptionFromAnotherUser(user, admin);
-                for(SubscriptionDTO subscription: subList){
-                    deleteSubscription(admin, subscription.getIdSubscription());
+                List<SubscriptionDTO> userSubscriptions = getAllSubscriptions(user);
+                List<BookingDTO> userBookings = getAllBookings(user);
+                for(SubscriptionDTO s: userSubscriptions){
+                    BookingManager.removeSubscription(admin, s.getIdSubscription());
                 }
-                List<BookingDTO> bookingList = getAllBookings(user);
-                for(BookingDTO booking: bookingList){
-                    deleteBooking(admin, booking.getIdBooking());
+                for(BookingDTO b: userBookings){
+                    deleteBooking(user, b.getIdBooking());
                 }
                 return Boolean.parseBoolean(reply.toString());
             }
@@ -550,16 +542,6 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
-                SubscriptionDTO subscription = getSubscription(SubscriptionId, user);
-                String subUser = subscription.getUsername();
-                int beachId = subscription.getIdBeach();
-                String type = subscription.getType();
-                String date = subscription.getEndDate();
-                int duration = SubscriptionType.parseInt(SubscriptionType.valueOf(type));
-                ResultMessage result = BookingManager.removeSubscription(user,subUser,SubscriptionId,beachId,type,date,duration);
-                if(!result.isResult()){
-                    return false;
-                }
                 return Boolean.parseBoolean(reply.toString());
             }
         } catch (IOException | OtpErlangExit | OtpAuthException e) {

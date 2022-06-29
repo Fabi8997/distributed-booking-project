@@ -3,6 +3,7 @@ package communication;
 import com.ericsson.otp.erlang.*;
 import database.DbManager;
 import dto.BookingDTO;
+import dto.SubscriptionDTO;
 import dto.SubscriptionType;
 import utility.ResultMessage;
 import utility.Utils;
@@ -97,18 +98,24 @@ public class BookingManager {
         return new ResultMessage(false, "Something has gone wrong!");
     }
 
-    public static ResultMessage removeSubscription(String connUser, String user, int subId, int BeachId, String Type, String EndDate, int Duration) {
+    public static ResultMessage removeSubscription(String connUser, int subId) {
+        SubscriptionDTO subscription = DbManager.getSubscription(subId, connUser);
+        String subUser = subscription.getUsername();
+        int beachId = subscription.getIdBeach();
+        String type = subscription.getType();
+        String date = subscription.getEndDate();
+        int duration = SubscriptionType.parseInt(SubscriptionType.valueOf(type));
         OtpConnection conn = null;
         try {
             conn = getConnection(connUser);
             if (conn != null) {
 
                 conn.sendRPC(registeredServer, "remove_subscription", new OtpErlangObject[]{
-                        new OtpErlangString(user),
-                        new OtpErlangInt(BeachId),
-                        new OtpErlangAtom(Type),
-                        Utils.fromDateToTuple(EndDate),
-                        new OtpErlangInt(Duration)});
+                        new OtpErlangString(subUser),
+                        new OtpErlangInt(beachId),
+                        new OtpErlangAtom(type),
+                        Utils.fromDateToTuple(date),
+                        new OtpErlangInt(duration)});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
