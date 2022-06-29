@@ -6,6 +6,7 @@ import utility.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class DbManager {
@@ -16,7 +17,6 @@ public class DbManager {
 
     public static void main(String[] args) {
 
-        System.out.println(DbManager.getAvailableSlots("Prova", 1));
     }
 
     //USERS
@@ -213,6 +213,8 @@ public class DbManager {
         for(int i = 0; i < list.arity(); i++){
             beaches.add(new BeachDTO((OtpErlangTuple) list.elementAt(i)));
         }
+        Comparator<BeachDTO> c = Comparator.comparingInt(BeachDTO::getBeachId);
+        beaches.sort(c);
         return beaches;
     }
 
@@ -531,8 +533,8 @@ public class DbManager {
         for(int i = 0; i < list.arity(); i++){
             int idSub = Integer.parseInt(String.valueOf(((OtpErlangTuple) list.elementAt(i)).elementAt(1)));
             subscriptions.add(getSubscription(idSub, user));
-            //subscriptions.add(OtpErlangCommunication.get_info(idSub,user));
         }
+        subscriptions.removeIf(s -> Utils.getDateNow().compareTo(s.getEndDate()) < 0);
         return subscriptions;
     }
 
