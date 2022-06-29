@@ -1,6 +1,6 @@
 -module(booking_manager).
 -export([init/1, handle_call/3, handle_cast/2]).
--export([new_booking/4, start_server/0, reset/0, initialize_slots/0, get_bookings/1, new_subscription/5]).
+-export([new_booking/4, start_server/0, reset/0, initialize_slots/0, get_bookings/1, new_subscription/5, remove_subscription/6]).
 -behavior(gen_server).
 
 %%API
@@ -22,6 +22,9 @@ get_bookings(Username) ->
 
 new_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
 	gen_server:call(booking_manager, {new_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
+	
+remove_subscription(SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
+	gen_server:call(booking_manager, {remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
 	
 
 %%CALLBACK
@@ -56,6 +59,16 @@ handle_call({new_subscription, {Username, BeachId, SubscriptionType, StartingDat
 			{EndDateYear, EndDateMonth, EndDateDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + SubscriptionDuration - 1),
   			EndDateStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[EndDateYear, EndDateMonth, EndDateDay])),
 			mnesia_manager:add_subscription(BeachId, Username, SubscriptionType, EndDateStr),
+			{ reply, {true,""}, _Status };
+		{false, Result}  ->
+			{ reply, {false, Result}, _Status }
+	end;
+	
+handle_call({remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
+
+	case mnesia_manager:delete_booking_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
+		{true,_} -> 
+			mnesia_manager:delete_subscription(SubscriptionId),
 			{ reply, {true,""}, _Status };
 		{false, Result}  ->
 			{ reply, {false, Result}, _Status }
