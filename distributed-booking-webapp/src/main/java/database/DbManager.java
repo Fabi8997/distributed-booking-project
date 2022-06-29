@@ -1,7 +1,9 @@
 package database;
 
 import com.ericsson.otp.erlang.*;
+import communication.BookingManager;
 import dto.*;
+import utility.ResultMessage;
 import utility.Utils;
 
 import java.io.IOException;
@@ -84,13 +86,13 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
-                List<BookingDTO> bookingList = getAllBookings(user);
-                for(BookingDTO booking: bookingList){
-                    deleteBooking(admin, booking.getIdBooking());
-                }
                 List<SubscriptionDTO> subList = getSubscriptionFromAnotherUser(user, admin);
                 for(SubscriptionDTO subscription: subList){
                     deleteSubscription(admin, subscription.getIdSubscription());
+                }
+                List<BookingDTO> bookingList = getAllBookings(user);
+                for(BookingDTO booking: bookingList){
+                    deleteBooking(admin, booking.getIdBooking());
                 }
                 return Boolean.parseBoolean(reply.toString());
             }
@@ -546,10 +548,16 @@ public class DbManager {
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
-                /*List<BookingDTO> bookingList = getAllBookings(user);
-                for(BookingDTO booking: bookingList){
-
-                }*/
+                SubscriptionDTO subscription = getSubscription(SubscriptionId, user);
+                String subUser = subscription.getUsername();
+                int beachId = subscription.getIdBeach();
+                String type = subscription.getType();
+                String date = subscription.getEndDate();
+                int duration = SubscriptionType.parseInt(SubscriptionType.valueOf(type));
+                ResultMessage result = BookingManager.removeSubscription(user,subUser,SubscriptionId,beachId,type,date,duration);
+                if(!result.isResult()){
+                    return false;
+                }
                 return Boolean.parseBoolean(reply.toString());
             }
         } catch (IOException | OtpErlangExit | OtpAuthException e) {

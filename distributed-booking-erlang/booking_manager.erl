@@ -23,8 +23,8 @@ get_bookings(Username) ->
 new_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
 	gen_server:call(booking_manager, {new_subscription, {Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
 	
-remove_subscription(SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) ->
-	gen_server:call(booking_manager, {remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}).
+remove_subscription(SubscriptionId, Username, BeachId, SubscriptionType, EndDate, SubscriptionDuration) ->
+	gen_server:call(booking_manager, {remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, EndDate, SubscriptionDuration}}).
 	
 
 %%CALLBACK
@@ -64,9 +64,9 @@ handle_call({new_subscription, {Username, BeachId, SubscriptionType, StartingDat
 			{ reply, {false, Result}, _Status }
 	end;
 	
-handle_call({remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration}}, _From, _Status) ->
+handle_call({remove_subscription, {SubscriptionId, Username, BeachId, SubscriptionType, EndDate, SubscriptionDuration}}, _From, _Status) ->
 
-	case mnesia_manager:delete_booking_subscription(SubscriptionId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) of 
+	case mnesia_manager:delete_booking_subscription(SubscriptionId, Username, BeachId, SubscriptionType, EndDate, SubscriptionDuration) of 
 		{true,_} -> 
 			mnesia_manager:delete_subscription(SubscriptionId),
 			{ reply, {true,""}, _Status };

@@ -96,4 +96,35 @@ public class BookingManager {
         }
         return new ResultMessage(false, "Something has gone wrong!");
     }
+
+    public static ResultMessage removeSubscription(String connUser, String user, int subId, int BeachId, String Type, String EndDate, int Duration) {
+        OtpConnection conn = null;
+        try {
+            conn = getConnection(connUser);
+            if (conn != null) {
+
+                conn.sendRPC(registeredServer, "remove_subscription", new OtpErlangObject[]{
+                        new OtpErlangString(user),
+                        new OtpErlangInt(BeachId),
+                        new OtpErlangAtom(Type),
+                        Utils.fromDateToTuple(EndDate),
+                        new OtpErlangInt(Duration)});
+                OtpErlangObject reply = conn.receiveRPC();
+                System.out.println("Received " + reply);
+                conn.close();
+                if (reply instanceof OtpErlangTuple) {
+                    boolean result = Boolean.parseBoolean(((OtpErlangTuple) reply).elementAt(0).toString());
+                    String message = ((OtpErlangTuple) reply).elementAt(1).toString();
+                    return new ResultMessage(result, message);
+                }
+            }
+        } catch (IOException | OtpErlangExit | OtpAuthException e) {
+            if (conn != null) {
+                conn.close();
+            }
+            e.printStackTrace();
+            return new ResultMessage(false, "Something has gone wrong!");
+        }
+        return new ResultMessage(false, "Something has gone wrong!");
+    }
 }

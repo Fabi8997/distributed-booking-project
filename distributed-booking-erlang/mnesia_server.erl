@@ -687,11 +687,11 @@ insert_booking_subscription(Username, BeachId, Type, StartingDate, SubscriptionD
     end.
 	
 %% to test
-delete_booking_subscription(SubId, Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration) -> 
+delete_booking_subscription(SubId, Username, BeachId, SubscriptionType, EndDate, SubscriptionDuration) -> 
   F = fun() ->
     case is_subscription_present(SubId) of
       {true,""} ->
-        delete_booking_from_subscription(Username, BeachId, SubscriptionType, StartingDate, SubscriptionDuration, 0),
+        delete_booking_from_subscription(Username, BeachId, SubscriptionType, EndDate, SubscriptionDuration, 0),
         {true,""};
       {false,Msg} -> 
         {false,Msg}  
@@ -702,15 +702,15 @@ delete_booking_subscription(SubId, Username, BeachId, SubscriptionType, Starting
 
 delete_booking_from_subscription(_, _, _, _, SubscriptionDuration, SubscriptionDuration) ->
   {true,""};
-delete_booking_from_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd) ->
-  {DateToAddYear, DateToAddMonth, DateToAddDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(StartingDate) + DaysToAdd),
-  DateToAddStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToAddYear, DateToAddMonth, DateToAddDay])),
-  case increase_slots(BeachId, DateToAddStr, Type) of
+delete_booking_from_subscription(Username, BeachId, Type, EndDate, SubscriptionDuration, DaysToRemove) ->
+  {DateToRemoveYear, DateToRemoveMonth, DateToRemoveDay} = calendar:gregorian_days_to_date(calendar:date_to_gregorian_days(EndDate) - DaysToRemove),
+  DateToRemoveStr = lists:flatten(io_lib:format("~4..0w-~2..0w-~2..0w",[DateToRemoveYear, DateToRemoveMonth, DateToRemoveDay])),
+  case increase_slots(BeachId, DateToRemoveStr, Type) of
       true -> 
-		Booking = retrieve_booking(Username, BeachId, Type, StartingDate),
+		Booking = retrieve_booking(Username, BeachId, Type, EndDate),
         delete_booking(element(2, Booking)),
-        delete_booking_from_subscription(Username, BeachId, Type, StartingDate, SubscriptionDuration, DaysToAdd + 1);
+        delete_booking_from_subscription(Username, BeachId, Type, EndDate, SubscriptionDuration, DaysToRemove + 1);
       false -> 
-        ResultStr = string:concat("No available slots on: ",DateToAddStr),
+        ResultStr = string:concat("No available slots on: ",DateToRemoveStr),
         {false, ResultStr}
     end.
