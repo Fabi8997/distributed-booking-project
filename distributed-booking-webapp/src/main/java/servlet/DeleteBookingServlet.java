@@ -43,18 +43,17 @@ public class DeleteBookingServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
             }else{
                 System.out.println("Receiving the booking to delete info...");
-
-                int booking = Integer.parseInt(request.getParameter("bookingToDelete"));
+                int booking = Integer.parseInt(request.getParameter("bookingID"));
                 String admin = session.getAttribute("user").toString();
                 String targetJSP;
 
                 if(DbManager.deleteBooking(admin, booking)){
                     //if no errors occur then it goes to the confirmation page!
-                    targetJSP = "/pages/jsp/admin.jsp";
+                    targetJSP = admin.equals("admin") ? "/pages/jsp/admin.jsp" : "/pages/jsp/profile.jsp";
                     request.setAttribute("info", "Subscription correctly inserted!");
                 }else{
                     //redirect to the previous page with an error msg!
-                    targetJSP = "/pages/jsp/admin.jsp";
+                    targetJSP = admin.equals("admin") ? "/pages/jsp/admin.jsp" : "/pages/jsp/profile.jsp";
                     request.setAttribute("error", "Something has gone wrong!");
                 }
 

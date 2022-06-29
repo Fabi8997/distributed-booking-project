@@ -47,10 +47,9 @@ public class UpdateBeachServlet extends HttpServlet {
                 int beachId = Integer.parseInt(request.getParameter("beachId"));
                 String desc = request.getParameter("description");
                 String user = session.getAttribute("user").toString();
-                int slots = Integer.parseInt(request.getParameter("slots"));
                 String targetJSP;
 
-                if(DbManager.updateBeach(user, beachId, desc, slots)){
+                if(DbManager.updateBeach(user, beachId, desc)){
                     //if no errors occur then it goes to the confirmation page!
                     targetJSP = "/pages/jsp/admin.jsp";
                     request.setAttribute("info", "Beach correctly updated!");
