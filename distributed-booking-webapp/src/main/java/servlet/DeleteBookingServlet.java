@@ -47,6 +47,9 @@ public class DeleteBookingServlet extends HttpServlet {
                 String admin = session.getAttribute("user").toString();
                 String targetJSP;
 
+                System.out.println("bookingid: " + booking + "\nUser: " + admin);
+
+
                 if(DbManager.deleteBooking(admin, booking)){
                     //if no errors occur then it goes to the confirmation page!
                     targetJSP = admin.equals("admin") ? "/pages/jsp/admin.jsp" : "/pages/jsp/profile.jsp";

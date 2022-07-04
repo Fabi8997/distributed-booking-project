@@ -399,7 +399,13 @@ is_user_booking_present(Username, _BeachId, Type, Date) ->
         Q = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.type == Type, E#booking.timestamp == Date]),
         case qlc:e(Q) =:= [] of
           true ->
-            false;
+            Q1 = qlc:q([E || E <- mnesia:table(booking),E#booking.username == Username, E#booking.type == all_day, E#booking.timestamp == Date]),
+            case qlc:e(Q1) =:= [] of
+              true ->
+                false;
+              false ->
+                true
+            end;
           false ->
             true
         end;

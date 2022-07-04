@@ -112,50 +112,6 @@
                 </select>
                 <button type="submit">DELETE</button>
             </form>
-            <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteSubscriptionServlet">
-                <label class="adminFormLabel" for="userToDelete">Select the user for subscriptions:</label>
-                <select name="userIdSub" id="userToFindForSubscriptions" onchange="displaySelectSub(this)">
-                    <option value="0" selected="selected">--</option>
-                    <%
-                        for(int i = 0; i < users.size(); i++)
-                        {
-                    %>
-                    <option value=<%= users.get(i).getUserId() %>>
-                        <%= users.get(i).getUsername().replace("\"", "") %>
-                    </option>
-                    <%
-                        }
-                    %>
-                </select>
-                <div hidden id="subDiv">
-                    <label class="adminFormLabel">Select the subscription:</label>
-                    <% for(int i = 0; i < users.size(); i++)
-                        {
-                    %>
-                    <select hidden="hidden" name="subscriptionId" id="<%=users.get(i).getUserId()%>" class = "subSelect">
-                        <option value="0" selected="selected">--</option>
-                        <%
-                                String currentUser = users.get(i).getUsername().replace("\"", "");
-                                List<SubscriptionDTO> subscriptions = DbManager.getSubscriptionFromAnotherUser(currentUser, user);
-                                for(int j = 0; j < subscriptions.size(); j++)
-                                {
-                        %>
-                        <option value=<%= subscriptions.get(j).getIdSubscription() %>>
-                            <%= subscriptions.get(j).getUsername().replace("\"", "") %>,
-                            <%= subscriptions.get(j).getIdBeach() %>,
-                            <%= subscriptions.get(j).getType().replace("\"", "") %>,
-                            <%= subscriptions.get(j).getEndDate().replace("\"", "") %>
-                        </option>
-                        <%
-                                }
-                        %>
-                    </select>
-                     <%
-                         }
-                     %>
-                    <button type="submit">DELETE</button>
-                </div>
-            </form>
             <form class="AdminForm" action="<%= request.getContextPath() %>/DeleteBookingServlet">
                 <label class="adminFormLabel" for="userToFindForBookings">Select the user for bookings:</label>
                 <select name="userIdBook" id="userToFindForBookings" onchange="displaySelectBookings(this)">
@@ -177,7 +133,7 @@
                     {
                     %>
                     <select hidden="hidden" name="bookingID" id="<%=users.get(i).getUserId()%>b" class="bookingSelect">
-                        <option value="0">--</option>
+                        <option value="0" selected="selected" disabled>--</option>
                         <%
                             String currentUser = users.get(i).getUsername().replace("\"", "");
                             List<BookingDTO> bookings = DbManager.getUserBookings(currentUser, user);

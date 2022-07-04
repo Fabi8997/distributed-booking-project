@@ -61,7 +61,7 @@
                 %>
                 <tr id = "row-<%=i%>">
                     <td style="display:none;"><input class="idSubCell" type="hidden" name="subCell" value="<%=subscriptions.get(i).getIdSubscription()%>"></td>
-                    <td><%=subscriptions.get(i).getType().replace("\"", "")%></td>
+                    <td><%=subscriptions.get(i).getType().replace("\"", "").replace("_", " ")%></td>
                     <td><%=DbManager.getBeach(subscriptions.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
                     <td><label>
                         <textarea readonly rows="2"><%=DbManager.getBeach(subscriptions.get(i).getIdBeach(), user).getDescription().replace("\"", "")%></textarea>
@@ -91,7 +91,7 @@
                 %>
                     <tr id = "row-<%=i%>">
                         <td style="display:none;"><input type="hidden" value="<%=bookings.get(i).getIdBooking()%>"></td>
-                        <td><%=bookings.get(i).getType().replace("\"", "")%></td>
+                        <td><%=bookings.get(i).getType().replace("\"", "").replace("_", " ")%></td>
                         <td><%=DbManager.getBeach(bookings.get(i).getIdBeach(), user).getName().replace("\"", "")%></td>
                         <td><%=bookings.get(i).getDate().replace("\"", "")%></td>
                         <td><button onclick="window.location.href='<%=request.getContextPath()%>/DeleteBookingServlet?bookingID=<%=bookings.get(i).getIdBooking()%>'">DELETE</button></td>

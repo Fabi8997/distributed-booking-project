@@ -94,7 +94,6 @@
 
         <tr id="beach1" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/spiaggiadimezzo.jpg')">
             <td><%=beaches.get(0).getName()%></td>
-            <td><%=beaches.get(0).getDescription()%></td>
             <td>
                 <% if(slotsBeach1.getMorningSlots() > 0){%>
                 <p>Morning: <em class="FreeSlotsMorning"><%=slotsBeach1.getMorningSlots()%></em> slots</p>
@@ -110,7 +109,6 @@
         </tr>
         <tr id="beach2" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/masua.jpg')">
             <td><%=beaches.get(1).getName()%></td>
-            <td><%=beaches.get(1).getDescription()%></td>
             <td>
                 <% assert slotsBeach2 != null;
                 if(slotsBeach2.getMorningSlots() > 0){%>
@@ -127,7 +125,6 @@
         </tr>
         <tr id="beach3" class="BeachRow" style= "background-image: url('<%= request.getContextPath() %>/images/portopino.jpg')">
             <td><%=beaches.get(2).getName()%></td>
-            <td><%=beaches.get(2).getDescription()%></td>
             <td>
                 <% assert slotsBeach3 != null;
                 if(slotsBeach3.getMorningSlots() > 0){%>

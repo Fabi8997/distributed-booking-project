@@ -74,7 +74,7 @@ public class DbManager {
         try {
             conn = getConnectionDB(admin);
             if(conn != null) {
-                conn.sendRPC(registeredServer, "delete_user", new OtpErlangObject[]{new OtpErlangString(user)});
+                conn.sendRPC(registeredServer, "delete_user", new OtpErlangObject[]{new OtpErlangInt(Integer.parseInt(user))});
                 OtpErlangObject reply = conn.receiveRPC();
                 System.out.println("Received " + reply);
                 conn.close();
